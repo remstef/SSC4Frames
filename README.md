@@ -40,8 +40,9 @@ Key components:
 - docker-compose.yml - compose file to start database
 - dvc.yml - [DVC](https://dvc.org/) configuration to ensure data integrity and reproducibility
 - Makefile - run `make <target>` for ease of access, and see example commands
-- LICENSE
-- CITATION
+- LICENSE - this software is provided under the Apache v2 License
+- CITATION.md - how to cite this repository and paper 
+- CODE_OF_CONDUCT.MD - please follow the code of conduct for issues and contributions
 - README.md (this file)
 
 ## Getting started
