@@ -1,0 +1,6 @@
+outs:
+- md5: 5052e04ea2509a501264057fbc86e444.dir
+  size: 855026962
+  nfiles: 14930
+  hash: md5
+  path: fndata-1.7

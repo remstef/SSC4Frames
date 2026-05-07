@@ -1,0 +1,5 @@
+outs:
+- md5: aa96b6faf04bc0ceda6a8233f627111b
+  size: 148794895
+  hash: md5
+  path: salsa_release.xml
