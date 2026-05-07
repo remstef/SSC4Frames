@@ -40,7 +40,9 @@ stages:
     - convert_fn17.py
     - fndata-1.7
     outs:
-    - open_sesame_v1_data
+    - open_sesame_v1_data/fn1.7/fn1.7.dev.syntaxnet.conll
+    - open_sesame_v1_data/fn1.7/fn1.7.fulltext.train.syntaxnet.conll
+    - open_sesame_v1_data/fn1.7/fn1.7.test.syntaxnet.conll
   db_load_dataset_bfn17_default:
     wdir: src
     cmd:
