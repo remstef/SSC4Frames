@@ -1,0 +1,67 @@
+stages:
+
+  ## load Salsa data and embeddings
+  prepare_salsa:
+    cmd: python data/salsa/convert_salsa.py
+    deps:
+    - data/salsa/convert_salsa.py
+    - data/salsa/salsa_release.xml
+    - data/salsa/salsa_splits.txt
+    outs:
+    - data/salsa/salsa.csv
+  db_load_dataset_salsa_default:
+    wdir: src
+    cmd:
+    - python cli.py data import-dataset -d salsa
+    - mkdir -p ../experiments/.database
+    - python cli.py data get-datasetsplit-hash salsa-default > ../experiments/.database/salsa-default
+    deps:
+    - ../data/salsa/salsa.csv
+    outs:
+    - ../experiments/.database/salsa-default
+  db_load_embeddings_salsa_bert_base_german_cased:
+    wdir: src
+    cmd:
+    - python cli.py data import-model-embeddings -d salsa -m bert-base-german-cased -v 768 -ms -um -p first
+    - mkdir -p ../experiments/.database/salsa-default_embeddings
+    - python cli.py data get-embeddings-hash salsa-default bert-base-german-cased > ../experiments/.database/salsa-default_embeddings/bert-base-german-cased
+    - python cli.py data get-embeddings-hash salsa-default bert-base-german-cased-masked > ../experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
+    deps:
+    - ../experiments/.database/salsa-default
+    outs:
+    - ../experiments/.database/salsa-default_embeddings/bert-base-german-cased
+    - ../experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
+
+  ## load BFN 1.7 data and embeddings
+  prepare_bfn17:
+    wdir: data/fn1.7
+    cmd: python convert_fn17.py
+    deps:
+    - convert_fn17.py
+    - fndata-1.7
+    outs:
+    - open_sesame_v1_data
+  db_load_dataset_bfn17_default:
+    wdir: src
+    cmd:
+    - python cli.py data import-dataset -d fn1.7
+    - mkdir -p ../experiments/.database
+    - python cli.py data get-datasetsplit-hash fn1.7-default > ../experiments/.database/fn1.7-default
+    deps:
+    - ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.dev.syntaxnet.conll
+    - ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.fulltext.train.syntaxnet.conll
+    - ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.test.syntaxnet.conll
+    outs:
+    - ../experiments/.database/fn1.7-default
+  db_load_embeddings_bfn17_bert_base_uncased:
+    wdir: src
+    cmd:
+    - python cli.py data import-model-embeddings -d fn1.7 -m bert-base-uncased -v 768 -ms -um -p first
+    - mkdir -p ../experiments/.database/fn1.7-default_embeddings
+    - python cli.py data get-embeddings-hash fn1.7-default bert-base-uncased > ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased
+    - python cli.py data get-embeddings-hash fn1.7-default bert-base-uncased-masked > ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
+    deps:
+    - ../experiments/.database/fn1.7-default
+    outs:
+    - ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased
+    - ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
