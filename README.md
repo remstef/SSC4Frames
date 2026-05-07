@@ -87,7 +87,7 @@ Key components:
 If you use this code or follow the method, please cite the [LREC 2026 paper](https://lrec.elra.info/lrec2026-main-786):
 
 
-Barteld, F., Remus, S., Anwar, S., Stawecki, J., Ziem, A., & Biemann, C. (2026). **Joint Identification and Induction of Semantic Frames with Scalable Semi-Supervised Graph Clustering**. In *Proceedings of the Fifteenth Language Resources and Evaluation Conference (LREC 2026)*
+Barteld, F., Remus, S., Anwar, S., Stawecki, J., Ziem, A., & Biemann, C. (2026). **Joint Identification and Induction of Semantic Frames with Scalable Semi-Supervised Graph Clustering**. In *Proceedings of the Fifteenth Language Resources and Evaluation Conference (LREC 2026)* (https://doi.org/10.63317/5q7o3fgim7pb).
 
 
 ```
@@ -105,6 +105,6 @@ Barteld, F., Remus, S., Anwar, S., Stawecki, J., Ziem, A., & Biemann, C. (2026).
 
 
 ## Contact / Contributing
-
 - Issues and pull requests are welcome.
 - For questions about reproducing experiments, open an issue with a reproducibility tag and include the dataset and config used.
+- For all questions and contributions, please see the [code of conduct](CODE_OF_CONDUCT.MD).
