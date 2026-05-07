@@ -1,6 +1,7 @@
 ### User defined ###
 SSC4Frames.code-workspace
 .vscode
+_ignored_resources
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
