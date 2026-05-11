@@ -1,0 +1,41 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "ssc4frames",
+  "dockerComposeFile": [
+		"docker-compose.yml",
+		"../docker-compose.yml"
+	],
+  "service": "ssc4framesdev",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	"runServices": [
+		"db",
+		"pgadmin"
+	],
+
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	// "shutdownAction": "none",
+	"shutdownAction": "stopCompose",
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && [ ! -d \".venv\" ] && { uv python pin 3.12; uv venv --python 3.12; } && uv pip install --link-mode=copy -r requirements.txt",
+	"postCreateCommand": "export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && [ ! -d \".venv\" ] && { uv python pin 3.12; uv venv --python 3.12; } && uv pip install --editable .",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+
+  // Set environment variables for VS Code and sub-processes
+  "remoteEnv": { 
+		"UV_LINK_MODE": "copy" 
+	}
+}

@@ -1,0 +1,23 @@
+dvc ~= 3.64
+numpy<=2.2
+networkx ~= 3.6
+pandas[excel] ~= 2.2
+conllu ~= 4.5
+transformers==4.43.4
+sentencepiece ~= 0.2
+sqlalchemy ~= 2.0
+psycopg2-binary ~= 2.9
+click ~= 8.1
+click-option-group ~= 0.5.9
+prompt-toolkit ~= 3.0.50
+python-dotenv ~= 1.0.1
+torch ~= 2.2
+pyclustering ~= 0.10
+pgvector ~= 0.2
+sqlalchemy-json ~= 0.7
+factory-manager ~= 0.1.0
+nltk ~= 3.9
+# git+ssh://git@github.com/remstef/wordpiece-retokenizer.git@main
+# git+ssh://git@github.com/remstef/pytorch-graph-cluster-lib.git@main
+./pkg/pt_graph_cluster_lib-20250923.0.tar.gz
+./pkg/wp_retok-20241025.0.tar.gz

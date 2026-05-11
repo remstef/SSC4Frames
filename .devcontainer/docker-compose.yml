@@ -1,0 +1,10 @@
+
+services:
+  ssc4framesdev: 
+    image: mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
+    container_name: ssc4framesdev
+    volumes:
+      - ..:/workspaces/SSC4Frames:cached
+      # - /some/other/host/directory:/workspaces/SSC4Frames/data:cached
+    command: sleep infinity
+

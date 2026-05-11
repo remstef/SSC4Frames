@@ -2,6 +2,7 @@
 SSC4Frames.code-workspace
 .vscode
 _ignored_resources
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

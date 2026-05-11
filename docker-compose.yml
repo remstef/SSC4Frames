@@ -1,0 +1,48 @@
+##
+#
+##
+
+volumes:
+  dbdata:
+  pgadmindata:
+
+services:
+
+  db:
+    image: paradedb/paradedb:0.23.2-pg18
+    container_name: ssc4framesdb
+    hostname: ssc4framesdb
+    shm_size: 1gb    
+    restart: always
+    environment:
+      - POSTGRES_INITDB_ARGS=
+          --data-checksums
+          --set shared_buffers=1024MB 
+          --set work_mem=512MB 
+          --set max_connections=256 
+          --set tcp_keepalives_idle=2min 
+          --set tcp_keepalives_interval=20
+          --set tcp_keepalives_count=6
+          --set idle_session_timeout=1d
+          --set idle_in_transaction_session_timeout=3d
+          --set client_connection_check_interval=20min
+          --set max_locks_per_transaction=256
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ssc4frames
+      - PARADEDB_TELEMETRY=false # not sure if this is still used
+    volumes:
+      - dbdata:/var/lib/postgresql
+    ports:
+      - 54323:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 55432:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@local.host
+      - PGADMIN_DEFAULT_PASSWORD=letmein
+      - PGADMIN_DISABLE_POSTFIX=true
+    volumes:
+      - pgadmindata:/var/lib/pgadmin

@@ -1,0 +1,83 @@
+[build-system]
+requires = ["poetry-core>=2.1.3"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+version = "20260509.0"
+name = "ssc4frames"
+description = "Joint Identification and Induction of Semantic Frames"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Steffen Remus", email = "remstef@github.com" },
+    { name = "Fabian Barteld", email = "fbarteld@github.com" },
+]
+maintainers = [
+    { name = "Steffen Remus", email = "remstef@github.com" },
+    { name = "Fabian Barteld", email = "fbarteld@github.com" },
+]
+license = "Apache-2.0"
+license-files = [ "LICENSE" ]
+keywords = ["classification", "clustering", "semi-supervised clustering", "graph clustering", "machine learning"]
+classifiers = [
+    # https://pypi.org/classifiers/
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "click~=8.1",
+    "click-option-group~=0.5.9",
+    "conllu~=4.5",
+    "dvc~=3.64",
+    "factory-manager~=0.1.0",
+    "networkx~=3.6",
+    "nltk~=3.9",
+    "numpy<=2.2",
+    "pandas[excel]~=2.2",
+    "pgvector~=0.2",
+    "prompt-toolkit~=3.0.50",
+    "psycopg2-binary~=2.9",
+    "pt-graph-cluster-lib",
+    "pyclustering~=0.10",
+    "python-dotenv~=1.0.1",
+    "sentencepiece~=0.2",
+    "sqlalchemy~=2.0",
+    "sqlalchemy-json~=0.7",
+    "torch~=2.2",
+    "transformers==4.43.4",
+    "wp-retok",
+]
+
+# [project.optional-dependencies]
+# thrirdparty_experiments = []
+
+[project.urls]
+Homepage = "https://github.com/remstef/ssc4frames"
+Repository = "https://github.com/remstef/ssc4frames"
+Documentation = "https://github.com/remstef/ssc4frames/docs"
+Issues = "https://github.com/remstef/ssc4frames/issues"
+Changelog = "https://github.com/remstef/ssc4frames/blob/master/CHANGELOG.md"
+
+[project.scripts]
+cli = "ssc4frames:main"
+
+[tool.poetry]
+packages = [
+    { include = "ssc4frames", from = "src" }
+]
+
+[tool.poetry.build]
+generate-setup-file = false
+
+[tool.uv.sources]
+pt-graph-cluster-lib = { path = "pkg/pt_graph_cluster_lib-20250923.0.tar.gz" }
+wp-retok = { path = "pkg/wp_retok-20241025.0.tar.gz" }
+

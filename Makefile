@@ -1,0 +1,41 @@
+
+.ONESHELL:
+
+SHELL:=/bin/bash
+
+start-db-stack:
+	docker compose up -d
+
+uv-init:
+	python -m pip install -U uv
+	uv python pin 3.12
+	uv venv --python 3.12
+
+uv-install:
+# uv pip install -U -r requirements.txt
+	uv pip install --editable .
+
+
+init-db:
+	uv run -m ssc4frames data init-db-tables
+	@echo "create database ssc4frames" | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
+	cat ./sql/0_clean.sql ./sql/1_views.sql ./sql/2_functions.sql | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
+	
+uv-activate-venv:
+	@echo "please run manually 'source .venv/bin/activate'"
+
+uv-deactivate-venv:
+	@echo "please run manually 'deactivate'"
+
+uv-run:
+	@echo "please run any command manually 'uv run -m ssc4frames'"
+
+uv-build:
+	uv pip install -U build
+	uv run -m build
+
+prepare-data:
+	@echo -n "Please see instructions in ./data/fn1.7 and ./data/salsa to prepare the data. Enter 'y' if you want to proceed: " \
+		&& read ans \
+		&& [ $${ans:-'N'} = 'y' ] \
+		&& dvc repro

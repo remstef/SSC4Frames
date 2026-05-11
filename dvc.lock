@@ -1,65 +1,65 @@
 schema: '2.0'
 stages:
   prepare_salsa:
-    cmd: python data/salsa/convert_salsa.py
+    cmd: python ./data/salsa/convert_salsa.py
     deps:
-    - path: data/salsa/convert_salsa.py
+    - path: ./data/salsa/convert_salsa.py
       hash: md5
       md5: e6ac6bb9c30d4ad189b7c6deeb99d0bf
       size: 7097
-    - path: data/salsa/salsa_release.xml
+    - path: ./data/salsa/salsa_release.xml
       hash: md5
       md5: aa96b6faf04bc0ceda6a8233f627111b
       size: 148794895
-    - path: data/salsa/salsa_splits.txt
+    - path: ./data/salsa/salsa_splits.txt
       hash: md5
       md5: 6adfe376132d3659a54bc11739fe9fd2
       size: 299378
     outs:
-    - path: data/salsa/salsa.csv
+    - path: ./data/salsa/salsa.csv
       hash: md5
       md5: 24e2b83f022a8129367be05541587656
       size: 4613192
   db_load_dataset_salsa_default:
     cmd:
-    - python cli.py data import-dataset -d salsa
-    - mkdir -p ../experiments/.database
-    - python cli.py data get-datasetsplit-hash salsa-default > 
-      ../experiments/.database/salsa-default
+    - python -m ssc4frames data import-dataset -d salsa
+    - mkdir -p ./experiments/.database
+    - python -m ssc4frames data get-datasetsplit-hash salsa-default > 
+      ./experiments/.database/salsa-default
     deps:
-    - path: ../data/salsa/salsa.csv
+    - path: ./data/salsa/salsa.csv
       hash: md5
       md5: 24e2b83f022a8129367be05541587656
       size: 4613192
     outs:
-    - path: ../experiments/.database/salsa-default
+    - path: ./experiments/.database/salsa-default
       hash: md5
       md5: 01964ce855fba0cc3bf28e6e26203300
       size: 37
   db_load_embeddings_salsa_bert_base_german_cased:
     cmd:
-    - python cli.py data import-model-embeddings -d salsa -m 
+    - python -m ssc4frames data import-model-embeddings -d salsa -m 
       bert-base-german-cased -v 768 -ms -um -p first
-    - mkdir -p ../experiments/.database/salsa-default_embeddings
-    - python cli.py data get-embeddings-hash salsa-default 
+    - mkdir -p ./experiments/.database/salsa-default_embeddings
+    - python -m ssc4frames data get-embeddings-hash salsa-default 
       bert-base-german-cased > 
-      ../experiments/.database/salsa-default_embeddings/bert-base-german-cased
-    - python cli.py data get-embeddings-hash salsa-default 
+      ./experiments/.database/salsa-default_embeddings/bert-base-german-cased
+    - python -m ssc4frames data get-embeddings-hash salsa-default 
       bert-base-german-cased-masked > 
-      ../experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
+      ./experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
     deps:
-    - path: ../experiments/.database/salsa-default
+    - path: ./experiments/.database/salsa-default
       hash: md5
       md5: 01964ce855fba0cc3bf28e6e26203300
       size: 37
     outs:
     - path: 
-        ../experiments/.database/salsa-default_embeddings/bert-base-german-cased
+        ./experiments/.database/salsa-default_embeddings/bert-base-german-cased
       hash: md5
       md5: 49b98e82870fcf99e998e194f83a2d41
       size: 37
     - path: 
-        ../experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
+        ./experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
       hash: md5
       md5: 927fb01e15475d123d0c420b0239bf47
       size: 37
@@ -90,51 +90,52 @@ stages:
       size: 10559798
   db_load_dataset_bfn17_default:
     cmd:
-    - python cli.py data import-dataset -d fn1.7
-    - mkdir -p ../experiments/.database
-    - python cli.py data get-datasetsplit-hash fn1.7-default > 
-      ../experiments/.database/fn1.7-default
+    - python -m ssc4frames data import-dataset -d fn1.7
+    - mkdir -p ./experiments/.database
+    - python -m ssc4frames data get-datasetsplit-hash fn1.7-default > 
+      ./experiments/.database/fn1.7-default
     deps:
-    - path: ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.dev.syntaxnet.conll
+    - path: ./data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.dev.syntaxnet.conll
       hash: md5
       md5: 040461bf5bd6dee1e6bb0ba1ebe4b9ed
       size: 4650567
     - path: 
-        ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.fulltext.train.syntaxnet.conll
+        ./data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.fulltext.train.syntaxnet.conll
       hash: md5
       md5: 5b78ee139b91f3572b6fb3d413a8bbbb
       size: 34012936
-    - path: ../data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.test.syntaxnet.conll
+    - path: ./data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.test.syntaxnet.conll
       hash: md5
       md5: de55e6b906837b99b4c986a225cf6d8d
       size: 10559798
     outs:
-    - path: ../experiments/.database/fn1.7-default
+    - path: ./experiments/.database/fn1.7-default
       hash: md5
       md5: 2a334756205e89b3f7294a5d5d385133
       size: 37
   db_load_embeddings_bfn17_bert_base_uncased:
     cmd:
-    - python cli.py data import-model-embeddings -d fn1.7 -m bert-base-uncased 
-      -v 768 -ms -um -p first
-    - mkdir -p ../experiments/.database/fn1.7-default_embeddings
-    - python cli.py data get-embeddings-hash fn1.7-default bert-base-uncased > 
-      ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased
-    - python cli.py data get-embeddings-hash fn1.7-default 
+    - python -m ssc4frames data import-model-embeddings -d fn1.7 -m 
+      bert-base-uncased -v 768 -ms -um -p first
+    - mkdir -p ./experiments/.database/fn1.7-default_embeddings
+    - python -m ssc4frames data get-embeddings-hash fn1.7-default 
+      bert-base-uncased > 
+      ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased
+    - python -m ssc4frames data get-embeddings-hash fn1.7-default 
       bert-base-uncased-masked > 
-      ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
     deps:
-    - path: ../experiments/.database/fn1.7-default
+    - path: ./experiments/.database/fn1.7-default
       hash: md5
       md5: 2a334756205e89b3f7294a5d5d385133
       size: 37
     outs:
-    - path: ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased
+    - path: ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased
       hash: md5
       md5: 057e5635de47cdcdb40d5b32351ec3f3
       size: 37
     - path: 
-        ../experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
+        ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
       hash: md5
       md5: 587dd096577c06f0c0d6a90328639934
       size: 37
