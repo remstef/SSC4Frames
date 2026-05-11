@@ -1,0 +1,35 @@
+
+
+# Version control
+.git
+.gitignore
+
+# Data
+.dvc/
+data/
+experiments/
+
+# IDE files
+.idea/
+.vscode/
+
+# development
+.devcontainer/
+_ignored_resources/
+
+# virtual environments
+.venv
+
+# environment files
+.env
+
+# Documentation
+docs/
+
+# Docker files
+Dockerfile
+docker-compose.yml
+
+# OS files
+.DS_Store
+Thumbs.db

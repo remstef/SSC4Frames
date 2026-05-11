@@ -17,6 +17,7 @@ services:
       - .env
     volumes:
       - ./data:/app/data:cached
+      - ./experiments:/app/experiments:cached
 
   db:
     image: paradedb/paradedb:0.23.2-pg18
