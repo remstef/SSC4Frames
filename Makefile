@@ -45,7 +45,7 @@ dev-uv-install:
 dev-uv-install-requirements:
 	uv pip install -U -r requirements-dev.txt
 
-dev-init-dbv:
+dev-init-db:
 	@echo "create database ssc4frames" | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
 # 	uv run -m ssc4frames data init-db-tables
 	docker exec ssc4framesdev uv run -m ssc4frames data init-db-tables
