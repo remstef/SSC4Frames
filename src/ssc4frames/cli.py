@@ -12,6 +12,7 @@ import enum
 
 from ssc4frames.helpers import get_dburl_from_env, dotenv_path, pooling_strategies
 import ssc4frames.loghelper as loghelper; logger = loghelper.setup_logger(os.path.basename(__file__))
+from ssc4frames.run_experiment_db_only import merge_with_default_params
 
 ## conditional import
 def require_experiment_imports():
@@ -30,81 +31,90 @@ def require_experiment_imports():
     import ssc4frames.run_experiment_db_only as runexp
     from ssc4frames.ExperimentManager import ExperimentManager
     from ssc4frames.database import Clustering, Experiment, ExperimentRun
-    
 
-## define some helper variables, functions and click types
-example_clustering_config = { #@see run_experiment_db_only.default_parameters
-  'meta': {
-    'device': 'cpu',
-    'reuse': { # set to False if you want to recompute clustering even if it exists!
-      'local': False, 
-      'global': False,
-    },
-    're-evaluate': { # set to True if you want to re-evaluate the clustering even if it exists and has been evaluated, ie. scores have that been stored will be overwritten
-      'local': False, 
-      'global': False
-    },
-    'internaleval': {
-      'silhouette': {
-        'nsamples': 1e3,
-        'ndraws': 3,
-        'randomize_order': True,
-        'random_seed': 0.946684799, # default=None
-      }
-    },
-    'note': None, # can be a string, an object or a list, anything you like. It will be added to extrainfo, so that it can be used for retrieval. I.e. you can specify if the clustering is used for hyperparameter tuning or if its used for testing, or if it can be deleted 
-  },
+# ## define some helper variables, functions and click types
+# example_clustering_config = { #@see run_experiment_db_only.default_parameters
+#   'meta': {
+#     'device': 'cpu',
+#     'reuse': { # set to False if you want to recompute clustering even if it exists!
+#       'local': False, 
+#       'global': False,
+#     },
+#     're-evaluate': { # set to True if you want to re-evaluate the clustering even if it exists and has been evaluated, ie. scores have that been stored will be overwritten
+#       'local': False, 
+#       'global': False
+#     },
+#     'internaleval': {
+#       'silhouette': {
+#         'nsamples': 1e3,
+#         'ndraws': 3,
+#         'randomize_order': True,
+#         'random_seed': 0.946684799, # default=None
+#       }
+#     },
+#     'note': None, # can be a string, an object or a list, anything you like. It will be added to extrainfo, so that it can be used for retrieval. I.e. you can specify if the clustering is used for hyperparameter tuning or if its used for testing, or if it can be deleted 
+#   },
+#   'data': {
+#     'dataset': 'fn1.7-sample', # 'fn1.7-default',
+#     'splits': [ 'train', 'dev', 'test' ], # specify the splits which are going to be clustered (possibly in a semi-supervised fashion, labels are not necessarily required), labels are explicitly removed from instances which are in the testsplits list below
+#     'testsplits': [ 'test' ], # specify the datasplit instances which are used for testing, i.e. during (semi-supervised) clustering, labels are removed from those instances
+#     'materialize': True, # improves runtime performance if set to true, might increase database storage drasticlally if dataset is too large (> 100K)
+#   },
+#   # configure local clustering step
+#   'local': {
+#     'emmodel': 'bert-base-uncased', # 'bert-base-uncased' for English, 'bert-base-german-cased' for German, 'nvidia_NV-Embed-v2' for multilingual
+#     'dim': 768, # 768 for bert-..., 4096 for nvidia_NV-Embed-v2
+#     'alpha': '0.3',
+#     'filter': { # instances which do not match this filter will be disregarded, i.e. they will not be clustered
+#       'min_lemmainstances': 1, # consider only lemmas with at least $min_lemmainstances instances in the test split
+#       'max_lemmainstances': 1e10, # consider only lemmas with at most of $max_lemmainstances instances in the test split
+#       'limit_lemmainstances': 1e10, # limit the number of instances per lemma to $limit_lemmainstances (use only the first instances as defined by instanceid (default) or random order if randomize_order is true. Only necessary id dataset is very large (>100K) (TODO: make sure labelled instances come still first (label!='<unk>'))
+#       'randomize_order': True,
+#       'random_seed': 0.946684799, # default=None
+#     },
+#     'clusterer': {
+#       'type': 'cw', 
+#       'options': {
+#         # 'random_state': 946684799, # default=None
+#         'criterion': 'minw_0.6', # set the minimum weight an edge in the similarity graph should have 
+#       }
+#     },
+#     'emaggregation': 'avg' # as of now, there is no other option than to average embeddings of a cluster
+#   },
+#   'global': {
+#     # use ##local@latest to refer to the local clustering as defined in this file, ##local@latest will be replaced to identifier@id internally
+#     # use identifier@id to refer to any local clustering identifier + id that has to exist in the database independent of the local setting in this file
+#     'localclustering': '##local@latest',
+#     'filter': { # clusters which do not match this filter will be disregarded, i.e. they will not be clustered
+#       'min_clusterinstances': 1, # consider only clusters with at least $min_clusterinstances instances
+#       'max_clusterinstances': 1e10, # consider only clusters with at most $max_clusterinstances instances
+#       'randomize_order': True,
+#       'random_seed': 0.946684799, # default=None
+#     },
+#     'clusterer': {
+#       'type': 'cw', 
+#       'options': {
+#         # 'random_state': 946684799, # default=None
+#         'criterion': 'minw_0.9', # 'minw_0.8', 'minw_0.45'
+#       }
+#     },
+#     'merge_knowns' : 'before_global' 
+#     # after_local => creates a new clustering with merged local clusters where local cluster embeddings are based on merged clusters
+#     # before_global => use merge label (transitive label) as yinput for global clustering, i.e. the local cluster embeddings are different and have multiple instances, but their (known) label is the same
+#     # after_global => no merging while clustering but transtive labels are used to create merged global clusters where global cluster embeddings are based on merged clusters
+#     # never => nothing is never ever merged (formerly default)
+#   }
+# }
+
+# to be merged with @see run_experiment_db_only.default_parameters
+example_clustering_config_override = {
   'data': {
-    'dataset': 'fn1.7-sample', # 'fn1.7-default',
+    'dataset': 'fn1.7-default',
     'splits': [ 'train', 'dev', 'test' ], # specify the splits which are going to be clustered (possibly in a semi-supervised fashion, labels are not necessarily required), labels are explicitly removed from instances which are in the testsplits list below
     'testsplits': [ 'test' ], # specify the datasplit instances which are used for testing, i.e. during (semi-supervised) clustering, labels are removed from those instances
-    'materialize': True, # improves runtime performance if set to true, might increase database storage drasticlally if dataset is too large (> 100K)
-  },
-  # configure local clustering step
-  'local': {
-    'emmodel': 'bert-base-uncased', # 'bert-base-uncased' for English, 'bert-base-german-cased' for German, 'nvidia_NV-Embed-v2' for multilingual
-    'dim': 768, # 768 for bert-..., 4096 for nvidia_NV-Embed-v2
-    'alpha': '0.3',
-    'filter': { # instances which do not match this filter will be disregarded, i.e. they will not be clustered
-      'min_lemmainstances': 1, # consider only lemmas with at least $min_lemmainstances instances in the test split
-      'max_lemmainstances': 1e10, # consider only lemmas with at most of $max_lemmainstances instances in the test split
-      'limit_lemmainstances': 1e10, # limit the number of instances per lemma to $limit_lemmainstances (use only the first instances as defined by instanceid (default) or random order if randomize_order is true. Only necessary id dataset is very large (>100K) (TODO: make sure labelled instances come still first (label!='<unk>'))
-      'randomize_order': True,
-      'random_seed': 0.946684799, # default=None
-    },
-    'clusterer': {
-      'type': 'cw', 
-      'options': {
-        # 'random_state': 946684799, # default=None
-        'criterion': 'minw_0.6', # set the minimum weight an edge in the similarity graph should have 
-      }
-    },
-    'emaggregation': 'avg' # as of now, there is no other option than to average embeddings of a cluster
-  },
-  'global': {
-    # use ##local@latest to refer to the local clustering as defined in this file, ##local@latest will be replaced to identifier@id internally
-    # use identifier@id to refer to any local clustering identifier + id that has to exist in the database independent of the local setting in this file
-    'localclustering': '##local@latest',
-    'filter': { # clusters which do not match this filter will be disregarded, i.e. they will not be clustered
-      'min_clusterinstances': 1, # consider only clusters with at least $min_clusterinstances instances
-      'max_clusterinstances': 1e10, # consider only clusters with at most $max_clusterinstances instances
-      'randomize_order': True,
-      'random_seed': 0.946684799, # default=None
-    },
-    'clusterer': {
-      'type': 'cw', 
-      'options': {
-        # 'random_state': 946684799, # default=None
-        'criterion': 'minw_0.9', # 'minw_0.8', 'minw_0.45'
-      }
-    },
-    'merge_knowns' : 'before_global' 
-    # after_local => creates a new clustering with merged local clusters where local cluster embeddings are based on merged clusters
-    # before_global => use merge label (transitive label) as yinput for global clustering, i.e. the local cluster embeddings are different and have multiple instances, but their (known) label is the same
-    # after_global => no merging while clustering but transtive labels are used to create merged global clusters where global cluster embeddings are based on merged clusters
-    # never => nothing is never ever merged (formerly default)
   }
 }
+
 
 example_experiment_config_with_hyperparameter_exchange = {
     'name': 'bfn-default_split-hyperparameter-tuning',
@@ -135,7 +145,7 @@ example_experiment_config_with_hyperparameter_exchange = {
             ]
         }
     ],
-    'base_run_settings': example_clustering_config
+    'base_run_settings': merge_with_default_params(example_clustering_config_override)
 }
 
 def get_dburl(dburl=None, application_name=None):
@@ -836,6 +846,35 @@ def get_embeddings_hash(datasetsplit, embeddingmodel, database):
     print(hash_value)
 
     return
+
+### CLustering Group
+
+@main.group()
+@click.option('--config', type=JsonOption(), default=example_clustering_config_override)
+@click.pass_context
+def clustering(ctx, config):
+    require_experiment_imports()
+    ctx.ensure_object(dict)
+    ctx.obj['CLUSTERING_CONFIG'] = config
+    
+
+@clustering.command()
+@click.pass_context
+def run(ctx):
+
+    clustering_config_override = ctx.obj['CLUSTERING_CONFIG']
+    clustering_config = merge_with_default_params(clustering_config_override)
+    manager = ExperimentManager()
+    manager.run_with_setting(clustering_config)
+
+    return
+
+
+@clustering.command()
+@click.pass_context
+def get(ctx):
+    pass
+
 
 ### Experiment Group
 
