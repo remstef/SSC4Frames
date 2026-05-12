@@ -1,0 +1,111 @@
+{
+    "name": "salsa-default-split_softmax_test-induction",
+    "extrainfo": {
+        "note": "supervised test"
+    },
+    "hyperparameters": [
+        {
+            "key": [
+                "local",
+                "alpha"
+            ],
+            "values": [
+                0.9
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "cls_args",
+                "C"
+            ],
+            "values": [
+                0.2
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "cls_args",
+                "max_iter"
+            ],
+            "values": [
+                100
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "standardization"
+            ],
+            "values": [
+                "true"
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "merge_knowns"
+            ],
+            "values": [
+                "never"
+            ]
+        }
+    ],
+    "base_run_settings": {
+        "meta": {
+            "device": "cpu",
+            "reuse": {
+                "local": true,
+                "global": true
+            }
+        },
+        "data": {
+            "dataset": "salsa-default",
+            "splits": [
+                "train",
+                "test"
+            ],
+            "testsplits": [
+                "test"
+            ],
+            "materialize": true
+        },
+        "local": {
+            "emmodel": "bert-base-german-cased",
+            "dim": 768,
+            "filter": {
+                "min_lemmainstances": 1,
+                "max_lemmainstances": 10000000000.0,
+                "limit_lemmainstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "ident"
+            },
+            "emaggregation": "avg"
+        },
+        "global": {
+            "localclustering": "##local@latest",
+            "filter": {
+                "min_clusterinstances": 1,
+                "max_clusterinstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "softmax",
+                "options": {
+                    "random_state": 946684799
+                }
+            }
+        }
+    }
+}

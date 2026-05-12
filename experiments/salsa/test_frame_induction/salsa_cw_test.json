@@ -1,0 +1,131 @@
+{
+    "name": "salsa-default-split_cw_test-induction",
+    "extrainfo": {
+        "note": "supervised test"
+    },
+    "hyperparameters": [
+        {
+            "key": [
+                "local",
+                "alpha"
+            ],
+            "values": [
+                0
+            ]
+        },
+        {
+            "key": [
+                "local",
+                "clusterer",
+                "options",
+                "criterion"
+            ],
+            "values": [
+                "minw_0.6"
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "criterion"
+            ],
+            "values": [
+                "minw_0.9"
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "merge_knowns"
+            ],
+            "values": [
+                "after_global"
+            ]
+        },
+        {
+            "key": [
+                "local",
+                "clusterer",
+                "options",
+                "random_state"
+            ],
+            "values": [
+                946684799,
+                539183563,
+                171258316,
+                744166688,
+                659689477
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "random_state"
+            ],
+            "values": [
+                946684799,
+                539183563,
+                171258316,
+                744166688,
+                659689477
+            ]
+        }
+    ],
+    "base_run_settings": {
+        "meta": {
+            "device": "cpu",
+            "reuse": {
+                "local": true,
+                "global": true
+            }
+        },
+        "data": {
+            "dataset": "salsa-default",
+            "splits": [
+                "train",
+                "test"
+            ],
+            "testsplits": [
+                "test"
+            ],
+            "materialize": true
+        },
+        "local": {
+            "emmodel": "bert-base-german-cased",
+            "dim": 768,
+            "filter": {
+                "min_lemmainstances": 1,
+                "max_lemmainstances": 10000000000.0,
+                "limit_lemmainstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "cw",
+                "options": {
+                    "random_state": 946684799
+                }
+            },
+            "emaggregation": "avg"
+        },
+        "global": {
+            "localclustering": "##local@latest",
+            "filter": {
+                "min_clusterinstances": 1,
+                "max_clusterinstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "cw",
+                "options": {
+                    "random_state": 946684799
+                }
+            }
+        }
+    }
+}

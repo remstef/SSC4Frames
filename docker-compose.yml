@@ -17,8 +17,8 @@ services:
     volumes:
       - ./.env:/app/.env
       - ./dvcstore:/app/dvcstore
-    #   - ./data:/app/data:delegated
-    #   - ./experiments:/app/experiments:delegated
+      - ./data:/app/data
+      - ./experiments:/app/experiments
     stdin_open: true
     tty: true
     entrypoint: [ "tini", "--", "sleep", "infinity" ]

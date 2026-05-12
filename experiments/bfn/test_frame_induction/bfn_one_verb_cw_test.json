@@ -1,0 +1,102 @@
+{
+    "name": "fn1.7-default-split_one_verb_cw_test-induction",
+    "extrainfo": {
+        "note": "supervised test"
+    },
+    "hyperparameters": [
+        {
+            "key": [
+                "local",
+                "alpha"
+            ],
+            "values": [
+                1
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "criterion"
+            ],
+            "values": [
+                "minw_0.8"
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "merge_knowns"
+            ],
+            "values": [
+                "after_global"
+            ]
+        },
+        {
+            "key": [
+                "global",
+                "clusterer",
+                "options",
+                "random_state"
+            ],
+            "values": [
+                946684799,
+                539183563,
+                171258316,
+                744166688,
+                659689477
+            ]
+        }
+    ],
+    "base_run_settings": {
+        "meta": {
+            "device": "cpu",
+            "reuse": {
+                "local": true,
+                "global": true
+            }
+        },
+        "data": {
+            "dataset": "fn1.7-default",
+            "splits": [
+                "train",
+                "test"
+            ],
+            "testsplits": [
+                "test"
+            ],
+            "materialize": true
+        },
+        "local": {
+            "emmodel": "bert-base-uncased",
+            "dim": 768,
+            "filter": {
+                "min_lemmainstances": 1,
+                "max_lemmainstances": 10000000000.0,
+                "limit_lemmainstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "const"
+            },
+            "emaggregation": "avg"
+        },
+        "global": {
+            "localclustering": "##local@latest",
+            "filter": {
+                "min_clusterinstances": 1,
+                "max_clusterinstances": 10000000000.0,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "cw",
+                "options": {
+                    "random_state": 946684799
+                }
+            }
+        }
+    }
+}
