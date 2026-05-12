@@ -7,7 +7,7 @@ version = "20260511.0"
 name = "ssc4frames"
 description = "Joint Identification and Induction of Semantic Frames"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = "==3.12.*"
 authors = [
     { name = "Steffen Remus", email = "remstef@github.com" },
     { name = "Fabian Barteld", email = "fab-bar@github.com" },

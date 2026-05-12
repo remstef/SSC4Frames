@@ -6,6 +6,7 @@ RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
+        iputils-ping \
         wget \
         git \
         curl \
@@ -22,6 +23,8 @@ ENV UV_LINK_MODE=copy
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+RUN uv venv
+
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pkg,target=pkg \
     --mount=type=bind,source=uv.lock,target=uv.lock \
@@ -34,6 +37,13 @@ RUN uv sync --locked --no-editable
 
 # make the virtual environment accessible
 ENV PATH="/app/.venv/bin:$PATH"
+
+# Initialize DVC
+RUN dvc init --no-scm
+
+# Add a (local) remote storage which can be mounted
+RUN mkdir -p ./dvcstore
+RUN dvc remote add -d --local myremote ./dvcstore
 
 # run with tini
 ENTRYPOINT [ "tini", "--", "python", "-O", "-m", "ssc4frames" ]

@@ -5,8 +5,17 @@
 .gitignore
 
 # Data
-.dvc/
-data/
+# .dvc/cache
+# .dvc/tmp
+.dvc
+dvcstore
+data/fn1.7/fndata-1.7
+data/fn1.7/fndata-1.7.tar.gz
+data/fn1.7/open_sesame_v1_data
+data/fn1.7/*.log
+data/salsa/salsa_release.xml
+data/salsa/salsa_splits.txt
+data/salsa/salsa.csv
 experiments/
 
 # IDE files

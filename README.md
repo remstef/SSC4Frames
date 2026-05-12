@@ -28,19 +28,28 @@ Key components:
   - database.py - 
   - embeddings.py — code for extracting masked/unmasked BERT embeddings and weighted averaging
   - ...
+- examples/ - example configuration files to run a clustering, a clustering as an exeriment, or create an exeriment with multile experiment runs, e.g. to optimize hyperparameters
 - experiments/
-  - scripts to run hyperparameter tuning on dev sets and to run test evaluations
+  - configurations to run hyperparameter tuning on dev sets and to run test evaluations
   - example configurations in JSON format for the reported best setups
+  - once computed, results will be stored here
 - pkg/
   - third party packages for word piece re-tokenization and chinese whispers clustering
 - sql/
   - sql scripts for initializing the database with helper functions and utilities
-- requirements.txt — Python package requirements
+- pyproject.toml - Python package configuration
+- uv.lock — Python package configuration locked for the current version
+- .python-version — pin the Python version 
+- requirements-dev.txt — Python package requirements (for development purposes)
+- requirements-gen.txt — Python package requirements locked for reference purposes
 - .env - configuration, i.e. database location, data location, etc.
-- docker-compose.yml - compose file to start database
-- dvc.yml - [DVC](https://dvc.org/) configuration to ensure data integrity and reproducibility
+- Dockerfile - to build the ssc4frames image
+- docker-compose.yml - compose file to start the container stack (database, database admin interface, ssc4frames app container)
+- dvc.yml - [DVC](https://dvc.org/) pipeline configuration
+- dvc.lock - created by the [DVC](https://dvc.org/) pipeline to ensure data integrity and reproducibility
 - Makefile - run `make <target>` for ease of access, and see example commands
 - LICENSE - this software is provided under the Apache v2 License
+- CHANGELOG.md - keep track of changes across versions
 - CITATION.md - how to cite this repository and paper 
 - CODE_OF_CONDUCT.MD - please follow the code of conduct for issues and contributions
 - README.md (this file)

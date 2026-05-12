@@ -10,14 +10,18 @@ services:
 
   app:
     image: remstef/ssc4frames
+    container_name: ssc4framesapp
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
     volumes:
-      - ./data:/app/data:cached
-      - ./experiments:/app/experiments:cached
+      - ./.env:/app/.env
+      - ./dvcstore:/app/dvcstore
+    #   - ./data:/app/data:delegated
+    #   - ./experiments:/app/experiments:delegated
+    stdin_open: true
+    tty: true
+    entrypoint: [ "tini", "--", "sleep", "infinity" ]
 
   db:
     image: paradedb/paradedb:0.23.2-pg18
