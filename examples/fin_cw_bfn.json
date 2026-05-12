@@ -1,0 +1,40 @@
+{
+    "meta": {
+        "reuse": {
+            "local": true,
+            "global": true
+        }
+    },
+    "data": {
+        "dataset": "fn1.7-default",
+        "splits": [
+            "train",
+            "dev",
+            "test"
+        ],
+        "testsplits": [
+            "test"
+        ]
+    },
+    "local": {
+        "emmodel": "bert-base-uncased",
+        "dim": 768,
+        "alpha": 0.2,
+        "clusterer": {
+            "type": "cw",
+            "options": {
+                "criterion": "minw_0.5"
+            }
+        }
+    },
+    "global": {
+        "localclustering": "##local@latest",
+        "clusterer": {
+            "type": "cw",
+            "options": {
+                "criterion": "minw_0.8"
+            }
+        },
+        "merge_knowns": "before_global"
+    }
+}

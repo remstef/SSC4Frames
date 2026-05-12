@@ -1,0 +1,40 @@
+{
+    "meta": {
+        "reuse": {
+            "local": true,
+            "global": true
+        }
+    },
+    "data": {
+        "dataset": "salsa-default",
+        "splits": [
+            "train",
+            "dev",
+            "test"
+        ],
+        "testsplits": [
+            "test"
+        ]
+    },
+    "local": {
+        "emmodel": "bert-base-german-cased",
+        "dim": 768,
+        "alpha": 0,
+        "clusterer": {
+            "type": "cw",
+            "options": {
+                "criterion": "minw_0.6"
+            }
+        }
+    },
+    "global": {
+        "localclustering": "##local@latest",
+        "clusterer": {
+            "type": "cw",
+            "options": {
+                "criterion": "minw_0.6"
+            }
+        },
+        "merge_knowns": "before_global"
+    }
+}
