@@ -18,7 +18,7 @@ jobs:
       curr_version: ${{ steps.get_curr_version.outputs.curr_version }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 2  # Needed to compare with previous commit
 
@@ -49,7 +49,7 @@ jobs:
 
       - name: Log in to Docker Hub
         if: steps.version_changed.outputs.changed == 'true'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4.1.0
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
