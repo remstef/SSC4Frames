@@ -117,7 +117,7 @@ class ExperimentWorker(object):
       lock=self.lock
     )
       
-  def execute(self, run:ExperimentRun, raise_exception=False) -> ExperimentRun:
+  def execute(self, run:ExperimentRun, raise_exception=False, await_key_confirmation=False) -> ExperimentRun:
     run = self.refresh_experiment_run(run.id)
     if run.status != 'created':
       self.cls_logger.info(f'Run {run.id} of experiment {run.experiment_id} ({run.experiment.name}) not in expected "created" state but in "{run.status}". Copy run or experiment to rerun this experiment run or reset the experiment / run.')
@@ -128,7 +128,7 @@ class ExperimentWorker(object):
     e_logger = self.setup_logger_for_experiment_run(run.id)
     e_logger.info(f'Starting run {run.id} for experiment {run.experiment.name} ({run.experiment.id})')
     try:
-      clustering_result = self.run_clustering(run.setting, e_logger)
+      clustering_result = self.run_clustering(run.setting, e_logger, await_key_confirmation)
       # update run {run.id}
       run = self.update_experiment_run_values(run.id, 
         status='finished',
@@ -330,13 +330,13 @@ class ExperimentManager(object):
       experiments = res.all()
     return {e.id: e for e in experiments}
 
-  def run_with_setting(self, setting:dict, same_thread=True, new_process=False, raise_worker_exception=False) -> Experiment:
+  def run_with_setting(self, setting:dict, same_thread=True, new_process=False, raise_worker_exception=False, await_key_confirmation=False) -> Experiment:
     # 1. create new Experiment and new ExperimentRun
     # 2. execute run
     new_experiment = self.create_experiment_from_setting(setting=setting)
     # run in main process, main thread or start a new process/thread?
     if same_thread:
-      ExperimentWorker(self._dbh).execute(new_experiment.runs[0], raise_exception=raise_worker_exception)
+      ExperimentWorker(self._dbh).execute(new_experiment.runs[0], raise_exception=raise_worker_exception, await_key_confirmation=await_key_confirmation)
       new_experiment_updated = self.refresh_experiment(new_experiment)
     else:
       new_experiment_updated = self.run_experiment_parallel(new_experiment, n_workers=1, process_pool=new_process, raise_worker_exception=raise_worker_exception)

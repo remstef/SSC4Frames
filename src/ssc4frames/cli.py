@@ -777,33 +777,44 @@ def get_embeddings_hash(datasetsplit, embeddingmodel, database):
 ### CLustering Group
 
 @main.group()
-@click.option('--config', type=JsonOption(), default=example_clustering_config_override)
 @click.pass_context
-def clustering(ctx, config):
+def clustering(ctx):
     require_experiment_imports()
-    ctx.ensure_object(dict)
-    ctx.obj['CLUSTERING_CONFIG'] = config
     
 
 @clustering.command()
+@click.argument('config', type=JsonOption(), required=False, default=example_clustering_config_override)
+@click.option('--no-wait', is_flag=True)
 @click.pass_context
-def run(ctx):
+def run(ctx, config, no_wait):
 
-    clustering_config_override = ctx.obj['CLUSTERING_CONFIG']
+    clustering_config_override = config
     clustering_config = merge_with_default_params(clustering_config_override)
     manager = ExperimentManager()
-    manager.run_with_setting(clustering_config)
+    manager.run_with_setting(clustering_config, same_thread=True, new_process=False, raise_worker_exception=True, await_key_confirmation=(not no_wait))
 
     return
 
 
 @clustering.command()
+@click.argument('cid', type=int, required=True)
 @click.pass_context
-def get(ctx):
-    clustering_config_override = ctx.obj['CLUSTERING_CONFIG']
-    clustering_config = merge_with_default_params(clustering_config_override)
-    # TODO: find the clustering with the provided settings and return assignments and optionally metadata
-    pass
+def get(ctx, cid):
+    from ssc4frames.database import DBHandler
+    import sqlalchemy as sa
+    database = get_dburl(database, application_name='ssc4frames_data')
+    dbhandler = DBHandler(database)
+    with dbhandler.sessionmaker() as session:
+        stmt = sa.text(f'''
+          select md5(array_agg(row(global_id,split)::text ORDER BY global_id)::text)::uuid as datasplit_hash from
+          frameinstances join
+          split_instances on frameinstances.id=split_instances.instance_id join
+          datasetsplits on split_instances.datasetsplit_id=datasetsplits.id
+          where datasetsplits.name='{datasetsplit}';
+        ''')
+        row = session.execute(stmt).one()
+    return row[0]
+    
 
 
 ### Experiment Group
