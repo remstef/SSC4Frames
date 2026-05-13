@@ -1,5 +1,13 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/13/2026 - 4
+  - added script exection instead of python module exectuion
+  - added script for hyperparameter test generation
+  - added hyperparameter tuning on dev sets configurations
+  - added experiments dvc.yaml pipeline
+
+--
+
 ### Update version - 05/13/2026 - 3
   - bump version to test gh actions docker build workflow 
   - bugfix typo in gh actions
