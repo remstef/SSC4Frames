@@ -1,5 +1,11 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/13/2026 - 2
+  - bump version to test gh actions docker build workflow 
+  - updated uv.lock
+
+---
+
 ### Update version - 05/13/2026 - 1
   - bump version to test gh actions docker build workflow 
   - updated github actions

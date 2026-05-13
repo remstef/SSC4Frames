@@ -2066,7 +2066,7 @@ wheels = [
 
 [[package]]
 name = "ssc4frames"
-version = "20260511.0"
+version = "20260513.2"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
