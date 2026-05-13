@@ -1,58 +1,53 @@
 {
-    "name": "salsa-default-split_softmax_test-induction",
-    "extrainfo": {
-        "note": "supervised test"
-    },
+    "name": "salsa-default-split_softmax_hyperparameter-tuning",
+    "extrainfo": {"note": "supervised development"},
     "hyperparameters": [
         {
-            "key": [
-                "local",
-                "alpha"
-            ],
+            "key": ["local", "alpha"],
             "values": [
-                0.9
+                0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7,
+                0.8,
+                0.9,
+                1
             ]
         },
         {
-            "key": [
-                "global",
-                "clusterer",
-                "options",
-                "cls_args",
-                "C"
-            ],
+            "key": ["global", "clusterer", "options", "cls_args", "C"],
             "values": [
-                0.2
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7,
+                0.8,
+                0.9,
+                1.0
             ]
         },
         {
-            "key": [
-                "global",
-                "clusterer",
-                "options",
-                "cls_args",
-                "max_iter"
-            ],
+            "key": ["global", "clusterer", "options", "cls_args", "max_iter"],
             "values": [
                 100
             ]
         },
         {
-            "key": [
-                "global",
-                "clusterer",
-                "options",
-                "standardization"
-            ],
+            "key": ["global", "clusterer", "options", "standardization"],
             "values": [
-                "true"
+                true,
+                false
             ]
         },
         {
-            "key": [
-                "global",
-                "merge_knowns"
-            ],
+            "key": ["global", "merge_knowns"],
             "values": [
                 "never"
             ]
@@ -68,13 +63,8 @@
         },
         "data": {
             "dataset": "salsa-default",
-            "splits": [
-                "train",
-                "test"
-            ],
-            "testsplits": [
-                "test"
-            ],
+            "splits": ["train", "dev"],
+            "testsplits": ["dev"],
             "materialize": true
         },
         "local": {
@@ -82,8 +72,8 @@
             "dim": 768,
             "filter": {
                 "min_lemmainstances": 1,
-                "max_lemmainstances": 10000000000.0,
-                "limit_lemmainstances": 10000000000.0,
+                "max_lemmainstances": 1e10,
+                "limit_lemmainstances": 1e10,
                 "randomize_order": true,
                 "random_seed": 0.946684799
             },
@@ -96,7 +86,7 @@
             "localclustering": "##local@latest",
             "filter": {
                 "min_clusterinstances": 1,
-                "max_clusterinstances": 10000000000.0,
+                "max_clusterinstances": 1e10,
                 "randomize_order": true,
                 "random_seed": 0.946684799
             },

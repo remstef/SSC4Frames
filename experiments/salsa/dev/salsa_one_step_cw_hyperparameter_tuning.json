@@ -1,51 +1,45 @@
 {
-    "name": "salsa-default-split_one_verb_cw_test-induction",
-    "extrainfo": {
-        "note": "supervised test"
-    },
+    "name": "salsa-default-split_one-step_semi-cw_hyperparameter-tuning",
+    "extrainfo": {"note": "supervised development"},
     "hyperparameters": [
         {
-            "key": [
-                "local",
-                "alpha"
-            ],
+            "key": ["local", "alpha"],
             "values": [
+                0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7,
+                0.8,
+                0.9,
                 1
             ]
         },
         {
-            "key": [
-                "global",
-                "clusterer",
-                "options",
-                "criterion"
-            ],
+            "key": ["global", "clusterer", "options", "criterion"],
             "values": [
-                "minw_0.9"
+                "minw_0",
+                "minw_0.1",
+                "minw_0.2",
+                "minw_0.3",
+                "minw_0.4",
+                "minw_0.5",
+                "minw_0.6",
+                "minw_0.7",
+                "minw_0.8",
+                "minw_0.9",
+                "minw_1"
             ]
         },
         {
-            "key": [
-                "global",
-                "merge_knowns"
-            ],
+            "key": ["global", "merge_knowns"],
             "values": [
-                "before_global"
-            ]
-        },
-        {
-            "key": [
-                "global",
-                "clusterer",
-                "options",
-                "random_state"
-            ],
-            "values": [
-                946684799,
-                539183563,
-                171258316,
-                744166688,
-                659689477
+                "after_local",
+                "before_global",
+                "after_global"
             ]
         }
     ],
@@ -59,13 +53,8 @@
         },
         "data": {
             "dataset": "salsa-default",
-            "splits": [
-                "train",
-                "test"
-            ],
-            "testsplits": [
-                "test"
-            ],
+            "splits": ["train", "dev"],
+            "testsplits": ["dev"],
             "materialize": true
         },
         "local": {
@@ -73,13 +62,13 @@
             "dim": 768,
             "filter": {
                 "min_lemmainstances": 1,
-                "max_lemmainstances": 10000000000.0,
-                "limit_lemmainstances": 10000000000.0,
+                "max_lemmainstances": 1e10,
+                "limit_lemmainstances": 1e10,
                 "randomize_order": true,
                 "random_seed": 0.946684799
             },
             "clusterer": {
-                "type": "const"
+                "type": "ident"
             },
             "emaggregation": "avg"
         },
@@ -87,7 +76,7 @@
             "localclustering": "##local@latest",
             "filter": {
                 "min_clusterinstances": 1,
-                "max_clusterinstances": 10000000000.0,
+                "max_clusterinstances": 1e10,
                 "randomize_order": true,
                 "random_seed": 0.946684799
             },

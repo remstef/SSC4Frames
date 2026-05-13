@@ -1,0 +1,195 @@
+vars:
+  - datasets:
+      - name: salsa-default
+        folder: salsa
+        embeddings: bert-base-german-cased
+        embeddings_masked: bert-base-german-cased-masked
+      - name: fn1.7-default
+        folder: bfn
+        embeddings: bert-base-uncased
+        embeddings_masked: bert-base-uncased-masked
+  - classifiers: [cw, one_step_cw, one_verb_cw]
+  - classifiers_no_rand: [softmax]
+  - classifiers_unsupervised: [cw-unsup, one_step_cw-unsup, one_verb_cw-unsup]
+  - classifiers_unsupervised_no_rand: [yamada-ha, yamada-xmeans]
+
+
+stages:
+  create_yamada_development_settings:
+    foreach: ${datasets}
+    do:
+      wdir: ./
+      cmd:
+        - ssc4frames-yamada-parameters ${item.name} --dev_file_ha ./${item.folder}/dev/${item.folder}_yamada-ha_hyperparameter_tuning.json --dev_file_xmeans ./${item.folder}/dev/${item.folder}_yamada-xmeans_hyperparameter_tuning.json
+      deps:
+        - ./.database/${item.name}
+        - ./.database/${item.name}_embeddings/${item.embeddings_masked}
+      outs:
+        - ./${item.folder}/dev/${item.folder}_yamada-ha_hyperparameter_tuning.json
+        - ./${item.folder}/dev/${item.folder}_yamada-xmeans_hyperparameter_tuning.json
+
+  development_supervised: &development
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers}
+    wdir: ./
+    cmd:
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} create
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} run 
+      - mkdir -p ./.database/${item.dataset.name}_experiments
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} get-hash > ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning
+    deps:
+      - ./.database/${item.dataset.name}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked}
+      - ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json
+    outs:
+      - ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning
+
+  development_supervised_no_rand:
+    <<: *development
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_no_rand}
+
+  development_unsupervised:
+    <<: *development
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised}
+
+  development_unsupervised_no_rand:
+    <<: *development
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised_no_rand}
+
+  create_test_config_identification: &create_test_config_identification   
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers}
+      rand: ['']
+    wdir: ./
+    cmd:
+      - mkdir -p ./${item.dataset.folder}/test_frame_identification/
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json --experiment_hash ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name ${item.dataset.name}-split_${item.classifier}_test-identification --output_experiment_file ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json ${item.rand}
+    deps:
+      - ./.database/${item.dataset.name}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked}
+      - ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json
+      - ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning
+    outs:
+      - ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json
+
+  create_test_config_identification_no_rand:    
+    <<: *create_test_config_identification
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_no_rand}
+      rand: ['--no_random_seeds']
+    wdir: ./
+
+
+  create_test_config_induction: &create_test_config_induction  
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers}
+      rand: ['']
+    wdir: ./
+    cmd:
+      - mkdir -p ./${item.dataset.folder}/test_frame_induction/
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json --experiment_hash ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name ${item.dataset.name}-split_${item.classifier}_test-induction --output_experiment_file ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json ${item.rand}
+    deps:
+      - ./.database/${item.dataset.name}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked}
+      - ./${item.dataset.folder}/dev/${item.dataset.folder}_${item.classifier}_hyperparameter_tuning.json
+      - ./.database/${item.dataset.name}_experiments/${item.dataset.name}-split_${item.classifier}_hyperparamter_tuning
+    outs:
+      - ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json
+
+  create_test_config_induction_no_rand:
+    <<: *create_test_config_induction  
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_no_rand}
+      rand: ['--no_random_seeds']
+
+  create_test_config_induction_unsupervised:
+    <<: *create_test_config_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised}
+      rand: ['']
+
+  create_test_config_induction_unsupervised_no_rand:
+    <<: *create_test_config_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised_no_rand}
+      rand: ['--no_random_seeds']
+
+
+  test_frame_identification: &test_frame_identification
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers}
+    wdir: ./
+    cmd:
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} create
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} run
+      - mkdir -p ./.results/${item.dataset.folder}/test_frame_identification
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} results --metric micro_f1 --json --average_runs --check_config_runs --results_folder ./.results/${item.dataset.folder}/test_frame_identification
+    deps:
+      - ./.database/${item.dataset.name}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked}
+      - ./${item.dataset.folder}/test_frame_identification/${item.dataset.folder}_${item.classifier}_test.json
+    metrics:
+        - ./.results/${item.dataset.folder}/test_frame_identification/${item.dataset.name}-split_${item.classifier}_test-identification.json
+
+  test_frame_identification_no_rand:
+    <<: *test_frame_identification
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_no_rand}
+
+
+  test_frame_induction: &test_frame_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers}
+    wdir: ./
+    cmd:
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} create
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} run
+      - mkdir -p ./.results/${item.dataset.folder}/test_frame_induction
+      - ssc4frames experiment --experiment_config ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json --datasetsplit_hash ./.database/${item.dataset.name} --embeddings_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings} --embeddings_masked_hash ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked} results --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json --average_runs --check_config_runs --results_folder ./.results/${item.dataset.folder}/test_frame_induction
+    deps:
+      - ./.database/${item.dataset.name}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings}
+      - ./.database/${item.dataset.name}_embeddings/${item.dataset.embeddings_masked}
+      - ./${item.dataset.folder}/test_frame_induction/${item.dataset.folder}_${item.classifier}_test.json
+    metrics:
+        - ./.results/${item.dataset.folder}/test_frame_induction/${item.dataset.name}-split_${item.classifier}_test-induction.json
+
+
+  test_frame_induction_no_rand:
+    <<: *test_frame_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_no_rand}
+
+
+  test_frame_induction_unsupervised:
+    <<: *test_frame_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised}
+
+  test_frame_induction_unsupervised_no_rand:
+    <<: *test_frame_induction
+    matrix:
+      dataset: ${datasets}
+      classifier: ${classifiers_unsupervised_no_rand}

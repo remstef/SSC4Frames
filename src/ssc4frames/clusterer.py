@@ -1106,3 +1106,43 @@ class PairsInClusterRatio(DBClusterer):
       if sum([(len(cluster)*(len(cluster)-1))/2 for cluster in label_to_items.values()]) >= pairs_in_same_cluster:
         return label_to_items, label_vector
 
+
+#### the following classes exist for backwards compatibility only
+
+class UnsupervisedCW(DBClustererUnsupervised):
+  '''
+    default unsupervised CW
+  '''
+  name = 'unsup-cw'
+
+  def __init__(self, criterion:str, random_state:int = None, cwargs:dict = {}):
+    import_required_on_init(import_cw)
+    super().__init__(clusterer=CW(criterion, random_state, cwargs), discard_labelled_instances=False)
+
+
+class HASilhouetteClustering(Silhouette):
+
+  name = 'ha-silhouette'
+
+  def __init__(self, cluster_options: dict = None):
+    if cluster_options is None:
+      cluster_options = {}
+
+    clusterings = HAClustering(**cluster_options)
+    super().__init__(clusterings=clusterings, metric=cluster_options.get('metric', 'euclidean'))
+
+
+class HAStoppingClustering(PairsInClusterRatio):
+
+  name = 'ha-stopping'
+
+  def __init__(self, stopping_ratio=0.5, cluster_options: dict = None):
+    if cluster_options is None:
+      cluster_options = {}
+
+    cluster_options['n_clusters'] = 1
+    cluster_options['compute_full_tree'] = True
+    cluster_options['compute_distances'] = True
+
+    clusterings = HAClustering(**cluster_options)
+    super().__init__(clusterings=clusterings, stopping_ratio=stopping_ratio)

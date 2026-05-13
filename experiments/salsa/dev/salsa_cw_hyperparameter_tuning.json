@@ -1,0 +1,110 @@
+{
+    "name": "salsa-default-split_semi-cw_hyperparameter-tuning",
+    "extrainfo": {"note": "supervised development"},
+    "hyperparameters": [
+        {
+            "key": ["local", "alpha"],
+            "values": [
+                0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7,
+                0.8,
+                0.9,
+                1
+            ]
+        },
+        {
+            "key": ["local", "clusterer", "options", "criterion"],
+            "values": [
+                "minw_0",
+                "minw_0.1",
+                "minw_0.2",
+                "minw_0.3",
+                "minw_0.4",
+                "minw_0.5",
+                "minw_0.6",
+                "minw_0.7",
+                "minw_0.8",
+                "minw_0.9",
+                "minw_1"
+            ]
+        },
+        {
+            "key": ["global", "clusterer", "options", "criterion"],
+            "values": [
+                "minw_0",
+                "minw_0.1",
+                "minw_0.2",
+                "minw_0.3",
+                "minw_0.4",
+                "minw_0.5",
+                "minw_0.6",
+                "minw_0.7",
+                "minw_0.8",
+                "minw_0.9",
+                "minw_1"
+            ]
+        },
+        {
+            "key": ["global", "merge_knowns"],
+            "values": [
+                "after_local",
+                "before_global",
+                "after_global"
+            ]
+        }
+    ],
+    "base_run_settings": {
+        "meta": {
+            "device": "cpu",
+            "reuse": {
+                "local": true,
+                "global": true
+            }
+        },
+        "data": {
+            "dataset": "salsa-default",
+            "splits": ["train", "dev"],
+            "testsplits": ["dev"],
+            "materialize": true
+        },
+        "local": {
+            "emmodel": "bert-base-german-cased",
+            "dim": 768,
+            "filter": {
+                "min_lemmainstances": 1,
+                "max_lemmainstances": 1e10,
+                "limit_lemmainstances": 1e10,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "cw",
+                "options": {
+                    "random_state": 946684799
+                }
+            },
+            "emaggregation": "avg"
+        },
+        "global": {
+            "localclustering": "##local@latest",
+            "filter": {
+                "min_clusterinstances": 1,
+                "max_clusterinstances": 1e10,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "cw",
+                "options": {
+                    "random_state": 946684799
+                }
+            }
+        }
+    }
+}

@@ -22,9 +22,9 @@ stages:
       size: 4613192
   db_load_dataset_salsa_default:
     cmd:
-    - python -m ssc4frames data import-dataset -d salsa
+    - ssc4frames data import-dataset -d salsa
     - mkdir -p ./experiments/.database
-    - python -m ssc4frames data get-datasetsplit-hash salsa-default > 
+    - ssc4frames data get-datasetsplit-hash salsa-default > 
       ./experiments/.database/salsa-default
     deps:
     - path: ./data/salsa/salsa.csv
@@ -38,13 +38,12 @@ stages:
       size: 37
   db_load_embeddings_salsa_bert_base_german_cased:
     cmd:
-    - python -m ssc4frames data import-model-embeddings -d salsa -m 
-      bert-base-german-cased -v 768 -ms -um -p first
+    - ssc4frames data import-model-embeddings -d salsa -m bert-base-german-cased
+      -v 768 -ms -um -p first
     - mkdir -p ./experiments/.database/salsa-default_embeddings
-    - python -m ssc4frames data get-embeddings-hash salsa-default 
-      bert-base-german-cased > 
+    - ssc4frames data get-embeddings-hash salsa-default bert-base-german-cased >
       ./experiments/.database/salsa-default_embeddings/bert-base-german-cased
-    - python -m ssc4frames data get-embeddings-hash salsa-default 
+    - ssc4frames data get-embeddings-hash salsa-default 
       bert-base-german-cased-masked > 
       ./experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
     deps:
@@ -90,9 +89,9 @@ stages:
       size: 10559798
   db_load_dataset_bfn17_default:
     cmd:
-    - python -m ssc4frames data import-dataset -d fn1.7
+    - ssc4frames data import-dataset -d fn1.7
     - mkdir -p ./experiments/.database
-    - python -m ssc4frames data get-datasetsplit-hash fn1.7-default > 
+    - ssc4frames data get-datasetsplit-hash fn1.7-default > 
       ./experiments/.database/fn1.7-default
     deps:
     - path: ./data/fn1.7/open_sesame_v1_data/fn1.7/fn1.7.dev.syntaxnet.conll
@@ -115,14 +114,13 @@ stages:
       size: 37
   db_load_embeddings_bfn17_bert_base_uncased:
     cmd:
-    - python -m ssc4frames data import-model-embeddings -d fn1.7 -m 
-      bert-base-uncased -v 768 -ms -um -p first
+    - ssc4frames data import-model-embeddings -d fn1.7 -m bert-base-uncased -v 
+      768 -ms -um -p first
     - mkdir -p ./experiments/.database/fn1.7-default_embeddings
-    - python -m ssc4frames data get-embeddings-hash fn1.7-default 
-      bert-base-uncased > 
+    - ssc4frames data get-embeddings-hash fn1.7-default bert-base-uncased > 
       ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased
-    - python -m ssc4frames data get-embeddings-hash fn1.7-default 
-      bert-base-uncased-masked > 
+    - ssc4frames data get-embeddings-hash fn1.7-default bert-base-uncased-masked
+      > 
       ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
     deps:
     - path: ./experiments/.database/fn1.7-default

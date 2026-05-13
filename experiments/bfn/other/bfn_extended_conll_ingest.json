@@ -1,0 +1,64 @@
+{
+    "name": "bfn-extended-split_conll_ingest",
+    "extrainfo": {"note": "supervised test"},
+    "hyperparameters": [
+        {
+            "key": ["local", "clusterer", "options", "fname_conll"],
+            "values": [
+"../data/opensesame_preds/fn1.7/extended/fn1.7-extended-frameid-01/predicted-1.7-frameid-test.conll.gz",
+"../data/opensesame_preds/fn1.7/extended/fn1.7-extended-frameid-02/predicted-1.7-frameid-test.conll.gz",
+"../data/opensesame_preds/fn1.7/extended/fn1.7-extended-frameid-03/predicted-1.7-frameid-test.conll.gz",
+"../data/opensesame_preds/fn1.7/extended/fn1.7-extended-frameid-04/predicted-1.7-frameid-test.conll.gz",
+"../data/opensesame_preds/fn1.7/extended/fn1.7-extended-frameid-05/predicted-1.7-frameid-test.conll.gz"
+            ]
+        }
+    ],
+    "base_run_settings": {
+        "meta": {
+            "device": "cpu",
+            "reuse": {
+                "local": true,
+                "global": true
+            }
+        },
+        "data": {
+            "dataset": "fn1.7-default",
+            "splits": ["train", "test"],
+            "testsplits": ["test"],
+            "materialize": true
+        },
+        "local": {
+            "emmodel": "bert-base-uncased",
+            "dim": 768,
+            "filter": {
+                "min_lemmainstances": 1,
+                "max_lemmainstances": 1e10,
+                "limit_lemmainstances": 1e10,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "conll",
+                "options": {
+                    "fname_conll": "../data/opensesame_preds/fn1.7/{split_name:s}/fn1.7-{split_name:s}-frameid-{run_j:02d}/predicted-1.7-frameid-test.conll.gz",
+                    "conll_fields": ["id", "form", "_u1", "lemma", "upos", "xpos", "docid",  "_u2", "_u3", "_u4", "_u5", "_u6", "lu", "frame", "B-I-O"],
+                    "fname_labelmap": "../data/opensesame_preds/fn1.7/fn1.7_labelmap__conll_to_db_all.tsv"
+                }
+            },
+            "emaggregation": "avg"
+        },
+        "global": {
+            "localclustering": "##local@latest",
+            "filter": {
+                "min_clusterinstances": 1,
+                "max_clusterinstances": 1e10,
+                "randomize_order": true,
+                "random_seed": 0.946684799
+            },
+            "clusterer": {
+                "type": "ident"
+            },
+            "merge_knowns": "before_global"
+        }
+    }
+}

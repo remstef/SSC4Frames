@@ -68,6 +68,7 @@ Changelog = "https://github.com/remstef/ssc4frames/blob/master/CHANGELOG.md"
 
 [project.scripts]
 ssc4frames = "ssc4frames.cli:main"
+ssc4frames-yamada-parameters = "ssc4frames.get_yamada_parameters:main"
 
 [tool.poetry]
 packages = [

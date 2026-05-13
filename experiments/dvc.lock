@@ -1,0 +1,48 @@
+schema: '2.0'
+stages:
+  create_yamada_development_settings@0:
+    cmd:
+    - ssc4frames-yamada-parameters salsa-default --dev_file_ha 
+      ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json --dev_file_xmeans 
+      ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 927fb01e15475d123d0c420b0239bf47
+      size: 37
+    outs:
+    - path: ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: a4202de5010b0026922655e2c1c48aa0
+      size: 3230
+    - path: ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: 454ef4cbf3f6ca9b19c39308f84c7036
+      size: 3124
+  create_yamada_development_settings@1:
+    cmd:
+    - ssc4frames-yamada-parameters fn1.7-default --dev_file_ha 
+      ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json --dev_file_xmeans 
+      ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 2a334756205e89b3f7294a5d5d385133
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 587dd096577c06f0c0d6a90328639934
+      size: 37
+    outs:
+    - path: ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: 0470131b1b66435d23ee8e6a7fb464aa
+      size: 3220
+    - path: ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: d1f4a8e1c89c3076ba319f368a476a74
+      size: 3114
