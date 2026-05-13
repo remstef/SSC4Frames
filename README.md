@@ -60,11 +60,17 @@ Key components:
 - Python 3.12+
 - [Docker](https://www.docker.com/) (with docker compose enabled), or a [ParadeDB](https://www.paradedb.com/) instance
 - Recommended: CUDA-enabled GPU for faster embedding extraction
-- Install dependencies:
+- The [Makefile](./Makefile) shows example commands and typical use case targets and is split into dev and user experiences (with the prefix `-user` and `-dev`). The `user` experience expects no installation, the `dev` experience expects [dev containers](https://code.visualstudio.com/docs/devcontainers/containers) or a python dev environment.
+- Prepare database:
   ```
-  make uv-init
-  make uv-install
+  make user-start-db-stack
+  make user-init-db
+
+  or as dev
+
+  make dev-init-db # (assumes that the docker db container has been started)
   ```
+  or change the database connection string in `.env` **if you use your own ParadeDB instance**
 
 <u>Prepare data</u>
 
@@ -72,19 +78,42 @@ Key components:
   - `data/fn1.7/README.md.`, and 
   - `data/salsa/README.md.`
 
-- Prepare database:
+- Prepare dataset. Run DVC pipeline to ensure data integrity and repropducibility:
   ```
-  make start-db-stack
-  ```
-  or change the database connection string in `.env` **if you use your own ParadeDB instance**
+  make user-attach-dockerapp
+  # in the docker container run 
+  make user-prepare-data
 
-- Run DVC pipeline to ensure data integrity and repropducibility:
-  ```
-  make prepare-data
-  ```
-  This process inserts the tokenized datasets into the database, extracts embeddings and inserts respective embeddings according to our experiments.
+  or as dev
 
-- ...
+  make user-prepare-data:
+  ```
+  This process inserts the tokenized datasets into the database, extracts embeddings and inserts respective embeddings according to our experiments.  
+
+<u>Run clusterings and get results</u>
+- see [default configuration](./examples/default-with-comments.jsonc)
+- see [sample configurations](./examples)
+- Commands
+  ```
+  # run default configuration
+  ssc4frames clustering run
+
+  # run specific configuration in json
+  ssc4frames clustering run examples/fid_cw_bfn.json
+
+  # run default configuration with ovverrides
+  ssc4frames clustering run '{"data":{"dataset":"fn1.7-sample"}}'
+  # run default configuration with ovverrides, don't wait for key confirmation
+  ssc4frames clustering run --no-wait '{"data":{"dataset":"fn1.7-sample"}}'
+  # run default configuration with ovverrides, don't wait for key confirmation, skip the test set
+  ssc4frames clustering run --no-wait '{"data":{"dataset":"fn1.7-sample", "splits":["train", "dev"], "testsplits":["dev"]}}'
+
+  # get results
+  ssc4frames clustering get <clustering-id>
+  # get results for the entire dataset including unassigned instances (e.g. for the test set if omitted during clustering)
+  ssc4frames clustering get -a <clustering-id>
+  ```
+
 
 ## Notes & limitations
 

@@ -12,7 +12,7 @@ user-start-db-stack:
 
 user-init-db:
 	@echo "create database ssc4frames" | docker compose exec -T db psql postgresql://root:root@localhost/ssc4frames
-	docker compose exec app python -m ssc4frames data init-db-tables
+	docker compose exec app ssc4frames data init-db-tables
 	cat ./sql/0_clean.sql ./sql/1_views.sql ./sql/2_functions.sql | docker compose exec -T db psql postgresql://root:root@localhost/ssc4frames
 
 user-attach-dockerapp:
@@ -36,8 +36,7 @@ user-prepare-data:
 
 dev-uv-init:
 	python -m pip install -U uv
-	uv python pin 3.12
-	uv venv --python 3.12
+	uv venv
 
 dev-uv-install:
 	uv pip install --editable .
@@ -47,8 +46,8 @@ dev-uv-install-requirements:
 
 dev-init-db:
 	@echo "create database ssc4frames" | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
-# 	uv run -m ssc4frames data init-db-tables
-	docker exec ssc4framesdev uv run -m ssc4frames data init-db-tables
+# 	ssc4frames data init-db-tables
+	docker exec ssc4framesdev ssc4frames data init-db-tables
 	cat ./sql/0_clean.sql ./sql/1_views.sql ./sql/2_functions.sql | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
 
 dev-uv-activate-venv:

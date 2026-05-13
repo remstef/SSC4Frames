@@ -4,6 +4,6 @@
 @author: remstef
 """
 
-from .cli import main
+from ssc4frames import cli
 
-main()
+cli.main()

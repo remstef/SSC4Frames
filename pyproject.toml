@@ -67,7 +67,7 @@ Issues = "https://github.com/remstef/ssc4frames/issues"
 Changelog = "https://github.com/remstef/ssc4frames/blob/master/CHANGELOG.md"
 
 [project.scripts]
-cli = "ssc4frames:main"
+ssc4frames = "ssc4frames.cli:main"
 
 [tool.poetry]
 packages = [
