@@ -29,28 +29,36 @@ import logging
 ### example parameters
 ### will be overriden if the name of a json-file is passed as argument
 default_parameters = {
+  # the meta tag will not be used to identify clusterings
   'meta': {
+    # Use the specified device for tensors, e.g. cpu or gpu.
+    # GPU support is limited as clustering algorithms do not necessarily use other devices than CPU.
     'device': 'cpu',
-    'reuse': { # set to False if you want to recompute clustering even if it exists!
+    'reuse': { 
+      # Clusterings will be reused if one with the same (sub-)configuration exists. 
+      # Set to False if you want to recompute clustering even if it exists!
       'local': False, 
       'global': False,
     },
-    're-evaluate': { # set to True if you want to re-evaluate the clustering even if it exists and has been evaluated, ie. scores have that been stored will be overwritten
+    're-evaluate': { 
+      # Set to True if you want to re-evaluate the clustering even if it exists and has been evaluated, ie. scores that have been stored will be overwritten
       'local': False, 
       'global': False
     },
     'internaleval': {
+      # Internal / unsupervised evaluation is performed using the silhouette score
       'silhouette': {
-        'nsamples': 1e3,
-        'ndraws': 3,
-        'randomize_order': True,
-        'random_seed': 0.946684799, # default=None
+        'nsamples': 1e3, # how many samples to use
+        'ndraws': 3, # how many draws (if using subsampling)
+        'randomize_order': True, # for multiple draws, this has to be True
+        'random_seed': None, # for multiple draws, this has to be None
       }
     },
     'note': None, # can be a string, an object or a list, anything you like. It will be added to extrainfo, so that it can be used for retrieval. I.e. you can specify if the clustering is used for hyperparameter tuning or if its used for testing, or if it can be deleted 
     # 'save_test_only': False, # only checked in local clustering and transitively applied for global clustering
     # 'parallel_local_clusterings': 128 # not used yet 
   },
+  # specify the dataset and the splits to use
   'data': {
     'dataset': 'fn1.7-sample', # 'fn1.7-default',
     'splits': [ 'train', 'dev', 'test' ], # specify the splits which are going to be clustered (possibly in a semi-supervised fashion, labels are not necessarily required), labels are explicitly removed from instances which are in the testsplits list below
@@ -59,47 +67,72 @@ default_parameters = {
   },
   # configure local clustering step
   'local': {
+    # which model to use
     'emmodel': 'bert-base-uncased', # 'bert-base-uncased' for English, 'bert-base-german-cased' for German, 'nvidia_NV-Embed-v2' for multilingual
+    # specify the dimension of the model, it must match!
     'dim': 768, # 768 for bert-..., 4096 for nvidia_NV-Embed-v2
+    # specify the weight of masked vs unmasked embeddings
+    # unmasked with weight alpha and masked with weight 1 − alpha 
+    # (i.e. alpha=0 -> only masked embeddings are used; alpha=1 -> only unmasked embeddings are used)
     'alpha': '0.3',
-    'filter': { # instances which do not match this filter will be disregarded, i.e. they will not be clustered
-      'min_lemmainstances': 1, # consider only lemmas with at least $min_lemmainstances instances in the test split
-      'max_lemmainstances': 1e10, # consider only lemmas with at most of $max_lemmainstances instances in the test split
-      'limit_lemmainstances': 1e10, # limit the number of instances per lemma to $limit_lemmainstances (use only the first instances as defined by instanceid (default) or random order if randomize_order is true. Only necessary id dataset is very large (>100K) (TODO: make sure labelled instances come still first (label!='<unk>'))
+    # instances which do not match this filter will be disregarded during clustering, 
+    # i.e. they will not be clustered directly, but assigned by the most similar (nearest neighbor) 
+    # cluster as a post clustering step. This is mainly useful for large datasets.
+    'filter': { 
+      # consider only lemmas with at least $min_lemmainstances instances in the test split, use 1 to deactivate filtering
+      'min_lemmainstances': 1,
+      # consider only lemmas with at most of $max_lemmainstances instances in the test split, use a very large value to deactivate filtering
+      'max_lemmainstances': 1e10, 
+      # limit the number of instances per lemma to $limit_lemmainstances (use only the first instances as defined by instanceid (default) 
+      # or random order if randomize_order is true. Only necessary id dataset is very large (>100K). Use a very large value to deactivate filtering
+      'limit_lemmainstances': 1e10,
       'randomize_order': True,
       'random_seed': 0.946684799, # default=None
     },
+    # define the clusterer for the local clustering step with options (@see ssc4frames.clusterer)
     'clusterer': {
       'type': 'cw', 
       'options': {
-        # 'random_state': 946684799, # default=None
+        'random_state': 946684799, # default=None
         'criterion': 'minw_0.6', # set the minimum weight an edge in the similarity graph should have 
       }
     },
-    'emaggregation': 'avg' # as of now, there is no other option than to average embeddings of a cluster
+    # as of now, there is no other option than to average embeddings of a cluster, 
+    # i.e. this option is disregarded
+    'emaggregation': 'avg' 
   },
+  # define the global clustering step
   'global': {
-    # use ##local@latest to refer to the local clustering as defined in this file, ##local@latest will be replaced to identifier@id internally
+    # define the local clustering, on which the global clusterer should operate
+    # use ##local@latest to refer to the local clustering as defined in this file, 
+    # ##local@latest will be replaced to identifier@id internally
     # use identifier@id to refer to any local clustering identifier + id that has to exist in the database independent of the local setting in this file
     'localclustering': '##local@latest',
-    'filter': { # clusters which do not match this filter will be disregarded, i.e. they will not be clustered
-      'min_clusterinstances': 1, # consider only clusters with at least $min_clusterinstances instances
-      'max_clusterinstances': 1e10, # consider only clusters with at most $max_clusterinstances instances
+    # cluster instances which do not match this filter will be disregarded during clustering, 
+    # i.e. instances within filtered clusters will be assigned by the most similar (nearest neighbor) 
+    # cluster as a post clustering step. This is mainly useful for large datasets.
+    'filter': {
+      # consider only clusters with at least $min_clusterinstances instances, use 1 to deactivate filtering
+      'min_clusterinstances': 1, 
+      # consider only clusters with at most $max_clusterinstances instances, use a large value to deactivate clustering
+      'max_clusterinstances': 1e10, 
       'randomize_order': True,
       'random_seed': 0.946684799, # default=None
     },
+    # define the clusterer for the global clustering step with options (@see ssc4frames.clusterer)
     'clusterer': {
       'type': 'cw', 
       'options': {
-        # 'random_state': 946684799, # default=None
-        'criterion': 'minw_0.9', # 'minw_0.8', 'minw_0.45'
+        'random_state': 946684799, # default=None
+        'criterion': 'minw_0.9', # set the minimum weight an edge in the similarity graph should have 
       }
     },
+    # define the strategy how clusters with known labels will be merged across the two clustering stages
+    # merge_knowns=after_local => creates a new clustering with merged local clusters where local cluster embeddings are based on merged clusters
+    # merge_knowns=before_global => use merge label (transitive label) as yinput for global clustering, i.e. the local cluster embeddings are different and have multiple instances, but their (known) label is the same
+    # merge_knowns=after_global => no merging while clustering but transtive labels are used to create merged global clusters where global cluster embeddings are based on merged clusters
+    # merge_knowns=never => nothing is never ever merged (evaluation is still based on the transitive labels)
     'merge_knowns' : 'before_global' 
-    # after_local => creates a new clustering with merged local clusters where local cluster embeddings are based on merged clusters
-    # before_global => use merge label (transitive label) as yinput for global clustering, i.e. the local cluster embeddings are different and have multiple instances, but their (known) label is the same
-    # after_global => no merging while clustering but transtive labels are used to create merged global clusters where global cluster embeddings are based on merged clusters
-    # never => nothing is never ever merged (formerly default)
   }
 }
 __default_db_url__ = get_dburl_from_env()
