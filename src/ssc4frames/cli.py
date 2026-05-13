@@ -798,22 +798,41 @@ def run(ctx, config, no_wait):
 
 @clustering.command()
 @click.argument('cid', type=int, required=True)
+@click.option('-a', '--all', is_flag=True)
 @click.pass_context
-def get(ctx, cid):
+def get(ctx, cid, all):
+    
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
-    database = get_dburl(database, application_name='ssc4frames_data')
-    dbhandler = DBHandler(database)
+
+    allinstances_query = 'select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl) and split = any((select splits::text from cl)::text[])'
+    if all:
+        allinstances_query = 'select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl)'
+        # allinstances_query = 'select * from frameinstances_split where datasetsplit_name = :_dataset_name_'
+
+    dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
         stmt = sa.text(f'''
-          select md5(array_agg(row(global_id,split)::text ORDER BY global_id)::text)::uuid as datasplit_hash from
-          frameinstances join
-          split_instances on frameinstances.id=split_instances.instance_id join
-          datasetsplits on split_instances.datasetsplit_id=datasetsplits.id
-          where datasetsplits.name='{datasetsplit}';
+            with cl as (
+                select * from clusterings where id = :_clusteringid_
+            ), allinstances as (
+                {allinstances_query}
+            ), cluster_assigned as (
+                select * from instanceassignments where clusteringid = (select id from cl)
+            )
+            select 
+                i.instance_id, i.datasetsplit_name, i.split, i.lu_lemma, i.frame_label as true_label, 
+                ci.clusterid, ci.clusterlabel, ci.tclusterlabel as transitive_clusterlabel, ci.assignmentinfo 
+            from allinstances i left outer join cluster_assigned ci on i.instance_id = ci.instance_id
         ''')
-        row = session.execute(stmt).one()
-    return row[0]
+        res = session.execute(stmt, {
+            '_clusteringid_': cid
+        })
+        print('\t'.join(map(str,res.keys())))
+        for r in res.all():
+            print('\t'.join(map(str,r)))
+
+    return
     
 
 

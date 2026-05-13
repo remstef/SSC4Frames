@@ -257,6 +257,28 @@ join clusterings cls on cl.clusteringid = cls.id
 --   select * from evaltable((select id from cl), (select datasetsplit_id from cl), (select splits from cl)) where cid is NULL
 -- )
 -- select * from "bert-base-german-cased-masked" v join unassigned u on v.key = u.instanceid
+--
+-- or
+--
+-- with cl as (
+--   select * from clusterings where id = 237
+-- ), allinstances as (
+--   select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl) and split = any((select splits::text from cl)::text[])
+-- ), cluster_assigned as (
+--   select * from instanceassignments where clusteringid = (select id from cl)
+-- )
+-- select * from allinstances ia left outer join cluster_assigned ica on ia.instance_id = ica.instance_id
+--
+-- or ignore the splits
+--
+-- with cl as (
+--   select * from clusterings where id = 237
+-- ), allinstances as (
+--   select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl)
+-- ), cluster_assigned as (
+--   select * from instanceassignments where clusteringid = (select id from cl)
+-- )
+-- select * from allinstances ia left outer join cluster_assigned ica on ia.instance_id = ica.instance_id
 
 -- ============================================================================
 -- ============================================================================
