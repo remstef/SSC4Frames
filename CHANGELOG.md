@@ -1,5 +1,11 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/13/2026 [1]
+  - bump version to test gh actions docker build workflow 
+  - updated github actions
+
+---
+
 ### Update version - 05/13/2026
   - add docker app container
   - added more documentation
