@@ -381,7 +381,7 @@ def data():
 @click.option('--batchsize', '-bs', type=int, required=True, default=0)
 def import_dataset(database, dataset, batchsize):
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     global Importer, importer
     from ssc4frames.dataimporter import Importer
@@ -424,7 +424,7 @@ def import_custom_dataset(database, dataset_name, dataset_lang, split_suffix,
     global pd
     import pandas as pd
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     df = pd.DataFrame()
     files_per_split = {
@@ -470,7 +470,7 @@ def import_custom_dataset(database, dataset_name, dataset_lang, split_suffix,
 @click.option('--database', '-db', type=str)
 def list_datasets(database):
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     from ssc4frames.database import DBHandler, DatasetSplit
     from sqlalchemy import select
@@ -503,7 +503,7 @@ def import_model_embeddings(database, dataset, model, vdim, input_masking, mask_
     import gc
     import torch
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     ## using unmasked input as default
     if not input_masking:
@@ -754,7 +754,7 @@ def copy_db_embeddings(source_database, target_database, dataset, source_table, 
 @click.option('--database', '-db', type=str)
 def get_datasetsplit_hash(datasetsplit, database):
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     hash_value = get_hash_for_datasetsplit(datasetsplit, database)
     print(hash_value)
@@ -767,7 +767,7 @@ def get_datasetsplit_hash(datasetsplit, database):
 @click.option('--database', '-db', type=str)
 def get_embeddings_hash(datasetsplit, embeddingmodel, database):
 
-    database = get_dburl(database, application_name='gfnc_data')
+    database = get_dburl(database, application_name='ssc4frames_data')
 
     hash_value = get_hash_for_embeddings(datasetsplit, embeddingmodel, database)
     print(hash_value)

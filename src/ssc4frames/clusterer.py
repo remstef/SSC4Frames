@@ -422,12 +422,6 @@ class ForwardLabels(DBClusterer):
 class ConllFilePseudoClusterer(DBClusterer):
   '''
 
-  echo "select * from labels_dataset_all((select id from datasets where name='fn1.7'))" | docker exec -i german-frame-clustering-paradedb-1 psql postgresql://root:root@pdb/gfncdata -tAF$'\t'
-
-  echo "select label, numinstances from labels_dataset_all((select id from datasets where name='fn1.7'))" | docker exec -i german-frame-clustering-paradedb-1 psql postgresql://root:root@pdb/gfncdata -tAF$'\t' | perl -lanE '$edt = $F[0]; $edt =~ s/^.*:://g; print "$edt","\t","$_"' > fn1.7_labelmap__conll_to_db.tsv
-  
-  echo "select label, numinstances from labels_dataset_all((select id from datasets where name='fn1.7'))" | docker exec -i german-frame-clustering-paradedb-1 psql postgresql://reader:reads@ltdemos.informatik.uni-hamburg.de:8099/gfncdata -tAF$'\t' | perl -lanE '$edt = $F[0]; $edt =~ s/^.*:://g; print "$edt","\t","$_"' > fn1.7_labelmap__conll_to_db_all.tsv
-
   use in factory with, e.g.:
 
     'clusterer': {

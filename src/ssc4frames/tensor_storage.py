@@ -899,7 +899,7 @@ class ModelTensorStorageDB(ModelTensorStorage):
 
 
 
-  # url='model+db://model_id/?masked=n&device=cuda&data=postgresql%2Bpsycopg2://root:root@localhost:54322/gfncdata'
+  # url='model+db://model_id/?masked=n&device=cuda&data=postgresql%2Bpsycopg2://{user}:{password}@{host}:{port}/{databasename}'
 
   def _prepare_db_connection(self):
     self._engine = sqlalchemy.create_engine(self.databack, pool_pre_ping=True, pool_recycle=3600, isolation_level='AUTOCOMMIT', echo=False)
