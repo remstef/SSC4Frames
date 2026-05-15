@@ -1,5 +1,3 @@
-:warning: This repository is under construction
-
 # Joint Identification and Induction of Semantic Frames
 
 This repository contains the code and resources to reproduce the experiments from the paper
@@ -17,6 +15,7 @@ Key components:
 - Semi-supervised adaptation of Chinese Whispers (CW) to enforce hard must-link / cannot-link constraints from labeled training instances.
 - Contextualized target representations: weighted average of masked and unmasked BERT token embeddings.
 - Support for English (BFN v1.7) and German (SALSA v2.0) experiments presented in the paper, other languages are straight forward.
+
 
 ## Repository structure
 
@@ -53,6 +52,7 @@ Key components:
 - CITATION.md - how to cite this repository and paper 
 - CODE_OF_CONDUCT.MD - please follow the code of conduct for issues and contributions
 - README.md (this file)
+
 
 ## Getting started
 
@@ -108,22 +108,26 @@ Key components:
   # run default configuration with ovverrides, don't wait for key confirmation, skip the test set
   ssc4frames clustering run --no-wait '{"data":{"dataset":"fn1.7-sample", "splits":["train", "dev"], "testsplits":["dev"]}}'
 
-  # get results
+  # get the clustered instance assignments
   ssc4frames clustering get <clustering-id>
   # get results for the entire dataset including unassigned instances (e.g. for the test set if omitted during clustering)
   ssc4frames clustering get -a <clustering-id>
   ```
 
-
-
-
+<u>Run experiments</u>
+- Reproduce paper result tables:
+```
+dvc repro -R
+```
+- This runs the DVC pipelines defined in `./dvc.yaml` (i.e. data preparation) and `./experiments/dvc.yaml` (hyperparameter tunixng + final test runs)
 
 
 ## Notes & limitations
 
-- Current implementation restricts FEEs to verbal LUs only (paper limitation).
+- Current implementation restricts FEEs (frame evoking elements) to verbal LUs only (paper limitation).
 - The semi-supervised CW enforces hard constraints from labeled instances; new frame clusters remain unnamed (manual or LLM-based labeling required).
 - Preliminary experiments showed larger LLM embeddings may encode excessive sentence info and hurt clustering — see paper footnote and experiments for details.
+
 
 ## Cite
 
@@ -131,7 +135,6 @@ If you use this code or follow the method, please cite the [LREC 2026 paper](htt
 
 
 Barteld, F., Remus, S., Anwar, S., Stawecki, J., Ziem, A., & Biemann, C. (2026). **Joint Identification and Induction of Semantic Frames with Scalable Semi-Supervised Graph Clustering**. In *Proceedings of the Fifteenth Language Resources and Evaluation Conference (LREC 2026)* (https://doi.org/10.63317/5q7o3fgim7pb).
-
 
 ```
 @inproceedings{barteld-etal-2026-joint,
