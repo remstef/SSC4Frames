@@ -27,7 +27,7 @@ Key components:
   - database.py - 
   - embeddings.py — code for extracting masked/unmasked BERT embeddings and weighted averaging
   - ...
-- examples/ - example configuration files to run a clustering, a clustering as an exeriment, or create an exeriment with multile experiment runs, e.g. to optimize hyperparameters
+- examples/ - example configuration files to run a clustering
 - experiments/
   - configurations to run hyperparameter tuning on dev sets and to run test evaluations
   - example configurations in JSON format for the reported best setups
