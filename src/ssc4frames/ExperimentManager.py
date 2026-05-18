@@ -252,7 +252,7 @@ class ExperimentManager(object):
     with self._dbh.sessionmaker() as session:
       return session.get(Experiment, experiment.id, options=sa_options)
 
-  def get_experiments_by_name(self, name:str=None) -> Iterable[Experiment]:
+  def get_experiments_by_name(self, name:str=None) -> dict[int, Experiment]:
     with self._dbh.sessionmaker() as session:
       res = session.execute(
         sa.select(Experiment).where(Experiment.name == name)

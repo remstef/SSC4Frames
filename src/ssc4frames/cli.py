@@ -841,16 +841,20 @@ def get(ctx, cid, all):
 @main.group()
 @click.option('--experiment_config', type=JsonOption(), default=example_experiment_config_with_hyperparameter_exchange)
 @click.option('--experiment_hash')
+@click.option('--experiment_name')
+@click.option('--experiment_id')
 @click.option('--datasetsplit_hash')
 @click.option('--embeddings_hash')
 @click.option('--embeddings_masked_hash')
 @click.pass_context
-def experiment(ctx, experiment_config, experiment_hash, datasetsplit_hash, embeddings_hash, embeddings_masked_hash):
+def experiment(ctx, experiment_config, experiment_hash, experiment_name, experiment_id, datasetsplit_hash, embeddings_hash, embeddings_masked_hash):
     require_experiment_imports()
 
     ctx.ensure_object(dict)
 
     ctx.obj['EXPERIMENT_CONFIG'] = experiment_config
+    ctx.obj['EXPERIMENT_NAME'] = experiment_name
+    ctx.obj['EXPERIMENT_ID'] = experiment_id
 
     if any([datasetsplit_hash, embeddings_hash, embeddings_masked_hash]):
 
@@ -914,6 +918,14 @@ def experiment(ctx, experiment_config, experiment_hash, datasetsplit_hash, embed
 
                 if embeddings_hash != embeddings_hash_db:
                     raise ValueError('Masked embeddings are different than expected')
+
+
+@experiment.command()
+def list():
+    manager = ExperimentManager()
+    experiments = manager.list_experiments()
+    for k, v in experiments.items():
+        print(f'{v.id}: {v.name} (#{len(v.runs)} {v.get_status()})')
 
 
 @experiment.command()
@@ -1020,24 +1032,35 @@ def status(ctx, verbose):
 @click.pass_context
 def remove(ctx):
 
-    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-
     manager = ExperimentManager()
 
-    experiments = manager.get_experiments_by_name(experiment_config['name'])
-
-    if len(experiments) == 0:
-        click.echo("Experiment not in database.")
-    elif len(experiments) > 1:
-        click.echo("Multiple experiments with given name found in database.")
+    if 'EXPERIMENT_ID' in ctx.obj:
+        experiment_id = ctx.obj['EXPERIMENT_ID']
+        experiment = manager.get_experiment_by_id(experiment_id)
+        if experiment == None:
+            click.echo("Experiment not in database.")
+            return
     else:
-        exp = experiments[list(experiments.keys())[0]]
-        click.echo(exp)
-        if click.confirm('Remove experiment from database?'):
-            click.echo("Removing experiment.")
-            manager.delete(exp)
+        if 'EXPERIMENT_NAME' in ctx.obj:
+            experiment_name = ctx.obj['EXPERIMENT_NAME']
         else:
-            click.echo('Aborted.')
+            experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+            experiment_name = experiment_config['name']
+        experiments = manager.get_experiments_by_name(experiment_name)
+        if len(experiments) == 0:
+            click.echo("Experiment not in database.")
+            return
+        elif len(experiments) > 1:
+            click.echo("Multiple experiments with given name found in database.")
+            return
+        experiment = next(iter(experiments.values()))
+
+    click.echo(experiment)
+    if click.confirm('Remove experiment from database?'):
+        click.echo("Removing experiment.")
+        manager.delete(experiment)
+    else:
+        click.echo('Aborted.')
 
 
 @experiment.command()
