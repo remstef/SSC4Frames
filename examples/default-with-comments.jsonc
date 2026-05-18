@@ -90,10 +90,10 @@
   // define the global clustering step
   "global": {
     // define the local clustering, on which the global clusterer should operate
-    // use ////local@latest to refer to the local clustering as defined in this file, 
-    // ////local@latest will be replaced to identifier@id internally
+    // use ##local@latest to refer to the local clustering as defined in this file, 
+    // ##local@latest will be replaced to identifier@id internally
     // use identifier@id to refer to any local clustering identifier + id that has to exist in the database independent of the local setting in this file
-    "localclustering": "////local@latest",
+    "localclustering": "##local@latest",
     // cluster instances which do not match this filter will be disregarded during clustering, 
     // i.e. instances within filtered clusters will be assigned by the most similar (nearest neighbor) 
     // cluster as a post clustering step. This is mainly useful for large datasets.
