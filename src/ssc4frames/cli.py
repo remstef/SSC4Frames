@@ -839,7 +839,7 @@ def get(ctx, cid, all):
 ### Experiment Group
 
 @main.group()
-@click.option('--experiment_config', type=JsonOption(), default=example_experiment_config_with_hyperparameter_exchange)
+@click.option('--experiment_config', type=JsonOption()) #, default=example_experiment_config_with_hyperparameter_exchange)
 @click.option('--experiment_hash')
 @click.option('--experiment_name')
 @click.option('--experiment_id')
@@ -933,6 +933,9 @@ def list():
 def create(ctx):
 
     experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+    if experiment_config is None:
+        click.echo("Experiment config (--experiment_config) is missing.")
+        return    
 
     manager = ExperimentManager()
     experiments = manager.get_experiments_by_name(experiment_config['name'])
@@ -947,49 +950,39 @@ def create(ctx):
             Experiment(name=experiment_config['name'],
                        extrainfo=experiment_config['extrainfo'],
                        runs=experiment_runs))
+        click.echo(f'Added:\n{experiment}')
 
 @experiment.command()
 @click.option('--n_workers', type=int, default=4)
 @click.option('--use_thread_pool', is_flag=True)
 @click.pass_context
 def run(ctx, n_workers, use_thread_pool):
-
-    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-
     manager = ExperimentManager()
+    experiment = get_experiment_from_ctxobj(ctx.obj, manager)
+    manager.run_experiment_parallel(experiment, n_workers=n_workers, process_pool=(not use_thread_pool))
+    return
 
-    experiments = manager.get_experiments_by_name(experiment_config['name'])
-    if len(experiments) == 1:
-        experiment = list(experiments.values())[0]
-        manager.run_experiment_parallel(experiment, n_workers=n_workers, process_pool=(not use_thread_pool))
-    elif len(experiments) == 0:
-        click.echo("Experiment not found - please create first.")
-    else:
-        click.echo("Multiple experiments with given name found.")
 
 @experiment.command()
 @click.option('--verbose', is_flag=True)
 @click.pass_context
 def status(ctx, verbose):
 
-    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-
     manager = ExperimentManager()
 
-    experiments = manager.get_experiments_by_name(experiment_config['name'])
+    experiment = get_experiment_from_ctxobj(ctx.obj, manager)
 
-    if len(experiments) == 0:
-        click.echo("Experiment not in database.")
-    elif len(experiments) > 1:
-        click.echo("Multiple experiments with given name found in database.")
+    exp = experiment
+    click.echo(exp)
+
+    for status, number in Counter([r.status for r in exp.runs]).items():
+        click.echo(f"{status}: {number}")
+
+    ## check if the experiment in the database matches the expected experiment from config 
+    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+    if experiment_config is None:
+        click.echo("Omitting config santity check. Provide --config if sanity check is desired.")
     else:
-        exp = experiments[list(experiments.keys())[0]]
-        click.echo(exp)
-
-        for status, number in Counter([r.status for r in exp.runs]).items():
-            click.echo(f"{status}: {number}")
-
-        ## check if the experiment in the database matches the expected experiment from config 
         config_runs = get_experiment_runs_from_experiment_config(experiment_config)
 
         ## check if number of runs is the same
@@ -1028,32 +1021,37 @@ def status(ctx, verbose):
         click.echo(local_clustering_durations.describe())
 
 
+def get_experiment_from_ctxobj(ctx_obj, manager):
+    if 'EXPERIMENT_ID' in ctx_obj:
+        experiment_id = ctx_obj['EXPERIMENT_ID']
+        experiment = manager.get_experiment_by_id(experiment_id)
+        if experiment == None:
+            click.echo(f"Experiment not in database (id {experiment_id})")
+            sys.exit(1)
+    else:
+        if 'EXPERIMENT_NAME' in ctx_obj:
+            experiment_name = ctx_obj['EXPERIMENT_NAME']
+        else:
+            experiment_config = ctx_obj['EXPERIMENT_CONFIG']
+            experiment_name = experiment_config['name']
+        experiments = manager.get_experiments_by_name(experiment_name)
+        if len(experiments) == 0:
+            click.echo(f"Experiment not in database (name {experiment_name})")
+            sys.exit(1)
+        elif len(experiments) > 1:
+            click.echo(f"Multiple experiments with given name found in database. (name: {experiment_name})")
+            sys.exit(1)
+        experiment = next(iter(experiments.values()))
+    return experiment
+
+
 @experiment.command()
 @click.pass_context
 def remove(ctx):
 
     manager = ExperimentManager()
 
-    if 'EXPERIMENT_ID' in ctx.obj:
-        experiment_id = ctx.obj['EXPERIMENT_ID']
-        experiment = manager.get_experiment_by_id(experiment_id)
-        if experiment == None:
-            click.echo("Experiment not in database.")
-            return
-    else:
-        if 'EXPERIMENT_NAME' in ctx.obj:
-            experiment_name = ctx.obj['EXPERIMENT_NAME']
-        else:
-            experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-            experiment_name = experiment_config['name']
-        experiments = manager.get_experiments_by_name(experiment_name)
-        if len(experiments) == 0:
-            click.echo("Experiment not in database.")
-            return
-        elif len(experiments) > 1:
-            click.echo("Multiple experiments with given name found in database.")
-            return
-        experiment = next(iter(experiments.values()))
+    experiment = get_experiment_from_ctxobj(ctx.obj, manager)
 
     click.echo(experiment)
     if click.confirm('Remove experiment from database?'):
@@ -1068,6 +1066,9 @@ def remove(ctx):
 def get_hash(ctx):
 
     experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+    if experiment_config is None:
+        click.echo("Experiment config (--experiment_config) is missing.")
+        return    
     experiment_hash = get_experiment_hash(experiment_config)
     click.echo(experiment_hash)
 
@@ -1095,6 +1096,9 @@ def best_hyperparameters(ctx, metrics:Metrics, n, verbose,
     ## get best hyperparameters for an experiment that has been run regarding specific metric
 
     experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+    if experiment_config is None:
+        click.echo("Experiment config (--experiment_config) is missing.")
+        return    
 
     manager = ExperimentManager()
     experiments = manager.get_experiments_by_name(experiment_config['name'])
@@ -1242,6 +1246,9 @@ def results(ctx, metrics, average_runs, output_format, results_folder, verbose, 
     dbh = runexp.setup_database_handler(dburl)
 
     experiment_config = ctx.obj['EXPERIMENT_CONFIG']
+    if experiment_config is None:
+        click.echo("Experiment config (--experiment_config) is missing.")
+        return    
 
     manager = ExperimentManager()
 
@@ -1319,30 +1326,21 @@ def reset(ctx, reset_type):
 
     ## reset run status for ( all | started | failed ) runs of the experiment
 
-    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-
     manager = ExperimentManager()
-    experiments = manager.get_experiments_by_name(experiment_config['name'])
+    exp = get_experiment_from_ctxobj(ctx.obj)
+    click.echo(exp)
 
-    if len(experiments) == 0:
-        click.echo("Experiment not in database.")
-    elif len(experiments) > 1:
-        click.echo("Multiple experiments with given name found in database.")
-    else:
-        exp = experiments[list(experiments.keys())[0]]
-        click.echo(exp)
+    if click.confirm(f'Reset {reset_type} experiment runs?'):
 
-        if click.confirm(f'Reset {reset_type} experiment runs?'):
-
-            click.echo(f"Resetting {reset_type} experiment runs.")
-            if reset_type=='all':
-                manager.reset_experiment(exp)
-            else:
-                for erun in exp.runs:
-                    if erun.status == reset_type:
-                        manager.reset_experiment_run(experiment_run=erun)
+        click.echo(f"Resetting {reset_type} experiment runs.")
+        if reset_type=='all':
+            manager.reset_experiment(exp)
         else:
-            click.echo('Aborted.')
+            for erun in exp.runs:
+                if erun.status == reset_type:
+                    manager.reset_experiment_run(experiment_run=erun)
+    else:
+        click.echo('Aborted.')
 
 
 @main.group()
