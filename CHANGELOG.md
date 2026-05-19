@@ -1,5 +1,10 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/19/2026 - 2
+  - minor cli bugfix
+
+--
+
 ### Update version - 05/19/2026 - 1
   - simplified interacting with experiments on cli
   - updated dvc outputs in dvc.lock
