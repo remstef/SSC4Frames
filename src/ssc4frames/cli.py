@@ -1342,7 +1342,7 @@ def reset(ctx, reset_type):
     ## reset run status for ( all | started | failed ) runs of the experiment
 
     manager = ExperimentManager()
-    exp = get_experiment_from_ctxobj(ctx.obj)
+    exp = get_experiment_from_ctxobj(ctx.obj, manager)
     click.echo(exp)
 
     if click.confirm(f'Reset {reset_type} experiment runs?'):
