@@ -115,11 +115,22 @@ Key components:
   ```
 
 <u>Run experiments</u>
+- Run the following commands inside the docker app container (`make user-attach-dockerapp`) or within the virtual environment (`make dev-uv-init dev-uv-activate-venv`)
+- Update files from your local dvcstore (./dvcstore)
+```
+dvc pull
+```
 - Reproduce paper result tables:
 ```
-dvc repro -R
+dvc repro -R .
 ```
 - This runs the DVC pipelines defined in `./dvc.yaml` (i.e. data preparation) and `./experiments/dvc.yaml` (hyperparameter tunixng + final test runs)
+- Push changes to your local dvc store (./dvcstore)
+```
+dvc commit 
+dvc push
+```
+- This avoids recomputing results if they were already computed
 
 
 ## Notes & limitations
