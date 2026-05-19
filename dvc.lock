@@ -55,12 +55,12 @@ stages:
     - path: 
         ./experiments/.database/salsa-default_embeddings/bert-base-german-cased
       hash: md5
-      md5: 49b98e82870fcf99e998e194f83a2d41
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
       size: 37
     - path: 
         ./experiments/.database/salsa-default_embeddings/bert-base-german-cased-masked
       hash: md5
-      md5: 927fb01e15475d123d0c420b0239bf47
+      md5: 6146535f7fc2e3ae71444c1b7082e575
       size: 37
   prepare_bfn17:
     cmd: python convert_fn17.py
@@ -110,7 +110,7 @@ stages:
     outs:
     - path: ./experiments/.database/fn1.7-default
       hash: md5
-      md5: 2a334756205e89b3f7294a5d5d385133
+      md5: 1857e24e048fd434a7dbae63add7a271
       size: 37
   db_load_embeddings_bfn17_bert_base_uncased:
     cmd:
@@ -125,15 +125,15 @@ stages:
     deps:
     - path: ./experiments/.database/fn1.7-default
       hash: md5
-      md5: 2a334756205e89b3f7294a5d5d385133
+      md5: 1857e24e048fd434a7dbae63add7a271
       size: 37
     outs:
     - path: ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased
       hash: md5
-      md5: 057e5635de47cdcdb40d5b32351ec3f3
+      md5: 40bb38c196cfcd17faacb035701fefda
       size: 37
     - path: 
         ./experiments/.database/fn1.7-default_embeddings/bert-base-uncased-masked
       hash: md5
-      md5: 587dd096577c06f0c0d6a90328639934
+      md5: 26df93eb77e21a6a9d641454947f0595
       size: 37
