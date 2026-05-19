@@ -1,5 +1,11 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/19/2026
+  - simplified interacting with experiments on cli
+  - updated dvc outputs in dvc.lock
+
+--
+
 ### Update version - 05/13/2026 - 4
   - added script exection instead of python module exectuion
   - added script for hyperparameter test generation
