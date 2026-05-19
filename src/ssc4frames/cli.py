@@ -371,6 +371,21 @@ class Metrics(enum.Enum):
 def main():
     pass
 
+@main.command()
+def version():
+    git_revision_short_hash = 'None'
+    ssc4frames_version = 'None'
+    try:
+        import subprocess
+        git_revision_short_hash = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=os.path.dirname(os.path.abspath(__file__))).decode('ascii').strip()
+    except:
+        pass
+    from importlib.metadata import version
+    ssc4frames_version = f'ssc4frames.v{version("ssc4frames")}'
+    print(f"Current git commit: {git_revision_short_hash}")
+    print(f"SSC4frames version: {ssc4frames_version}")
+    
+
 @main.group()
 def data():
     pass
