@@ -410,3 +410,2643 @@ stages:
       hash: md5
       md5: e2293ce818f16102e39e754f37070bcb
       size: 33
+  development_unsupervised@dataset0-cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.database/salsa-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      get-hash > 
+      ./.database/salsa-default_experiments/salsa-default-split_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: a472dafede4b4a24267becce63e4dc1e
+      size: 2859
+    outs:
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 626ddb141cc55f4ddccdbd766c5d8bc5
+      size: 33
+  development_unsupervised@dataset0-one_step_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.database/salsa-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      get-hash > 
+      ./.database/salsa-default_experiments/salsa-default-split_one_step_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 1f86adfa0a58e41cdba2f0c6a065b330
+      size: 2342
+    outs:
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_step_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 1c38541a80ce8cbc8862207a587ac763
+      size: 33
+  development_unsupervised@dataset0-one_verb_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.database/salsa-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      get-hash > 
+      ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: f8c08ce85740ba3af1988ad239550d53
+      size: 2342
+    outs:
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: fe9278e5dbf60d359fc68137c573c55a
+      size: 33
+  development_unsupervised@dataset1-cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.database/fn1.7-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked get-hash > 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: b74b42a1583debf22b14f20ce5a9d01a
+      size: 2852
+    outs:
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: aad8385f690e4e9da8793645228e8e48
+      size: 33
+  development_unsupervised@dataset1-one_step_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.database/fn1.7-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked get-hash > 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 69ae2c2ea7b5b61029c1b1cb9bb23a25
+      size: 2335
+    outs:
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 24821bdc0a03c8f2e300bd3e489e27fe
+      size: 33
+  development_unsupervised@dataset1-one_verb_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.database/fn1.7-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked get-hash > 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw-unsup_hyperparamter_tuning
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 9d7534cb31c66725e3a4ae3b54f57f63
+      size: 2335
+    outs:
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 0aefebd5ef2a2199e39dffc37e8f7d1c
+      size: 33
+  development_unsupervised_no_rand@dataset0-yamada-ha:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.database/salsa-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      get-hash > 
+      ./.database/salsa-default_experiments/salsa-default-split_yamada-ha_hyperparamter_tuning
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: 32dab939059fca56c1b661e61816241a
+      size: 3229
+    outs:
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_yamada-ha_hyperparamter_tuning
+      hash: md5
+      md5: 5fd3943e8a85f0bab50bde0302c12d1b
+      size: 33
+  development_unsupervised_no_rand@dataset0-yamada-xmeans:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.database/salsa-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      get-hash > 
+      ./.database/salsa-default_experiments/salsa-default-split_yamada-xmeans_hyperparamter_tuning
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: 454ef4cbf3f6ca9b19c39308f84c7036
+      size: 3124
+    outs:
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_yamada-xmeans_hyperparamter_tuning
+      hash: md5
+      md5: 9d7b6069fdea562375c249d152c19119
+      size: 33
+  development_unsupervised_no_rand@dataset1-yamada-ha:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.database/fn1.7-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked get-hash > 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-ha_hyperparamter_tuning
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: 4580467cf292383dcf3a1cfceabc9c7f
+      size: 3220
+    outs:
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-ha_hyperparamter_tuning
+      hash: md5
+      md5: 9cb6cef4ccc49a2cb44e559a212b5046
+      size: 33
+  development_unsupervised_no_rand@dataset1-yamada-xmeans:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.database/fn1.7-default_experiments
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked get-hash > 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-xmeans_hyperparamter_tuning
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: 2f810222e1541f76eddbd93cf24e4691
+      size: 3113
+    outs:
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-xmeans_hyperparamter_tuning
+      hash: md5
+      md5: 3c24fd8fc9bca8ff929613777c65e908
+      size: 33
+  create_test_config_identification@dataset0-cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name salsa-default-split_cw_test-identification
+      --output_experiment_file ./salsa/test_frame_identification/salsa_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_cw_hyperparamter_tuning
+      hash: md5
+      md5: 85de7b09f1e7def1f1e5ae3b607e1459
+      size: 33
+    - path: ./salsa/dev/salsa_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: dfcd006b967b8a42a95d9de2bf2c0417
+      size: 2915
+    outs:
+    - path: ./salsa/test_frame_identification/salsa_cw_test.json
+      hash: md5
+      md5: 32e9796d5494b36804aa70bfbfae67f0
+      size: 3127
+  create_test_config_identification@dataset0-one_step_cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_step_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_step_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name salsa-default-split_one_step_cw_test-identification
+      --output_experiment_file ./salsa/test_frame_identification/salsa_one_step_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_step_cw_hyperparamter_tuning
+      hash: md5
+      md5: 2a2b07f29808e0eb7410e5ae9c7b35c3
+      size: 33
+    - path: ./salsa/dev/salsa_one_step_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: cd7b52d7a097481363c52b42f2f5ff09
+      size: 2404
+    outs:
+    - path: ./salsa/test_frame_identification/salsa_one_step_cw_test.json
+      hash: md5
+      md5: 99556482750e70490be25dd4d5bf8365
+      size: 2475
+  create_test_config_identification@dataset0-one_verb_cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_verb_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name salsa-default-split_one_verb_cw_test-identification
+      --output_experiment_file ./salsa/test_frame_identification/salsa_one_verb_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw_hyperparamter_tuning
+      hash: md5
+      md5: 31fb03bccbe41f595383947fa62a5870
+      size: 33
+    - path: ./salsa/dev/salsa_one_verb_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: cd51cb0b28192953ee9ae7876448f9c9
+      size: 2404
+    outs:
+    - path: ./salsa/test_frame_identification/salsa_one_verb_cw_test.json
+      hash: md5
+      md5: 803a479a4ce08eceafb7801ff178763d
+      size: 2474
+  create_test_config_identification@dataset1-cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name fn1.7-default-split_cw_test-identification
+      --output_experiment_file ./bfn/test_frame_identification/bfn_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_cw_hyperparamter_tuning
+      hash: md5
+      md5: 81ed9fb90b5565a07b956f5a9bc7bfb7
+      size: 33
+    - path: ./bfn/dev/bfn_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: dab92826a468eed152ec85e26c12b418
+      size: 2907
+    outs:
+    - path: ./bfn/test_frame_identification/bfn_cw_test.json
+      hash: md5
+      md5: 4ad30230af2a1ce88795acdf0fb83399
+      size: 3124
+  create_test_config_identification@dataset1-one_step_cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_step_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name fn1.7-default-split_one_step_cw_test-identification
+      --output_experiment_file ./bfn/test_frame_identification/bfn_one_step_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw_hyperparamter_tuning
+      hash: md5
+      md5: 9c3a9f6ed5ac53af77f7d393390bbf3a
+      size: 33
+    - path: ./bfn/dev/bfn_one_step_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: 4533679345cc8e5dd135c3901fa257fe
+      size: 2397
+    outs:
+    - path: ./bfn/test_frame_identification/bfn_one_step_cw_test.json
+      hash: md5
+      md5: 3aec8451cce95cb458174f01e4305d2b
+      size: 2468
+  create_test_config_identification@dataset1-one_verb_cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_identification/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_verb_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name fn1.7-default-split_one_verb_cw_test-identification
+      --output_experiment_file ./bfn/test_frame_identification/bfn_one_verb_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw_hyperparamter_tuning
+      hash: md5
+      md5: 03c777348078c06d3518f16096990d0f
+      size: 33
+    - path: ./bfn/dev/bfn_one_verb_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: bf89022a5ffd11072bd306b3f8502e7a
+      size: 2397
+    outs:
+    - path: ./bfn/test_frame_identification/bfn_one_verb_cw_test.json
+      hash: md5
+      md5: a855a79222f1ef4c03e0fab1557b723e
+      size: 2468
+  create_test_config_identification_no_rand@dataset0-softmax---no_random_seeds:
+    cmd:
+    - mkdir -p ./salsa/test_frame_identification/
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_softmax_hyperparameter_tuning.json --experiment_hash 
+      ./.database/salsa-default_experiments/salsa-default-split_softmax_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name 
+      salsa-default-split_softmax_test-identification --output_experiment_file 
+      ./salsa/test_frame_identification/salsa_softmax_test.json 
+      --no_random_seeds
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_softmax_hyperparamter_tuning
+      hash: md5
+      md5: 20bc53376a9051430040a65c89ccc2b3
+      size: 33
+    - path: ./salsa/dev/salsa_softmax_hyperparameter_tuning.json
+      hash: md5
+      md5: b1ba01f235686d8d8463a97ad32c0f88
+      size: 2574
+    outs:
+    - path: ./salsa/test_frame_identification/salsa_softmax_test.json
+      hash: md5
+      md5: 2b43f0dbdcbd51cc27b9a16f8eb5c846
+      size: 2625
+  create_test_config_identification_no_rand@dataset1-softmax---no_random_seeds:
+    cmd:
+    - mkdir -p ./bfn/test_frame_identification/
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_softmax_hyperparameter_tuning.json --experiment_hash 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_softmax_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked 
+      best-hyperparameters --metric micro_f1 -n 1 --output_experiment_name 
+      fn1.7-default-split_softmax_test-identification --output_experiment_file 
+      ./bfn/test_frame_identification/bfn_softmax_test.json --no_random_seeds
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_softmax_hyperparamter_tuning
+      hash: md5
+      md5: e2293ce818f16102e39e754f37070bcb
+      size: 33
+    - path: ./bfn/dev/bfn_softmax_hyperparameter_tuning.json
+      hash: md5
+      md5: 32614e4f56c3ef51073e77fa530bb26b
+      size: 2567
+    outs:
+    - path: ./bfn/test_frame_identification/bfn_softmax_test.json
+      hash: md5
+      md5: 1e8469f58a3f64235f76c24cf293da96
+      size: 2618
+  create_test_config_induction@dataset0-cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_cw_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_cw_hyperparamter_tuning
+      hash: md5
+      md5: 85de7b09f1e7def1f1e5ae3b607e1459
+      size: 33
+    - path: ./salsa/dev/salsa_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: dfcd006b967b8a42a95d9de2bf2c0417
+      size: 2915
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_cw_test.json
+      hash: md5
+      md5: 348a6d9a33a8af99dee37e8df92bb3c8
+      size: 3124
+  create_test_config_induction@dataset0-one_step_cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_step_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_step_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_one_step_cw_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_one_step_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_step_cw_hyperparamter_tuning
+      hash: md5
+      md5: 2a2b07f29808e0eb7410e5ae9c7b35c3
+      size: 33
+    - path: ./salsa/dev/salsa_one_step_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: cd7b52d7a097481363c52b42f2f5ff09
+      size: 2404
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_one_step_cw_test.json
+      hash: md5
+      md5: ac39e5f2e4e60b75a7dfa20f4cfc3f44
+      size: 2470
+  create_test_config_induction@dataset0-one_verb_cw-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_verb_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_one_verb_cw_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_one_verb_cw_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw_hyperparamter_tuning
+      hash: md5
+      md5: 31fb03bccbe41f595383947fa62a5870
+      size: 33
+    - path: ./salsa/dev/salsa_one_verb_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: cd51cb0b28192953ee9ae7876448f9c9
+      size: 2404
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_one_verb_cw_test.json
+      hash: md5
+      md5: 4193f0b1e206ecb1fba3df47007e0f6b
+      size: 2469
+  create_test_config_induction@dataset1-cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_cw_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_cw_hyperparamter_tuning
+      hash: md5
+      md5: 81ed9fb90b5565a07b956f5a9bc7bfb7
+      size: 33
+    - path: ./bfn/dev/bfn_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: dab92826a468eed152ec85e26c12b418
+      size: 2907
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_cw_test.json
+      hash: md5
+      md5: d71b773dd20b408c7d985581dd613d7b
+      size: 3119
+  create_test_config_induction@dataset1-one_step_cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_step_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_one_step_cw_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_one_step_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw_hyperparamter_tuning
+      hash: md5
+      md5: 9c3a9f6ed5ac53af77f7d393390bbf3a
+      size: 33
+    - path: ./bfn/dev/bfn_one_step_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: 4533679345cc8e5dd135c3901fa257fe
+      size: 2397
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_one_step_cw_test.json
+      hash: md5
+      md5: da0a328a667e6476440c952c3862a377
+      size: 2463
+  create_test_config_induction@dataset1-one_verb_cw-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_verb_cw_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_one_verb_cw_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_one_verb_cw_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw_hyperparamter_tuning
+      hash: md5
+      md5: 03c777348078c06d3518f16096990d0f
+      size: 33
+    - path: ./bfn/dev/bfn_one_verb_cw_hyperparameter_tuning.json
+      hash: md5
+      md5: bf89022a5ffd11072bd306b3f8502e7a
+      size: 2397
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_one_verb_cw_test.json
+      hash: md5
+      md5: 48dab492186621e39a7228c019dafdc4
+      size: 2464
+  create_test_config_induction_no_rand@dataset0-softmax---no_random_seeds:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_softmax_hyperparameter_tuning.json --experiment_hash 
+      ./.database/salsa-default_experiments/salsa-default-split_softmax_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      salsa-default-split_softmax_test-induction --output_experiment_file 
+      ./salsa/test_frame_induction/salsa_softmax_test.json --no_random_seeds
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_softmax_hyperparamter_tuning
+      hash: md5
+      md5: 20bc53376a9051430040a65c89ccc2b3
+      size: 33
+    - path: ./salsa/dev/salsa_softmax_hyperparameter_tuning.json
+      hash: md5
+      md5: b1ba01f235686d8d8463a97ad32c0f88
+      size: 2574
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_softmax_test.json
+      hash: md5
+      md5: 435ee1339eb964ff252f2e5adb9726ae
+      size: 2620
+  create_test_config_induction_no_rand@dataset1-softmax---no_random_seeds:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_softmax_hyperparameter_tuning.json --experiment_hash 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_softmax_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      fn1.7-default-split_softmax_test-induction --output_experiment_file 
+      ./bfn/test_frame_induction/bfn_softmax_test.json --no_random_seeds
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_softmax_hyperparamter_tuning
+      hash: md5
+      md5: e2293ce818f16102e39e754f37070bcb
+      size: 33
+    - path: ./bfn/dev/bfn_softmax_hyperparameter_tuning.json
+      hash: md5
+      md5: 32614e4f56c3ef51073e77fa530bb26b
+      size: 2567
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_softmax_test.json
+      hash: md5
+      md5: 450d73699cf73d7355d5007f5c8d4250
+      size: 2613
+  create_test_config_induction_unsupervised@dataset0-cw-unsup-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_cw-unsup_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_cw-unsup_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 626ddb141cc55f4ddccdbd766c5d8bc5
+      size: 33
+    - path: ./salsa/dev/salsa_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: a472dafede4b4a24267becce63e4dc1e
+      size: 2859
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_cw-unsup_test.json
+      hash: md5
+      md5: 0d73a5d56209523ebb98c89df67206a7
+      size: 3134
+  create_test_config_induction_unsupervised@dataset0-one_step_cw-unsup-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_step_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_one_step_cw-unsup_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_step_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 1c38541a80ce8cbc8862207a587ac763
+      size: 33
+    - path: ./salsa/dev/salsa_one_step_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 1f86adfa0a58e41cdba2f0c6a065b330
+      size: 2342
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json
+      hash: md5
+      md5: aaa761bfa054a416e5aa64b4e595c4bd
+      size: 2472
+  create_test_config_induction_unsupervised@dataset0-one_verb_cw-unsup-:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash ./.database/salsa-default_embeddings/bert-base-german-cased
+      --embeddings_masked_hash ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name salsa-default-split_one_verb_cw-unsup_test-induction
+      --output_experiment_file ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json '
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: fe9278e5dbf60d359fc68137c573c55a
+      size: 33
+    - path: ./salsa/dev/salsa_one_verb_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: f8c08ce85740ba3af1988ad239550d53
+      size: 2342
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json
+      hash: md5
+      md5: 7dcd019e8f7b33c99cba7d034ebf2cb0
+      size: 2474
+  create_test_config_induction_unsupervised@dataset1-cw-unsup-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_cw-unsup_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_cw-unsup_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: aad8385f690e4e9da8793645228e8e48
+      size: 33
+    - path: ./bfn/dev/bfn_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: b74b42a1583debf22b14f20ce5a9d01a
+      size: 2852
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_cw-unsup_test.json
+      hash: md5
+      md5: 424eed570c59f994f7da86f810f8663a
+      size: 3129
+  create_test_config_induction_unsupervised@dataset1-one_step_cw-unsup-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_one_step_cw-unsup_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_step_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 24821bdc0a03c8f2e300bd3e489e27fe
+      size: 33
+    - path: ./bfn/dev/bfn_one_step_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 69ae2c2ea7b5b61029c1b1cb9bb23a25
+      size: 2335
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json
+      hash: md5
+      md5: 6b0cbdf046e6a0133f2b752b823c636e
+      size: 2467
+  create_test_config_induction_unsupervised@dataset1-one_verb_cw-unsup-:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - 'ssc4frames experiment --experiment_config ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json
+      --experiment_hash ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash ./.database/fn1.7-default_embeddings/bert-base-uncased
+      --embeddings_masked_hash ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name fn1.7-default-split_one_verb_cw-unsup_test-induction
+      --output_experiment_file ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json '
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_one_verb_cw-unsup_hyperparamter_tuning
+      hash: md5
+      md5: 0aefebd5ef2a2199e39dffc37e8f7d1c
+      size: 33
+    - path: ./bfn/dev/bfn_one_verb_cw-unsup_hyperparameter_tuning.json
+      hash: md5
+      md5: 9d7534cb31c66725e3a4ae3b54f57f63
+      size: 2335
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json
+      hash: md5
+      md5: a74d8a7c465fb8b731850f7caa3c7c8d
+      size: 2469
+  create_test_config_induction_unsupervised_no_rand@dataset0-yamada-ha---no_random_seeds:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json --experiment_hash 
+      ./.database/salsa-default_experiments/salsa-default-split_yamada-ha_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      salsa-default-split_yamada-ha_test-induction --output_experiment_file 
+      ./salsa/test_frame_induction/salsa_yamada-ha_test.json --no_random_seeds
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_yamada-ha_hyperparamter_tuning
+      hash: md5
+      md5: 5fd3943e8a85f0bab50bde0302c12d1b
+      size: 33
+    - path: ./salsa/dev/salsa_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: 32dab939059fca56c1b661e61816241a
+      size: 3229
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_yamada-ha_test.json
+      hash: md5
+      md5: 8487b825425a2a93acfef5881ffa20be
+      size: 2983
+  create_test_config_induction_unsupervised_no_rand@dataset0-yamada-xmeans---no_random_seeds:
+    cmd:
+    - mkdir -p ./salsa/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json 
+      --experiment_hash 
+      ./.database/salsa-default_experiments/salsa-default-split_yamada-xmeans_hyperparamter_tuning
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      salsa-default-split_yamada-xmeans_test-induction --output_experiment_file 
+      ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json 
+      --no_random_seeds
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: 
+        ./.database/salsa-default_experiments/salsa-default-split_yamada-xmeans_hyperparamter_tuning
+      hash: md5
+      md5: 9d7b6069fdea562375c249d152c19119
+      size: 33
+    - path: ./salsa/dev/salsa_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: 454ef4cbf3f6ca9b19c39308f84c7036
+      size: 3124
+    outs:
+    - path: ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json
+      hash: md5
+      md5: d7b2164b8dff2c7dd59b9c3ba5770520
+      size: 2880
+  create_test_config_induction_unsupervised_no_rand@dataset1-yamada-ha---no_random_seeds:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json --experiment_hash 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-ha_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      fn1.7-default-split_yamada-ha_test-induction --output_experiment_file 
+      ./bfn/test_frame_induction/bfn_yamada-ha_test.json --no_random_seeds
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-ha_hyperparamter_tuning
+      hash: md5
+      md5: 9cb6cef4ccc49a2cb44e559a212b5046
+      size: 33
+    - path: ./bfn/dev/bfn_yamada-ha_hyperparameter_tuning.json
+      hash: md5
+      md5: 4580467cf292383dcf3a1cfceabc9c7f
+      size: 3220
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_yamada-ha_test.json
+      hash: md5
+      md5: f3071f868d3c9b00a521e5f6785792ee
+      size: 2973
+  create_test_config_induction_unsupervised_no_rand@dataset1-yamada-xmeans---no_random_seeds:
+    cmd:
+    - mkdir -p ./bfn/test_frame_induction/
+    - ssc4frames experiment --experiment_config 
+      ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json --experiment_hash 
+      ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-xmeans_hyperparamter_tuning
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked 
+      best-hyperparameters --metric bcubed_f1 -n 1 --output_experiment_name 
+      fn1.7-default-split_yamada-xmeans_test-induction --output_experiment_file 
+      ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json --no_random_seeds
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: 
+        ./.database/fn1.7-default_experiments/fn1.7-default-split_yamada-xmeans_hyperparamter_tuning
+      hash: md5
+      md5: 3c24fd8fc9bca8ff929613777c65e908
+      size: 33
+    - path: ./bfn/dev/bfn_yamada-xmeans_hyperparameter_tuning.json
+      hash: md5
+      md5: 2f810222e1541f76eddbd93cf24e4691
+      size: 3113
+    outs:
+    - path: ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json
+      hash: md5
+      md5: 76a0caf96871ed7a986d3ea5f1fb3f04
+      size: 2864
+  test_frame_identification@dataset0-cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/salsa/test_frame_identification
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_identification/salsa_cw_test.json
+      hash: md5
+      md5: 32e9796d5494b36804aa70bfbfae67f0
+      size: 3127
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_identification/salsa-default-split_cw_test-identification.json
+      hash: md5
+      md5: 028f0666fe7bcbd9ffa0f66879f4d7be
+      size: 75
+  test_frame_identification@dataset0-one_step_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/salsa/test_frame_identification
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_identification/salsa_one_step_cw_test.json
+      hash: md5
+      md5: 99556482750e70490be25dd4d5bf8365
+      size: 2475
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_identification/salsa-default-split_one_step_cw_test-identification.json
+      hash: md5
+      md5: c2e334fbe8ed8e46f3b97315b00f5e95
+      size: 75
+  test_frame_identification@dataset0-one_verb_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/salsa/test_frame_identification
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_identification/salsa_one_verb_cw_test.json
+      hash: md5
+      md5: 803a479a4ce08eceafb7801ff178763d
+      size: 2474
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_identification/salsa-default-split_one_verb_cw_test-identification.json
+      hash: md5
+      md5: bb13e491c5d22399d352cddbd8edade8
+      size: 75
+  test_frame_identification@dataset1-cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/bfn/test_frame_identification
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_identification/bfn_cw_test.json
+      hash: md5
+      md5: 4ad30230af2a1ce88795acdf0fb83399
+      size: 3124
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_identification/fn1.7-default-split_cw_test-identification.json
+      hash: md5
+      md5: b91e4ff3979e5d3959b467c14e3d1f79
+      size: 75
+  test_frame_identification@dataset1-one_step_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/bfn/test_frame_identification
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_identification/bfn_one_step_cw_test.json
+      hash: md5
+      md5: 3aec8451cce95cb458174f01e4305d2b
+      size: 2468
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_identification/fn1.7-default-split_one_step_cw_test-identification.json
+      hash: md5
+      md5: 2500a842b031c6b823c442bc577489e0
+      size: 67
+  test_frame_identification@dataset1-one_verb_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/bfn/test_frame_identification
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_identification/bfn_one_verb_cw_test.json
+      hash: md5
+      md5: a855a79222f1ef4c03e0fab1557b723e
+      size: 2468
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_identification/fn1.7-default-split_one_verb_cw_test-identification.json
+      hash: md5
+      md5: b2a2a5581350b25a3861d94e461ad94d
+      size: 75
+  test_frame_identification_no_rand@dataset0-softmax:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_softmax_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_softmax_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_identification/salsa_softmax_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/salsa/test_frame_identification
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_identification/salsa_softmax_test.json
+      hash: md5
+      md5: 2b43f0dbdcbd51cc27b9a16f8eb5c846
+      size: 2625
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_identification/salsa-default-split_softmax_test-identification.json
+      hash: md5
+      md5: 4560f18e42eb9e9dc7fafee1c07271b4
+      size: 67
+  test_frame_identification_no_rand@dataset1-softmax:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_identification
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_identification/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric micro_f1 --json --average_runs --check_config_runs 
+      --results_folder ./.results/bfn/test_frame_identification
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_identification/bfn_softmax_test.json
+      hash: md5
+      md5: 1e8469f58a3f64235f76c24cf293da96
+      size: 2618
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_identification/fn1.7-default-split_softmax_test-identification.json
+      hash: md5
+      md5: e6b786b8472b9a31fa40414e5f86ef74
+      size: 67
+  test_frame_induction@dataset0-cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_cw_test.json
+      hash: md5
+      md5: 348a6d9a33a8af99dee37e8df92bb3c8
+      size: 3124
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_cw_test-induction.json
+      hash: md5
+      md5: 7f54778559f856b7f6a8f0ff91feb17e
+      size: 226
+  test_frame_induction@dataset0-one_step_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_one_step_cw_test.json
+      hash: md5
+      md5: ac39e5f2e4e60b75a7dfa20f4cfc3f44
+      size: 2470
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_one_step_cw_test-induction.json
+      hash: md5
+      md5: d2dfb3223efd82d8201583923435ba4b
+      size: 225
+  test_frame_induction@dataset0-one_verb_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_one_verb_cw_test.json
+      hash: md5
+      md5: 4193f0b1e206ecb1fba3df47007e0f6b
+      size: 2469
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_one_verb_cw_test-induction.json
+      hash: md5
+      md5: 91ca23316c00d2ae0c4ee778a4f14fe1
+      size: 225
+  test_frame_induction@dataset1-cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_cw_test.json
+      hash: md5
+      md5: d71b773dd20b408c7d985581dd613d7b
+      size: 3119
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_cw_test-induction.json
+      hash: md5
+      md5: 632634fc7475f1a982e2657aba6a992d
+      size: 226
+  test_frame_induction@dataset1-one_step_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_one_step_cw_test.json
+      hash: md5
+      md5: da0a328a667e6476440c952c3862a377
+      size: 2463
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_one_step_cw_test-induction.json
+      hash: md5
+      md5: 513098ade3a7104f1600400e869a0f2c
+      size: 227
+  test_frame_induction@dataset1-one_verb_cw:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_one_verb_cw_test.json
+      hash: md5
+      md5: 48dab492186621e39a7228c019dafdc4
+      size: 2464
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_one_verb_cw_test-induction.json
+      hash: md5
+      md5: 069cd6da6740ecebe004e9c838ee1f0a
+      size: 224
+  test_frame_induction_no_rand@dataset0-softmax:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_softmax_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_softmax_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_softmax_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_softmax_test.json
+      hash: md5
+      md5: 435ee1339eb964ff252f2e5adb9726ae
+      size: 2620
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_softmax_test-induction.json
+      hash: md5
+      md5: 5da7eb985cfb89da4a46680cb63cc541
+      size: 203
+  test_frame_induction_no_rand@dataset1-softmax:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_softmax_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_softmax_test.json
+      hash: md5
+      md5: 450d73699cf73d7355d5007f5c8d4250
+      size: 2613
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_softmax_test-induction.json
+      hash: md5
+      md5: 0879c974f20222c1b82ed8d3e4944740
+      size: 203
+  test_frame_induction_unsupervised@dataset0-cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_cw-unsup_test.json
+      hash: md5
+      md5: 0d73a5d56209523ebb98c89df67206a7
+      size: 3134
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_cw-unsup_test-induction.json
+      hash: md5
+      md5: 18cd639baa75ad793cc9cca14886698c
+      size: 225
+  test_frame_induction_unsupervised@dataset0-one_step_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_one_step_cw-unsup_test.json
+      hash: md5
+      md5: aaa761bfa054a416e5aa64b4e595c4bd
+      size: 2472
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_one_step_cw-unsup_test-induction.json
+      hash: md5
+      md5: 77b2befa15870de480e11b9eb33b1477
+      size: 227
+  test_frame_induction_unsupervised@dataset0-one_verb_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_one_verb_cw-unsup_test.json
+      hash: md5
+      md5: 7dcd019e8f7b33c99cba7d034ebf2cb0
+      size: 2474
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_one_verb_cw-unsup_test-induction.json
+      hash: md5
+      md5: a1a622ad769278531ee8a72cbde5eba0
+      size: 217
+  test_frame_induction_unsupervised@dataset1-cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_cw-unsup_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_cw-unsup_test.json
+      hash: md5
+      md5: 424eed570c59f994f7da86f810f8663a
+      size: 3129
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_cw-unsup_test-induction.json
+      hash: md5
+      md5: 32dfd6b7a1fbdd89e8f02af5ba912ff9
+      size: 226
+  test_frame_induction_unsupervised@dataset1-one_step_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_one_step_cw-unsup_test.json
+      hash: md5
+      md5: 6b0cbdf046e6a0133f2b752b823c636e
+      size: 2467
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_one_step_cw-unsup_test-induction.json
+      hash: md5
+      md5: d56551e26817db96abbde134ffff234a
+      size: 225
+  test_frame_induction_unsupervised@dataset1-one_verb_cw-unsup:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json 
+      --datasetsplit_hash ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_one_verb_cw-unsup_test.json
+      hash: md5
+      md5: a74d8a7c465fb8b731850f7caa3c7c8d
+      size: 2469
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_one_verb_cw-unsup_test-induction.json
+      hash: md5
+      md5: ecf38fd62a5e4f3a0cf6fe9dd6cb7452
+      size: 212
+  test_frame_induction_unsupervised_no_rand@dataset0-yamada-ha:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-ha_test.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-ha_test.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-ha_test.json --datasetsplit_hash
+      ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_yamada-ha_test.json
+      hash: md5
+      md5: 8487b825425a2a93acfef5881ffa20be
+      size: 2983
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_yamada-ha_test-induction.json
+      hash: md5
+      md5: 0ee14a8dd94778494d8f2c0a48eb5d6a
+      size: 203
+  test_frame_induction_unsupervised_no_rand@dataset0-yamada-xmeans:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked run
+    - mkdir -p ./.results/salsa/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json 
+      --datasetsplit_hash ./.database/salsa-default --embeddings_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased 
+      --embeddings_masked_hash 
+      ./.database/salsa-default_embeddings/bert-base-german-cased-masked results
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/salsa/test_frame_induction
+    deps:
+    - path: ./.database/salsa-default
+      hash: md5
+      md5: 01964ce855fba0cc3bf28e6e26203300
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased
+      hash: md5
+      md5: b24a1b7832ada24bc834aac3ebeb82e5
+      size: 37
+    - path: ./.database/salsa-default_embeddings/bert-base-german-cased-masked
+      hash: md5
+      md5: 6146535f7fc2e3ae71444c1b7082e575
+      size: 37
+    - path: ./salsa/test_frame_induction/salsa_yamada-xmeans_test.json
+      hash: md5
+      md5: d7b2164b8dff2c7dd59b9c3ba5770520
+      size: 2880
+    outs:
+    - path: 
+        ./.results/salsa/test_frame_induction/salsa-default-split_yamada-xmeans_test-induction.json
+      hash: md5
+      md5: 764ece253b57d9a161595d22cc835116
+      size: 203
+  test_frame_induction_unsupervised_no_rand@dataset1-yamada-ha:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-ha_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-ha_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-ha_test.json --datasetsplit_hash 
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_yamada-ha_test.json
+      hash: md5
+      md5: f3071f868d3c9b00a521e5f6785792ee
+      size: 2973
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_yamada-ha_test-induction.json
+      hash: md5
+      md5: f7734541dc254e454d17a767aa463001
+      size: 203
+  test_frame_induction_unsupervised_no_rand@dataset1-yamada-xmeans:
+    cmd:
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked create
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked run
+    - mkdir -p ./.results/bfn/test_frame_induction
+    - ssc4frames experiment --experiment_config 
+      ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json --datasetsplit_hash
+      ./.database/fn1.7-default --embeddings_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased 
+      --embeddings_masked_hash 
+      ./.database/fn1.7-default_embeddings/bert-base-uncased-masked results 
+      --metric bcubed_p --metric bcubed_r --metric bcubed_f1 --json 
+      --average_runs --check_config_runs --results_folder 
+      ./.results/bfn/test_frame_induction
+    deps:
+    - path: ./.database/fn1.7-default
+      hash: md5
+      md5: 1857e24e048fd434a7dbae63add7a271
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased
+      hash: md5
+      md5: 40bb38c196cfcd17faacb035701fefda
+      size: 37
+    - path: ./.database/fn1.7-default_embeddings/bert-base-uncased-masked
+      hash: md5
+      md5: 26df93eb77e21a6a9d641454947f0595
+      size: 37
+    - path: ./bfn/test_frame_induction/bfn_yamada-xmeans_test.json
+      hash: md5
+      md5: 76a0caf96871ed7a986d3ea5f1fb3f04
+      size: 2864
+    outs:
+    - path: 
+        ./.results/bfn/test_frame_induction/fn1.7-default-split_yamada-xmeans_test-induction.json
+      hash: md5
+      md5: 0a7cdad8452b62c46fbae498b0647e7b
+      size: 203
