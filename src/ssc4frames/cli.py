@@ -1037,14 +1037,14 @@ def status(ctx, verbose):
 
 
 def get_experiment_from_ctxobj(ctx_obj, manager):
-    if 'EXPERIMENT_ID' in ctx_obj:
+    if 'EXPERIMENT_ID' in ctx_obj and ctx_obj['EXPERIMENT_ID'] is not None:
         experiment_id = ctx_obj['EXPERIMENT_ID']
         experiment = manager.get_experiment_by_id(experiment_id)
         if experiment == None:
             click.echo(f"Experiment not in database (id {experiment_id})")
             sys.exit(1)
     else:
-        if 'EXPERIMENT_NAME' in ctx_obj:
+        if 'EXPERIMENT_NAME' in ctx_obj and ctx_obj['EXPERIMENT_NAME'] is not None:
             experiment_name = ctx_obj['EXPERIMENT_NAME']
         else:
             experiment_config = ctx_obj['EXPERIMENT_CONFIG']
