@@ -69,3 +69,9 @@ dev-uv-lock-requirements:
 dev-uv-add-dev-requirements:
 	uv add -r requirements-dev.txt
 
+dev-push-new-version:
+	@echo "Make sure the following files have been edited according to the version update."
+	@echo "CHANGELOG.md"
+	@echo "pyproject.toml"
+	@echo "uv.lock (run 'uv lock' after editing pyproject.toml)"
+
