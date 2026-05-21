@@ -286,7 +286,7 @@ def exp_config_equals_db_config(experiment_config, experiments):
         click.echo("Multiple experiments with given name found in database.")
         config_matches = False
     else:
-        exp = experiments[list(experiments.keys())[0]]
+        exp = next(iter(experiments.values()))
         ## check if the experiment in the database matches the expected experiment from config 
         config_runs = get_experiment_runs_from_experiment_config(experiment_config)
 
@@ -1123,7 +1123,7 @@ def best_hyperparameters(ctx, metrics:Metrics, n, verbose,
     elif len(experiments) > 1:
         click.echo("Multiple experiments with given name found in database.")
     else:
-        exp = experiments[list(experiments.keys())[0]]
+        exp = next(iter(experiments.values()))
 
     ## Warn if not all experiment runs have status finished
     if exp.get_status() != str(set(['finished'])):
@@ -1409,7 +1409,7 @@ def status(ctx):
         elif len(experiments) > 1:
             pass
         else:
-            exp = experiments[list(experiments.keys())[0]]
+            exp = next(iter(experiments.values()))
             experiment_info['status'] = exp.get_status()
             experiment_info['runs_in_db'] = len(exp.runs)
             experiment_info['configuration_matches'] = compare_run_configurations(exp.runs, config_runs)
