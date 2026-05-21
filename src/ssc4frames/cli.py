@@ -266,7 +266,7 @@ def get_experiment_hash(experiment_config):
     elif len(experiments) > 1:
         raise ValueError("Multiple experiments with given name found in database.")
     else:
-        exp = iter(experiments.values())
+        exp = next(iter(experiments.values()))
 
         clustering_identifier_list = (run.clustering.identifier for run in exp.runs if run.status == 'finished')
 
