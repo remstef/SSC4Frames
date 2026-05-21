@@ -1,5 +1,10 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 05/21/2026
+  - fix potential bugs in cli
+
+--
+
 ### Update version - 05/19/2026 - 3
   - fix bug in cli.get_experiment_from_ctxobj
 
