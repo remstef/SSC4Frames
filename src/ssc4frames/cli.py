@@ -844,7 +844,7 @@ def get(ctx, cid, all):
             '_clusteringid_': cid
         })
         print('\t'.join(map(str,res.keys())))
-        for r in res.all():
+        for r in res:
             print('\t'.join(map(str,r)))
 
     return
