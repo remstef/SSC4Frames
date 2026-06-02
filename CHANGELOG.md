@@ -1,5 +1,10 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 06/02/2026
+  - added embeddings support for 'clustering get' command
+
+--
+
 ### Update version - 05/21/2026
   - fix potential bugs in cli
 
