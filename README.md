@@ -108,10 +108,26 @@ Key components:
   # run default configuration with ovverrides, don't wait for key confirmation, skip the test set
   ssc4frames clustering run --no-wait '{"data":{"dataset":"fn1.7-sample", "splits":["train", "dev"], "testsplits":["dev"]}}'
 
+  # get frame instances joined with embeddings
+  ssc4frames data instances -b <batchsize> -e <embedding-model> -e <embedding-model> <datasetsplitname>
+  ssc4frames data instances -b 10 -e bert-base-uncased -e bert-base-uncased-masked fn1.7-default 
+
+  # get infos about one or many clusterings using their clustering ids
+  ssc4frames clustering info <clustering-id> ... <clustering-id>
+  ssc4frames clustering info 1 3 4 
+
+  # list the clusters of a clustering
+  ssc4frames clustering clusters -b <batchsize> <clustering-id>
+  ssc4frames clustering clusters -b 10 4
+  # list the clusters of a clustering with the clusterembeddings
+  ssc4frames clustering clusters -e -b <batchsize> <clustering-id>
+  ssc4frames clustering clusters -e -b 10 4
+
   # get the clustered instance assignments
-  ssc4frames clustering get <clustering-id>
+  ssc4frames clustering instances <clustering-id>
   # get results for the entire dataset including unassigned instances (e.g. for the test set if omitted during clustering)
-  ssc4frames clustering get -a <clustering-id>
+  ssc4frames clustering instances -a <clustering-id>
+
   ```
 
 <u>Run experiments</u>
