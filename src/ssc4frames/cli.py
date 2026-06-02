@@ -813,39 +813,85 @@ def run(ctx, config, no_wait):
 
 @clustering.command()
 @click.argument('cid', type=int, required=True)
+@click.option('-e', '--embeddings', is_flag=True)
 @click.option('-a', '--all', is_flag=True)
+@click.option('-b', '--batchsize', type=int, default=1000)
 @click.pass_context
-def get(ctx, cid, all):
+def get(ctx, cid, embeddings, all, batchsize):
     
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
 
-    allinstances_query = 'select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl) and split = any((select splits::text from cl)::text[])'
+    if embeddings:
+        # join result set with averaged embeddings i.e. the frameinstances_split_vectorized view, we need to get the respective local clustering (if the current clustering is not a local clustering)
+        pass
+
+    allinstances_query = 'select * from frameinstances_split where datasetsplit_id = :_datasetsplit_id_ and split = any(:_splits_)'
     if all:
-        allinstances_query = 'select * from frameinstances_split where datasetsplit_id = (select datasetsplit_id from cl)'
+        allinstances_query = 'select * from frameinstances_split where datasetsplit_id = :_datasetsplit_id_'
         # allinstances_query = 'select * from frameinstances_split where datasetsplit_name = :_dataset_name_'
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
-        stmt = sa.text(f'''
-            with cl as (
-                select * from clusterings where id = :_clusteringid_
-            ), allinstances as (
-                {allinstances_query}
-            ), cluster_assigned as (
-                select * from instanceassignments where clusteringid = (select id from cl)
-            )
-            select 
-                i.instance_id, i.datasetsplit_name, i.split, i.lu_lemma, i.frame_label as true_label, 
-                ci.clusterid, ci.clusterlabel, ci.tclusterlabel as transitive_clusterlabel, ci.assignmentinfo 
-            from allinstances i left outer join cluster_assigned ci on i.instance_id = ci.instance_id
-        ''')
-        res = session.execute(stmt, {
-            '_clusteringid_': cid
-        })
-        print('\t'.join(map(str,res.keys())))
-        for r in res:
-            print('\t'.join(map(str,r)))
+    
+        clustering = session.get(Clustering, cid)
+        if clustering is None:
+            print(f'Clustering with id {cid} not found.', file=sys.stderr)
+            return
+        # check if we have a local or a global clustering here
+        if clustering.type == 'localglobal':
+            # get the respective local clustering id (use identifier, so we can resolve merged clusterings)
+            clusteringident_local = clustering.setting['global']['localclustering'].split('@')[0].split('[')[0]
+            clustering_local = session.execute(sa.select(Clustering).where(Clustering.identifier == clusteringident_local)).scalar_one_or_none()
+            if clustering_local is None:
+                raise KeyError(f'Local clustering for global clustering {cid} not found')
+            cid_local = clustering_local.id
+        else:
+            cid_local = cid
+        
+        if embeddings:
+            # join result set with averaged embeddings i.e. just use the prepared frameinstances_split_vectorized__<local-cluster-id> view, we need to get the respective local clustering (if the current clustering is not a local clustering)
+            viewname = f'frameinstances_split_vectorized__{cid_local}'
+            allinstances_query = allinstances_query.replace('frameinstances_split', viewname)
+            # check if view exists and if not create a non-materialized one
+            from sqlalchemy import inspect
+            inspector = inspect(session.get_bind())
+            views = inspector.get_view_names() + inspector.get_materialized_view_names()
+            if viewname not in views:
+                # create the view
+                datadict = clustering.setting['data']
+                datadict['materialize'] = False
+                raise IndexError(f'View for local clustering does not exist, consider (re-)creating it.')
+                # TODO:
+                # runexp.create_instances_view_if_not_exists(dbhandler, datadict, cid_local, emmodel, vectordim:int,  alphaval:float):
+        
+        current_offset = 0
+        next_offset = current_offset
+        while True:
+            stmt = sa.text(f'''
+                with allinstances as (
+                    {allinstances_query} limit {batchsize} offset {current_offset}
+                ), cluster_assigned as (
+                    select * from instanceassignments where clusteringid = :_clusteringid_
+                )
+                select 
+                    i.instance_id, i.datasetsplit_name, i.split, i.lu_lemma, i.frame_label as true_label, 
+                    ci.clusterid, ci.clusterlabel, ci.tclusterlabel as transitive_clusterlabel, ci.assignmentinfo{'' if not embeddings else ', i.vector as embedding'}
+                from allinstances i left outer join cluster_assigned ci on i.instance_id = ci.instance_id
+            ''')
+            res = session.execute(stmt, {
+                '_clusteringid_': cid,
+                '_datasetsplit_id_': clustering.datasetsplit_id,
+                '_splits_': clustering.splits
+            })
+            if current_offset == 0:
+                print('\t'.join(map(str,res.keys())))
+            for r in res:
+                print('\t'.join(map(str, r)))
+                next_offset += 1
+            if next_offset == current_offset: # no change, no more rows to fetch
+                break
+            current_offset = next_offset
 
     return
     
