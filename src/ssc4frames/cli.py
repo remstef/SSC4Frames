@@ -435,6 +435,7 @@ def instances(ctx, datasetsplit_name, batchsize, embedding_table):
 
     join_embedding_tables = [f'left join "{tablename}" t{i} on t{i}.key = fis.instance_id' for i, tablename in enumerate(embedding_table)]
     join_embedding_tables = '\n'.join(join_embedding_tables)
+    join_embedding_columnnames = ''.join([f', t{i}.embedding as {tablename.replace("-","_")}' for i, tablename in enumerate(embedding_table)])
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
@@ -443,7 +444,7 @@ def instances(ctx, datasetsplit_name, batchsize, embedding_table):
         next_offset = current_offset
         while True:
             stmt = sa.text(f'''
-                select * 
+                select fis.* {join_embedding_columnnames}
                 from frameinstances_split fis
                 {join_embedding_tables}
                 where fis.datasetsplit_name = :_datasetsplit_name_
