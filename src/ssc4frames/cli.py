@@ -426,12 +426,16 @@ def import_dataset(database, dataset, batchsize):
 @data.command()
 @click.argument('datasetsplit-name', type=str, required=True)
 @click.option('-b', '--batchsize', type=int, default=100)
+@click.option('-e', '--embedding_table', type=str, multiple=True)
 @click.pass_context
-def instances(ctx, datasetsplit_name, batchsize):
-    
+def instances(ctx, datasetsplit_name, batchsize, embedding_table):
+
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
-        
+
+    join_embedding_tables = [f'left join "{tablename}" t{i} on t{i}.key = fis.instance_id' for i, tablename in enumerate(embedding_table)]
+    join_embedding_tables = '\n'.join(join_embedding_tables)
+
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
     
@@ -440,8 +444,9 @@ def instances(ctx, datasetsplit_name, batchsize):
         while True:
             stmt = sa.text(f'''
                 select * 
-                from frameinstances_split 
-                where datasetsplit_name = :_datasetsplit_name_
+                from frameinstances_split fis
+                {join_embedding_tables}
+                where fis.datasetsplit_name = :_datasetsplit_name_
                 limit :_batchsize_ offset :_offset_
             ''')
             res = session.execute(stmt, {
