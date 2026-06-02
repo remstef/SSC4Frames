@@ -75,3 +75,7 @@ dev-push-new-version:
 	@echo "pyproject.toml"
 	@echo "uv.lock (run 'uv lock' after editing pyproject.toml)"
 
+deploy: dev-push-new-version
+
+
+
