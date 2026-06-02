@@ -423,6 +423,44 @@ def import_dataset(database, dataset, batchsize):
     return
 
 
+@data.command()
+@click.argument('datasetsplit-name', type=str, required=True)
+@click.option('-b', '--batchsize', type=int, default=100)
+@click.pass_context
+def instances(ctx, datasetsplit_name, batchsize):
+    
+    from ssc4frames.database import DBHandler
+    import sqlalchemy as sa
+        
+    dbhandler = DBHandler(get_dburl())
+    with dbhandler.sessionmaker() as session:
+    
+        current_offset = 0
+        next_offset = current_offset
+        while True:
+            stmt = sa.text(f'''
+                select * 
+                from frameinstances_split 
+                where datasetsplit_name = :_datasetsplit_name_
+                limit :_batchsize_ offset :_offset_
+            ''')
+            res = session.execute(stmt, {
+                '_datasetsplit_name_': datasetsplit_name,
+                '_batchsize_': batchsize,
+                '_offset_': current_offset
+            })
+            if current_offset == 0:
+                print('\t'.join(map(str,res.keys())))
+            for r in res:
+                print('\t'.join(map(str, r)))
+                next_offset += 1
+            if next_offset == current_offset: # no change, no more rows to fetch
+                break
+            current_offset = next_offset
+
+    return
+
+
 @data.command
 @click.option('--database', '-db', type=str)
 @click.option('--dataset_name', '-d', type=str, required=True)
@@ -815,16 +853,12 @@ def run(ctx, config, no_wait):
 @click.argument('cid', type=int, required=True)
 @click.option('-e', '--embeddings', is_flag=True)
 @click.option('-a', '--all', is_flag=True)
-@click.option('-b', '--batchsize', type=int, default=1000)
+@click.option('-b', '--batchsize', type=int, default=100)
 @click.pass_context
-def get(ctx, cid, embeddings, all, batchsize):
+def instances(ctx, cid, embeddings, all, batchsize):
     
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
-
-    if embeddings:
-        # join result set with averaged embeddings i.e. the frameinstances_split_vectorized view, we need to get the respective local clustering (if the current clustering is not a local clustering)
-        pass
 
     allinstances_query = 'select * from frameinstances_split where datasetsplit_id = :_datasetsplit_id_ and split = any(:_splits_)'
     if all:
@@ -883,6 +917,102 @@ def get(ctx, cid, embeddings, all, batchsize):
                 '_clusteringid_': cid,
                 '_datasetsplit_id_': clustering.datasetsplit_id,
                 '_splits_': clustering.splits
+            })
+            if current_offset == 0:
+                print('\t'.join(map(str,res.keys())))
+            for r in res:
+                print('\t'.join(map(str, r)))
+                next_offset += 1
+            if next_offset == current_offset: # no change, no more rows to fetch
+                break
+            current_offset = next_offset
+
+    return
+
+
+@clustering.command()
+@click.argument('cids', type=int, required=True, nargs=-1)
+@click.pass_context
+def info(ctx, cids):
+    from ssc4frames.database import DBHandler
+    import sqlalchemy as sa
+    
+    # convert tuple to list
+    cids = [cid for cid in cids]
+
+    dbhandler = DBHandler(get_dburl())
+    with dbhandler.sessionmaker() as session:
+
+        res = session.execute(
+            sa.text('''
+                select
+                    id, 
+                    datasetsplit_id, 
+                    splits, 
+                    numinstances, 
+                    numclusters, 
+                    type,
+                    status,
+                    start,
+                    finish,
+                    identifier,
+                    setting,
+                    extrainfo
+                from clusterings 
+                where id = any(:_clusteringids_)
+            '''), 
+            {'_clusteringids_': cids}
+        )
+        print('\t'.join(map(str,res.keys())))
+        for r in res:
+            print('\t'.join(map(str, r)))
+
+
+@clustering.command()
+@click.argument('cid', type=int, required=True)
+@click.option('-e', '--embeddings', is_flag=True)
+@click.option('-b', '--batchsize', type=int, default=100)
+@click.pass_context
+def clusters(ctx, cid, embeddings, batchsize):
+    
+    from ssc4frames.database import DBHandler
+    import sqlalchemy as sa
+
+    dbhandler = DBHandler(get_dburl())
+    with dbhandler.sessionmaker() as session:
+    
+        clustering = session.get(Clustering, cid)
+        if clustering is None:
+            print(f'Clustering with id {cid} not found.', file=sys.stderr)
+            return
+        
+        query_statement = f'''
+            select cl.clusteringid, cl.id as clusterid, cl.label, cl.extrainfo->>'transitive_label' as transitive_label, cl.extrainfo
+            from clusters cl
+            where cl.clusteringid = :_clusteringid_
+        '''
+        
+        if embeddings:
+            # join result set with averaged embeddings i.e. use the prepared clusterembeddings__<cid> table
+            # no need to check if we have a local or a global clustering, both create a table called clusterembeddings__<cid>
+            # leave that to the user
+            cluster_embeddings_tablename = f'clusterembeddings__{cid}'
+            query_statement = f'''
+                select cl.clusteringid, cl.id as clusterid, cl.label, cl.extrainfo->>'transitive_label' as transitive_label, cl.extrainfo, cle.embedding
+                from clusters cl
+                left join {cluster_embeddings_tablename} cle on cl.id = cle.clusterid
+                where cl.clusteringid = :_clusteringid_
+            '''
+            
+        current_offset = 0
+        next_offset = current_offset
+        while True:
+            stmt = sa.text(f'''
+                {query_statement}
+                limit {batchsize} offset {current_offset}
+            ''')
+            res = session.execute(stmt, {
+                '_clusteringid_': cid
             })
             if current_offset == 0:
                 print('\t'.join(map(str,res.keys())))
