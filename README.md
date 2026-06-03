@@ -112,6 +112,11 @@ Key components:
   ssc4frames data instances -b <batchsize> -e <embedding-model> -e <embedding-model> <datasetsplitname>
   ssc4frames data instances -b 10 -e bert-base-uncased -e bert-base-uncased-masked fn1.7-default 
 
+  # list all clusterings for specified dataset split names 
+  ssc4frames clustering list <dataset-split-name> ... <dataset-split-name>
+  # e.g.
+  ssc4frames clustering list fn1.7-default salsa
+
   # get infos about one or many clusterings using their clustering ids
   ssc4frames clustering info <clustering-id> ... <clustering-id>
   ssc4frames clustering info 1 3 4 
@@ -127,6 +132,12 @@ Key components:
   ssc4frames clustering instances <clustering-id>
   # get results for the entire dataset including unassigned instances (e.g. for the test set if omitted during clustering)
   ssc4frames clustering instances -a <clustering-id>
+  # get results for the entire dataset including embeddings
+  ssc4frames clustering instances -e -a <clustering-id>
+  # get results for the entire dataset including embeddings using the batchsize (smaller batchsize = quicker initial results)
+  ssc4frames clustering instances -b <batchsize> -e -a <clustering-id>
+  # e.g.
+  ssc4frames clustering instances -b <batchsize> -e -a <clustering-id>
 
   ```
 
@@ -159,7 +170,6 @@ dvc push
 ## Cite
 
 If you use this code or follow the method, please cite the [LREC 2026 paper](https://lrec.elra.info/lrec2026-main-786):
-
 
 Barteld, F., Remus, S., Anwar, S., Stawecki, J., Ziem, A., & Biemann, C. (2026). **Joint Identification and Induction of Semantic Frames with Scalable Semi-Supervised Graph Clustering**. In *Proceedings of the Fifteenth Language Resources and Evaluation Conference (LREC 2026)* (https://doi.org/10.63317/5q7o3fgim7pb).
 
