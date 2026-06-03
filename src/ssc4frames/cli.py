@@ -1479,23 +1479,19 @@ def best_hyperparameters(ctx, metrics:Metrics, n, verbose,
 @click.pass_context
 def results(ctx, metrics, average_runs, output_format, results_folder, verbose, check_config_runs):
 
-    dburl = get_dburl_from_env()
-    dbh = runexp.setup_database_handler(dburl)
-
-    experiment_config = ctx.obj['EXPERIMENT_CONFIG']
-    if experiment_config is None:
-        click.echo("Experiment config (--experiment_config) is missing.")
-        return    
-
     manager = ExperimentManager()
 
-    experiments = manager.get_experiments_by_name(experiment_config['name'])
-
     if check_config_runs:
-        exp_config_equals_db_config(experiment_config, experiments)
-
-    output_results(dbh, [experiment_config['name']], metrics, average_runs, output_format, results_folder, verbose)
-
+        if 'EXPERIMENT_CONFIG' in ctx.obj:
+            ec = ctx.obj['EXPERIMENT_CONFIG']
+            experiments = manager.get_experiments_by_name(ec['name'])
+            exp_config_equals_db_config(ctx.obj['EXPERIMENT_CONFIG'], experiments)
+        else:
+            click.echo('To Check config runs please provide the --experiment_config parameter!')
+            return
+    
+    e = get_experiment_from_ctxobj(ctx.obj, manager)
+    output_results(manager._dbh, [ e.name ], metrics, average_runs, output_format, results_folder, verbose)
 
 
 @experiment.command()
