@@ -855,6 +855,7 @@ def run(ctx, config, no_wait):
     return
 
 
+
 @clustering.command()
 @click.argument('cid', type=int, required=True)
 @click.option('-e', '--embeddings', is_flag=True)
@@ -934,6 +935,45 @@ def instances(ctx, cid, embeddings, all, batchsize):
             current_offset = next_offset
 
     return
+
+
+@clustering.command()
+@click.argument('datasetsplitname', type=str, required=False, nargs=-1)
+@click.pass_context
+def list(ctx, datasetsplitname):
+    from ssc4frames.database import DBHandler
+    import sqlalchemy as sa
+    
+    # convert tuple to list
+    dsnames = [ name for name in datasetsplitname ]
+
+    dbhandler = DBHandler(get_dburl())
+    with dbhandler.sessionmaker() as session:
+
+        res = session.execute(
+            sa.text('''
+                select
+                    cl.id as clusteringid, 
+                    ds.name as datasetsplit_name,
+                    cl.splits, 
+                    cl.numinstances, 
+                    cl.numclusters, 
+                    cl.type,
+                    cl.status,
+                    cl.start,
+                    cl.finish,
+                    cl.identifier,
+                    cl.setting,
+                    cl.extrainfo
+                from clusterings cl 
+                join datasetsplits ds on ds.id = cl.datasetsplit_id
+                where ds.name = any(:_dsnames_)
+            '''), 
+            {'_dsnames_': dsnames}
+        )
+        print('\t'.join(map(str,res.keys())))
+        for r in res:
+            print('\t'.join(map(str, r)))
 
 
 @clustering.command()
