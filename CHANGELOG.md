@@ -1,5 +1,15 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 06/03/2026
+  - added several sub commands, which allow to view the dataset instances with embeddings and retrieve clusters and their cluster embeddings, and retreive instances with their aggregated embeddings:
+    - data instances 
+    - clustering list
+    - clustering info
+    - clustering clusters
+    - clustering instances
+
+--
+
 ### Update version - 06/02/2026
   - added embeddings support for 'clustering get' command
 
