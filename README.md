@@ -137,7 +137,7 @@ Key components:
   # get results for the entire dataset including embeddings using the batchsize (smaller batchsize = quicker initial results)
   ssc4frames clustering instances -b <batchsize> -e -a <clustering-id>
   # e.g.
-  ssc4frames clustering instances -b <batchsize> -e -a <clustering-id>
+  ssc4frames clustering instances -b 10 -e -a 4
 
   ```
 
