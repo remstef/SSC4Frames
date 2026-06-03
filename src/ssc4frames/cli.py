@@ -1504,25 +1504,28 @@ def results(ctx, metrics, average_runs, output_format, results_folder, verbose, 
 @click.option('--no-config', 'omit_config', is_flag=True )
 @click.option('--logs', 'show_logs', is_flag=False, flag_value=0, default=-1, type=int )
 def inspect(ctx, check_config_runs, omit_config, show_logs):
-    ec = ctx.obj['EXPERIMENT_CONFIG']
-
-    em = ExperimentManager()
-
-    experiments = em.get_experiments_by_name(ec['name'])
     
-    if check_config_runs:
-        exp_config_equals_db_config(ec, experiments)
+    manager = ExperimentManager()
 
-    # get first experiment
-    e = next(iter(experiments.values()))
+    if check_config_runs:
+        if 'EXPERIMENT_CONFIG' in ctx.obj:
+            ec = ctx.obj['EXPERIMENT_CONFIG']
+            experiments = manager.get_experiments_by_name(ec['name'])
+            exp_config_equals_db_config(ctx.obj['EXPERIMENT_CONFIG'], experiments)
+        else:
+            click.echo('To Check config runs please provide the --experiment_config parameter!')
+            return
+    
+    e = get_experiment_from_ctxobj(ctx.obj, manager)
+
     # refresh to get all values
     if show_logs >= 0:
-        e = em.refresh_experiment(e, sa_options=(
+        e = manager.refresh_experiment(e, sa_options=(
             sa.orm.undefer_group('extrainfos'),
             sa.orm.joinedload(Experiment.runs).undefer_group('extrainfos').undefer_group('logs'),
         ))
     else:
-        e = em.refresh_experiment(e)        
+        e = manager.refresh_experiment(e)        
 
     print(f'''=== === ===
 Name: {e.name}
