@@ -3,6 +3,7 @@ from datetime import datetime
 import hashlib
 import json
 import pprint
+import os
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, deferred
 from sqlalchemy import ForeignKey, String, UniqueConstraint, DateTime, Boolean, ARRAY, Integer, Text # JSON
@@ -13,13 +14,15 @@ from sqlalchemy import inspect as sqlalchemyinspect
 from sqlalchemy.orm.session import close_all_sessions
 
 import pandas as pd
+import ssc4frames.loghelper as loghelper
 
 class DBHandler:
 
     def __init__(self, dbconnectionstring,
                  pool_size=5, max_overflow=10, autoflush=False,
                  **enginekwargs):
-
+        
+        self.logger = loghelper.setup_logger(f'{DBHandler.__name__}{id(self)}')
         self.dbconnectionstring = dbconnectionstring
         self.pool_size = pool_size
         self.max_overflow = max_overflow
@@ -46,6 +49,7 @@ class DBHandler:
         from sqlalchemy import create_engine
         from sqlalchemy.orm import sessionmaker
 
+        self.logger.info(f'Using DB: \'{self.dbconnectionstring}\'.')
         self.engine = create_engine(self.dbconnectionstring, **self.enginekwargs)
         self.sessionmaker = sessionmaker(self.engine, autoflush=autoflush)
 
