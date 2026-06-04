@@ -1,6 +1,13 @@
 # CHANGES to the SSC4Frames project
 
 ### Update version - 06/03/2026
+  - updated ptgcl version that fixed python syntax warnings for latex code
+  - ignore subprocess warnings (git revision hash)
+  - minor cli fixes
+
+---
+
+### Update version - 06/03/2026
   - added several sub commands, which allow to view the dataset instances with embeddings and retrieve clusters and their cluster embeddings, and retreive instances with their aggregated embeddings:
     - data instances 
     - clustering list

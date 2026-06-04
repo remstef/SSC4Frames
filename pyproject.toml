@@ -3,7 +3,7 @@ requires = ["poetry-core>=2.1.3"]
 build-backend = "poetry.core.masonry.api"
 
 [project]
-version = "20260603.0"
+version = "20260604.0"
 name = "ssc4frames"
 description = "Joint Identification and Induction of Semantic Frames"
 readme = "README.md"
@@ -79,6 +79,6 @@ packages = [
 generate-setup-file = false
 
 [tool.uv.sources]
-pt-graph-cluster-lib = { path = "pkg/pt_graph_cluster_lib-20250923.0.tar.gz" }
+pt-graph-cluster-lib = { path = "pkg/pt_graph_cluster_lib-20260604.0.tar.gz" }
 wp-retok = { path = "pkg/wp_retok-20241025.0.tar.gz" }
 

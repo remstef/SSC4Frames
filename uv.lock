@@ -1538,8 +1538,8 @@ wheels = [
 
 [[package]]
 name = "pt-graph-cluster-lib"
-version = "20250923.0"
-source = { path = "pkg/pt_graph_cluster_lib-20250923.0.tar.gz" }
+version = "20260604.0"
+source = { path = "pkg/pt_graph_cluster_lib-20260604.0.tar.gz" }
 dependencies = [
     { name = "bcubed" },
     { name = "chinese-whispers" },
@@ -1549,22 +1549,25 @@ dependencies = [
     { name = "scipy" },
     { name = "torch" },
 ]
-sdist = { hash = "sha256:7bd0ecc269d08891e30e1ee2e553b5f6a7a99d596f909dd7eb4f45f41581caeb" }
+sdist = { hash = "sha256:f309d1f136edd6a8b034f3fc3ac58f5d2cbe4abd25d2d3678465344a9e0c339c" }
 
 [package.metadata]
 requires-dist = [
     { name = "bcubed", specifier = "~=1.5" },
+    { name = "black", marker = "extra == 'dev'" },
+    { name = "build", marker = "extra == 'dev'" },
     { name = "chinese-whispers", specifier = "~=0.9" },
     { name = "fire", marker = "extra == 'app'", specifier = "~=0.7" },
     { name = "networkx", specifier = "~=3.3" },
     { name = "numpy", specifier = ">=1.19" },
+    { name = "pytest", marker = "extra == 'dev'" },
     { name = "scikit-learn", specifier = "~=1.5" },
     { name = "scipy", specifier = "~=1.14" },
     { name = "toml", marker = "extra == 'app'", specifier = "~=0.10" },
     { name = "torch", specifier = "~=2.2" },
     { name = "tornado", marker = "extra == 'app'", specifier = "~=6.4" },
 ]
-provides-extras = ["app"]
+provides-extras = ["app", "dev"]
 
 [[package]]
 name = "pyclustering"
@@ -2066,7 +2069,7 @@ wheels = [
 
 [[package]]
 name = "ssc4frames"
-version = "20260603.0"
+version = "20260604.0"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
@@ -2106,7 +2109,7 @@ requires-dist = [
     { name = "pgvector", specifier = "~=0.2" },
     { name = "prompt-toolkit", specifier = "~=3.0.50" },
     { name = "psycopg2-binary", specifier = "~=2.9" },
-    { name = "pt-graph-cluster-lib", path = "pkg/pt_graph_cluster_lib-20250923.0.tar.gz" },
+    { name = "pt-graph-cluster-lib", path = "pkg/pt_graph_cluster_lib-20260604.0.tar.gz" },
     { name = "pyclustering", specifier = "~=0.10" },
     { name = "python-dotenv", specifier = "~=1.0.1" },
     { name = "sentencepiece", specifier = "~=0.2" },
