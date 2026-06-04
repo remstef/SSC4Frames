@@ -377,7 +377,11 @@ def version():
     ssc4frames_version = 'None'
     try:
         import subprocess
-        git_revision_short_hash = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=os.path.dirname(os.path.abspath(__file__))).decode('ascii').strip()
+        git_revision_short_hash = subprocess.check_output(
+            ['git', 'rev-parse', '--short', 'HEAD'], 
+            cwd=os.path.dirname(os.path.abspath(__file__)),
+            stderr=subprocess.DEVNULL
+        ).decode('ascii').strip()
     except:
         pass
     from importlib.metadata import version

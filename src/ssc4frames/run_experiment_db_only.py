@@ -140,7 +140,11 @@ __base_logger_name__ = os.path.basename(__file__)
 __base_logger = loghelper.setup_logger(__base_logger_name__)
 machinename = os.uname()[1]
 try:
-  git_revision_short_hash = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=os.path.dirname(os.path.abspath(__file__))).decode('ascii').strip()
+  git_revision_short_hash = subprocess.check_output(
+    ['git', 'rev-parse', '--short', 'HEAD'], 
+    cwd=os.path.dirname(os.path.abspath(__file__)),
+    stderr=subprocess.DEVNULL
+  ).decode('ascii').strip()
 except:
   from importlib.metadata import version
   git_revision_short_hash = f'ssc4frames.v{version("ssc4frames")}'
