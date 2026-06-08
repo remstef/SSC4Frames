@@ -1,6 +1,11 @@
 # CHANGES to the SSC4Frames project
 
 ### Update version - 06/03/2026
+  - update transformers version and remove obsolete wp_retok
+
+---
+
+### Update version - 06/03/2026
   - updated ptgcl version that fixed python syntax warnings for latex code
   - ignore subprocess warnings (git revision hash)
   - minor cli fixes
