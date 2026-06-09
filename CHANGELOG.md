@@ -1,5 +1,10 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 06/09/2026 - 1
+  - restructure cli commands - outsource subcommands into their own files
+
+---
+
 ### Update version - 06/03/2026
   - update transformers version and remove obsolete wp_retok
 
