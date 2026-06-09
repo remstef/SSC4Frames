@@ -32,7 +32,7 @@
 	// "shutdownAction": "none",
 	"shutdownAction": "stopCompose",
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y iputils-ping && export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && { [ ! -d .venv ] && {  echo 'creating virtual environment (.venv folder does not exist)' && uv venv; } || { echo 'using existing virtual environment (.venv folder exists)' && uv venv --allow-existing; } } && uv pip install --editable .",
+	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y iputils-ping postgresql-client && export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && { [ ! -d .venv ] && {  echo 'creating virtual environment (.venv folder does not exist)' && uv venv; } || { echo 'using existing virtual environment (.venv folder exists)' && uv venv --allow-existing; } } && uv pip install --editable .",
 	// "postCreateCommand": "sudo apt-get update && sudo apt-get install -y iputils-ping && export UV_LINK_MODE=copy && [ ! -d .venv ] && { uv python pin 3.12; uv venv --python 3.12; } && uv pip install --editable .",
 	// "postCreateCommand": "export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && [ ! -d \".venv\" ] && { uv python pin 3.12; uv venv --python 3.12; } && uv pip install --link-mode=copy -r requirements.txt",
 	// "postCreateCommand": "export UV_LINK_MODE=copy && python -m pip install --upgrade --user pip uv && [ ! -d \".venv\" ] && { uv python pin 3.12; uv venv --python 3.12; } && uv pip install --editable .",

@@ -45,10 +45,9 @@ dev-uv-install-requirements:
 	uv pip install -U -r requirements-dev.txt
 
 dev-init-db:
-	@echo "create database ssc4frames" | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
-# 	ssc4frames data init-db-tables
-	docker exec ssc4framesdev ssc4frames data init-db-tables
-	cat ./sql/0_clean.sql ./sql/1_views.sql ./sql/2_functions.sql | docker exec -i ssc4framesdb psql postgresql://root:root@localhost/ssc4frames
+	@echo "create database ssc4frames" | psql postgresql://root:root@ssc4framesdb/ssc4frames
+	ssc4frames data init-db-tables
+	cat ./sql/0_clean.sql ./sql/1_views.sql ./sql/2_functions.sql | psql postgresql://root:root@ssc4framesdb/ssc4frames
 
 dev-uv-activate-venv:
 	@echo "please run manually 'source .venv/bin/activate'"
