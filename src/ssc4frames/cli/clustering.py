@@ -1,12 +1,14 @@
 import sys
 import click
-from ssc4frames.newcli.main import main
-from ssc4frames.newcli.helpers import get_dburl, JsonOption, example_clustering_config_override, merge_with_default_params
+from ssc4frames.cli.main import main
+from ssc4frames.cli.helpers import get_dburl, JsonOption, example_clustering_config_override, merge_with_default_params
 
-## conditional import
+# conditional import
+
+
 def require_experiment_imports():
     global Counter, deepcopy, hashlib, itertools, pprint, pd, sa, update_value, runexp, ExperimentManager, ExperimentRun, Experiment, Clustering
-    
+
     from collections import Counter
     from copy import deepcopy
     import hashlib
@@ -21,13 +23,14 @@ def require_experiment_imports():
     from ssc4frames.ExperimentManager import ExperimentManager
     from ssc4frames.database import Clustering, Experiment, ExperimentRun
 
-### CLustering Group
+# CLustering Group
+
 
 @main.group()
 @click.pass_context
 def clustering(ctx):
     require_experiment_imports()
-    
+
 
 @clustering.command()
 @click.argument('config', type=JsonOption(), required=False, default=example_clustering_config_override)
@@ -38,10 +41,10 @@ def run(ctx, config, no_wait):
     clustering_config_override = config
     clustering_config = merge_with_default_params(clustering_config_override)
     manager = ExperimentManager()
-    manager.run_with_setting(clustering_config, same_thread=True, new_process=False, raise_worker_exception=True, await_key_confirmation=(not no_wait))
+    manager.run_with_setting(clustering_config, same_thread=True, new_process=False,
+                             raise_worker_exception=True, await_key_confirmation=(not no_wait))
 
     return
-
 
 
 @clustering.command()
@@ -51,7 +54,7 @@ def run(ctx, config, no_wait):
 @click.option('-b', '--batchsize', type=int, default=100)
 @click.pass_context
 def instances(ctx, cid, embeddings, all, batchsize):
-    
+
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
 
@@ -62,7 +65,7 @@ def instances(ctx, cid, embeddings, all, batchsize):
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
-    
+
         clustering = session.get(Clustering, cid)
         if clustering is None:
             print(f'Clustering with id {cid} not found.', file=sys.stderr)
@@ -70,18 +73,22 @@ def instances(ctx, cid, embeddings, all, batchsize):
         # check if we have a local or a global clustering here
         if clustering.type == 'localglobal':
             # get the respective local clustering id (use identifier, so we can resolve merged clusterings)
-            clusteringident_local = clustering.setting['global']['localclustering'].split('@')[0].split('[')[0]
-            clustering_local = session.execute(sa.select(Clustering).where(Clustering.identifier == clusteringident_local)).scalar_one_or_none()
+            clusteringident_local = clustering.setting['global']['localclustering'].split(
+                '@')[0].split('[')[0]
+            clustering_local = session.execute(sa.select(Clustering).where(
+                Clustering.identifier == clusteringident_local)).scalar_one_or_none()
             if clustering_local is None:
-                raise KeyError(f'Local clustering for global clustering {cid} not found')
+                raise KeyError(
+                    f'Local clustering for global clustering {cid} not found')
             cid_local = clustering_local.id
         else:
             cid_local = cid
-        
+
         if embeddings:
             # join result set with averaged embeddings i.e. just use the prepared frameinstances_split_vectorized__<local-cluster-id> view, we need to get the respective local clustering (if the current clustering is not a local clustering)
             viewname = f'frameinstances_split_vectorized__{cid_local}'
-            allinstances_query = allinstances_query.replace('frameinstances_split', viewname)
+            allinstances_query = allinstances_query.replace(
+                'frameinstances_split', viewname)
             # check if view exists and if not create a non-materialized one
             from sqlalchemy import inspect
             inspector = inspect(session.get_bind())
@@ -90,10 +97,11 @@ def instances(ctx, cid, embeddings, all, batchsize):
                 # create the view
                 datadict = clustering.setting['data']
                 datadict['materialize'] = False
-                raise IndexError(f'View for local clustering does not exist, consider (re-)creating it.')
+                raise IndexError(
+                    f'View for local clustering does not exist, consider (re-)creating it.')
                 # TODO:
                 # runexp.create_instances_view_if_not_exists(dbhandler, datadict, cid_local, emmodel, vectordim:int,  alphaval:float):
-        
+
         current_offset = 0
         next_offset = current_offset
         while True:
@@ -114,11 +122,11 @@ def instances(ctx, cid, embeddings, all, batchsize):
                 '_splits_': clustering.splits
             })
             if current_offset == 0:
-                print('\t'.join(map(str,res.keys())))
+                print('\t'.join(map(str, res.keys())))
             for r in res:
                 print('\t'.join(map(str, r)))
                 next_offset += 1
-            if next_offset == current_offset: # no change, no more rows to fetch
+            if next_offset == current_offset:  # no change, no more rows to fetch
                 break
             current_offset = next_offset
 
@@ -131,9 +139,9 @@ def instances(ctx, cid, embeddings, all, batchsize):
 def list(ctx, datasetsplitname):
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
-    
+
     # convert tuple to list
-    dsnames = [ name for name in datasetsplitname ]
+    dsnames = [name for name in datasetsplitname]
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
@@ -156,10 +164,10 @@ def list(ctx, datasetsplitname):
                 from clusterings cl 
                 join datasetsplits ds on ds.id = cl.datasetsplit_id
                 where ds.name = any(:_dsnames_)
-            '''), 
+            '''),
             {'_dsnames_': dsnames}
         )
-        print('\t'.join(map(str,res.keys())))
+        print('\t'.join(map(str, res.keys())))
         for r in res:
             print('\t'.join(map(str, r)))
 
@@ -170,7 +178,7 @@ def list(ctx, datasetsplitname):
 def info(ctx, cids):
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
-    
+
     # convert tuple to list
     cids = [cid for cid in cids]
 
@@ -194,10 +202,10 @@ def info(ctx, cids):
                     extrainfo
                 from clusterings 
                 where id = any(:_clusteringids_)
-            '''), 
+            '''),
             {'_clusteringids_': cids}
         )
-        print('\t'.join(map(str,res.keys())))
+        print('\t'.join(map(str, res.keys())))
         for r in res:
             print('\t'.join(map(str, r)))
 
@@ -208,24 +216,24 @@ def info(ctx, cids):
 @click.option('-b', '--batchsize', type=int, default=100)
 @click.pass_context
 def clusters(ctx, cid, embeddings, batchsize):
-    
+
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
-    
+
         clustering = session.get(Clustering, cid)
         if clustering is None:
             print(f'Clustering with id {cid} not found.', file=sys.stderr)
             return
-        
+
         query_statement = f'''
             select cl.clusteringid, cl.id as clusterid, cl.label, cl.extrainfo->>'transitive_label' as transitive_label, cl.extrainfo
             from clusters cl
             where cl.clusteringid = :_clusteringid_
         '''
-        
+
         if embeddings:
             # join result set with averaged embeddings i.e. use the prepared clusterembeddings__<cid> table
             # no need to check if we have a local or a global clustering, both create a table called clusterembeddings__<cid>
@@ -237,7 +245,7 @@ def clusters(ctx, cid, embeddings, batchsize):
                 left join {cluster_embeddings_tablename} cle on cl.id = cle.clusterid
                 where cl.clusteringid = :_clusteringid_
             '''
-            
+
         current_offset = 0
         next_offset = current_offset
         while True:
@@ -249,13 +257,12 @@ def clusters(ctx, cid, embeddings, batchsize):
                 '_clusteringid_': cid
             })
             if current_offset == 0:
-                print('\t'.join(map(str,res.keys())))
+                print('\t'.join(map(str, res.keys())))
             for r in res:
                 print('\t'.join(map(str, r)))
                 next_offset += 1
-            if next_offset == current_offset: # no change, no more rows to fetch
+            if next_offset == current_offset:  # no change, no more rows to fetch
                 break
             current_offset = next_offset
 
     return
-    

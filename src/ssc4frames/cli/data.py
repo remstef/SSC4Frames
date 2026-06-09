@@ -1,11 +1,12 @@
 import click
-from ssc4frames.newcli.main import main
-from ssc4frames.newcli.helpers import get_dburl, logger, CorpusfileType, pooling_strategies, get_dburl_from_env, get_hash_for_embeddings, get_hash_for_datasetsplit
+from ssc4frames.cli.main import main
+from ssc4frames.cli.helpers import get_dburl, logger, CorpusfileType, pooling_strategies, get_dburl_from_env, get_hash_for_embeddings, get_hash_for_datasetsplit
 
 
 @main.group()
 def data():
     pass
+
 
 @data.command
 @click.option('--database', '-db', type=str)
@@ -20,9 +21,9 @@ def import_dataset(database, dataset, batchsize):
     importer = Importer(dbconnectionstring=database)
     for d in dataset:
         if ':' in d:
-            ds, offset = d.split(':',1)
+            ds, offset = d.split(':', 1)
         else:
-            ds, offset = (d,0)
+            ds, offset = (d, 0)
         basedata = ds.split('-')[0]
         offset = int(offset)
         logger.info(f''' Importing Data:
@@ -33,7 +34,7 @@ def import_dataset(database, dataset, batchsize):
             batchsize = {batchsize}
         ''')
         importer.import_data(
-            datasetname=ds, 
+            datasetname=ds,
             basedataname=basedata,
             batchsize=batchsize,
             offset=offset)
@@ -50,13 +51,15 @@ def instances(ctx, datasetsplit_name, batchsize, embedding_table):
     from ssc4frames.database import DBHandler
     import sqlalchemy as sa
 
-    join_embedding_tables = [f'left join "{tablename}" t{i} on t{i}.key = fis.instance_id' for i, tablename in enumerate(embedding_table)]
+    join_embedding_tables = [
+        f'left join "{tablename}" t{i} on t{i}.key = fis.instance_id' for i, tablename in enumerate(embedding_table)]
     join_embedding_tables = '\n'.join(join_embedding_tables)
-    join_embedding_columnnames = ''.join([f', t{i}.embedding as {tablename.replace("-","_")}' for i, tablename in enumerate(embedding_table)])
+    join_embedding_columnnames = ''.join(
+        [f', t{i}.embedding as {tablename.replace("-", "_")}' for i, tablename in enumerate(embedding_table)])
 
     dbhandler = DBHandler(get_dburl())
     with dbhandler.sessionmaker() as session:
-    
+
         current_offset = 0
         next_offset = current_offset
         while True:
@@ -73,11 +76,11 @@ def instances(ctx, datasetsplit_name, batchsize, embedding_table):
                 '_offset_': current_offset
             })
             if current_offset == 0:
-                print('\t'.join(map(str,res.keys())))
+                print('\t'.join(map(str, res.keys())))
             for r in res:
                 print('\t'.join(map(str, r)))
                 next_offset += 1
-            if next_offset == current_offset: # no change, no more rows to fetch
+            if next_offset == current_offset:  # no change, no more rows to fetch
                 break
             current_offset = next_offset
 
@@ -116,7 +119,6 @@ def import_custom_dataset(database, dataset_name, dataset_lang, split_suffix,
             if split == 'test':
                 df['fixed_label'] = None
             df = pd.concat([df, file_df], sort=False)
-
 
     df.reset_index(drop=True, inplace=True)
     df['c'] = range(0, df.shape[0])
@@ -181,15 +183,16 @@ def import_model_embeddings(database, dataset, model, vdim, input_masking, mask_
 
     database = get_dburl(database, application_name='ssc4frames_data')
 
-    ## using unmasked input as default
+    # using unmasked input as default
     if not input_masking:
         input_masking = ('unmasked',)
 
     if 'masked' in input_masking and 'mask_subwords' in input_masking:
-        raise ValueError('Masking must either be on token or subword level - not both.')
+        raise ValueError(
+            'Masking must either be on token or subword level - not both.')
 
     for masking_strategy in input_masking:
-        m_str = None ## only set mask_str when masking_strategy is masked
+        m_str = None  # only set mask_str when masking_strategy is masked
         if masking_strategy == 'unmasked':
             masking = False
             mask_subwords = False
@@ -203,10 +206,11 @@ def import_model_embeddings(database, dataset, model, vdim, input_masking, mask_
         else:
             raise ValueError('Unknown masking strategy')
 
-        __import_model_embeddings(database, dataset, model, vdim, masking, m_str, mask_subwords, pooling, device, batchsize, tablename)
+        __import_model_embeddings(database, dataset, model, vdim, masking,
+                                  m_str, mask_subwords, pooling, device, batchsize, tablename)
 
-        ## trigger garbage collection to remove transformer model from memory
-        ## maybe: refactor to reuse loaded model for masked and unmasked embeddings
+        # trigger garbage collection to remove transformer model from memory
+        # maybe: refactor to reuse loaded model for masked and unmasked embeddings
         gc.collect()
         torch.cuda.empty_cache()
 
@@ -225,60 +229,64 @@ def __import_model_embeddings(database, dataset, model, vdim, masking, mask_str,
     # use the tensorstorage classes with backoff and insert on miss, use ids from database
     main_fmt = 'paradedb://{user}:{passwd}@{host}:{port}/{dbname}/{modeltablename}/?dim={vdim}'
     backoff_fmt = 'model+db://{modelname}/?masked={masked_YN}&{mask_string_option}masksubwords={mask_subwords_YN}&pooling={pooling}&device={device}&data=postgresql%2Bpsycopg2://{user}:{passwd}@{host}:{port}/{dbname}'
-    
+
     user = urlsegments.username if urlsegments.username is not None else 'root'
     password = urlsegments.password if urlsegments.password is not None else 'root'
     host = urlsegments.hostname if urlsegments.hostname is not None else 'localhost'
     port = urlsegments.port if urlsegments.port is not None else 5432
-    modeltablename = (tablename if tablename is not None else model.replace('/','_')) + ('-masked' if masking else '')
+    modeltablename = (tablename if tablename is not None else model.replace(
+        '/', '_')) + ('-masked' if masking else '')
 
     main = main_fmt.format(
-        user = user,
-        passwd = password,
-        host = host, 
-        port = port, 
-        modeltablename = modeltablename, 
-        vdim = vdim,
-        dbname = dbname
+        user=user,
+        passwd=password,
+        host=host,
+        port=port,
+        modeltablename=modeltablename,
+        vdim=vdim,
+        dbname=dbname
     )
     backoff = backoff_fmt.format(
-        modelname = model,
-        masked_YN = 'yes' if masking else 'no',
-        mask_string_option = '' if mask_str is None else f'mask_str={mask_str}&',
-        mask_subwords_YN = 'yes' if mask_subwords else 'no',
-        pooling = pooling,
-        device = device,
-        user = user,
-        passwd = password,
-        host = host, 
-        port = port,
-        dbname = dbname
+        modelname=model,
+        masked_YN='yes' if masking else 'no',
+        mask_string_option='' if mask_str is None else f'mask_str={mask_str}&',
+        mask_subwords_YN='yes' if mask_subwords else 'no',
+        pooling=pooling,
+        device=device,
+        user=user,
+        passwd=password,
+        host=host,
+        port=port,
+        dbname=dbname
     )
 
     logger.info(main)
     logger.info(backoff)
     from ssc4frames.tensor_storage import TensorStorage
-    store = TensorStorage.fromurl(main).with_backoff(backoff).get(insert_on_miss=True)
+    store = TensorStorage.fromurl(main).with_backoff(
+        backoff).get(insert_on_miss=True)
     dbhandler = DBHandler(database)
     for d in dataset:
-        d_name, d_start_offset = (d,0)
+        d_name, d_start_offset = (d, 0)
         if ':' in d:
-            d_name, d_start_offset = d.split(':',1)
-        __import_embeddings_by_backoff_strategy_for_db_dataset(dbhandler, store, d_name, d_start_offset, batchsize)
+            d_name, d_start_offset = d.split(':', 1)
+        __import_embeddings_by_backoff_strategy_for_db_dataset(
+            dbhandler, store, d_name, d_start_offset, batchsize)
 
 
 def __import_embeddings_by_backoff_strategy_for_db_dataset(dbhandler, tensorstore_to_with_backoff_from, datasetname, startoffset, batchsize):
     global DBHandler, Dataset, FrameInstance, sa
-    try: 
+    try:
         with dbhandler.sessionmaker() as session:
-            ds = session.execute(sa.select(Dataset).where(Dataset.name == datasetname)).scalar_one()
+            ds = session.execute(sa.select(Dataset).where(
+                Dataset.name == datasetname)).scalar_one()
             logger.info(f'{ds.name} ({ds.id})')
             dsid = ds.id
     except Exception as e:
         logger.error(f"Dataset '{datasetname}' does not exist. {e}")
         return
-    
-    # get keys from db    
+
+    # get keys from db
     offset_ = startoffset
     while True:
         with dbhandler.sessionmaker() as session:
@@ -286,7 +294,7 @@ def __import_embeddings_by_backoff_strategy_for_db_dataset(dbhandler, tensorstor
                 .order_by(FrameInstance.id) \
                 .offset(offset_) \
                 .limit(batchsize)
-            
+
             frameinstances = session.execute(stmt).scalars().all()
             if len(frameinstances) == 0:
                 break
@@ -318,8 +326,9 @@ def init_db_tables(connectionstring):
     #         with open(sql_script_file) as file:
     #             query = satext(file.read())
     #             con.execute(query)
-    
+
     return
+
 
 @data.command
 @click.option('--source-database', '-s', type=str)
@@ -330,18 +339,21 @@ def init_db_tables(connectionstring):
 @click.option('--batchsize', '-bs', type=int, required=True, default=32)
 def copy_db_embeddings(source_database, target_database, dataset, source_table, target_table, batchsize):
 
-    source_database = get_dburl(source_database, application_name='copy_embeddings')
-    target_database = get_dburl(target_database, application_name='copy_embeddings')
+    source_database = get_dburl(
+        source_database, application_name='copy_embeddings')
+    target_database = get_dburl(
+        target_database, application_name='copy_embeddings')
 
     from ssc4frames.database import DBHandler, Dataset, FrameInstance, Base
     import sqlalchemy as sa
     from sqlalchemy.dialects.postgresql import insert as pginsert
     from pgvector.sqlalchemy import Vector
-    
+
     # get vector dimensionality from the from_store
     source_dbhandler = DBHandler(source_database)
     with source_dbhandler.sessionmaker() as session:
-        stmt = sa.text(f'select vector_dims(embedding) from "{source_table}" limit 1')
+        stmt = sa.text(
+            f'select vector_dims(embedding) from "{source_table}" limit 1')
         row = session.execute(stmt).one()
         vdim = row[0]
 
@@ -359,24 +371,29 @@ def copy_db_embeddings(source_database, target_database, dataset, source_table, 
     if source_table != target_table:
         source_sa_table_instance = sa.Table(
             source_table, Base.metadata,
-            sa.Column("key", sa.BigInteger, primary_key=True, autoincrement=False),
+            sa.Column("key", sa.BigInteger,
+                      primary_key=True, autoincrement=False),
             sa.Column("embedding", Vector(vdim))
         )
 
     # start importing
     for d in dataset:
-        d_name, d_start_offset = (d,0)
+        d_name, d_start_offset = (d, 0)
         if ':' in d:
-            d_name, d_start_offset = d.split(':',1)
-        
+            d_name, d_start_offset = d.split(':', 1)
+
         with target_dbhandler.sessionmaker() as target_session:
-            ds = target_session.execute(sa.select(Dataset).where(Dataset.name == d_name)).scalar_one()
-            logger.info(f'Target {ds.name} (id={ds.id}) {target_database} {target_table}')
+            ds = target_session.execute(sa.select(Dataset).where(
+                Dataset.name == d_name)).scalar_one()
+            logger.info(
+                f'Target {ds.name} (id={ds.id}) {target_database} {target_table}')
             target_dsid = ds.id
 
         with source_dbhandler.sessionmaker() as source_session:
-            ds = source_session.execute(sa.select(Dataset).where(Dataset.name == d_name)).scalar_one()
-            logger.info(f'Source {ds.name} (id={ds.id}) {source_database} {source_table}')
+            ds = source_session.execute(sa.select(Dataset).where(
+                Dataset.name == d_name)).scalar_one()
+            logger.info(
+                f'Source {ds.name} (id={ds.id}) {source_database} {source_table}')
             source_dsid = ds.id
 
         # get keys from target db
@@ -387,23 +404,28 @@ def copy_db_embeddings(source_database, target_database, dataset, source_table, 
                     .order_by(FrameInstance.id) \
                     .offset(offset_) \
                     .limit(batchsize)
-                target_frameinstances = target_session.execute(stmt).scalars().all()
+                target_frameinstances = target_session.execute(
+                    stmt).scalars().all()
                 if len(target_frameinstances) == 0:
                     break
 
-                target_gid_to_fi = {fi.global_id: fi for fi in target_frameinstances}
+                target_gid_to_fi = {
+                    fi.global_id: fi for fi in target_frameinstances}
                 # find the corresponding frameinstance in the source db using the global id
                 with source_dbhandler.sessionmaker() as source_session:
                     stmt = sa.select(FrameInstance)\
                         .where(FrameInstance.dataset_id == source_dsid)\
                         .where(FrameInstance.global_id.in_(target_gid_to_fi.keys()))
-                    source_frameinstances = source_session.execute(stmt).scalars().all()    
+                    source_frameinstances = source_session.execute(
+                        stmt).scalars().all()
                     # get the embeddings
-                    source_id_to_fi = { fi.id: fi for fi in source_frameinstances }
+                    source_id_to_fi = {
+                        fi.id: fi for fi in source_frameinstances}
                     # query_embeddings
-                    stmt = sa.select(source_sa_table_instance).where(source_sa_table_instance.c.key.in_(source_id_to_fi))
+                    stmt = sa.select(source_sa_table_instance).where(
+                        source_sa_table_instance.c.key.in_(source_id_to_fi))
                     rows = source_session.execute(stmt).all()
-                    
+
                 # from the retrieved rows, add information of the source frame instances to map them to the target frame instances
                 def get_target_key(source_key):
                     source_fi = source_id_to_fi[source_key]
@@ -411,19 +433,25 @@ def copy_db_embeddings(source_database, target_database, dataset, source_table, 
                     target_key = target_fi.id
                     return target_key
 
-                insert_items = [{'key': get_target_key(source_key), 'embedding': source_embedding} for source_key, source_embedding in rows]
+                insert_items = [{'key': get_target_key(
+                    source_key), 'embedding': source_embedding} for source_key, source_embedding in rows]
                 if len(insert_items) != len(target_frameinstances):
-                    logger.warning(f'Import of {len(target_frameinstances)} embeddings from offset {offset_} unsuccessful.')
-                    logger.warning(f'{d_name} {offset_}: {list(source_id_to_fi.keys())} ==> {list(map(lambda d: d['key'], insert_items))}')
+                    logger.warning(
+                        f'Import of {len(target_frameinstances)} embeddings from offset {offset_} unsuccessful.')
+                    logger.warning(
+                        f'{d_name} {offset_}: {list(source_id_to_fi.keys())} ==> {list(map(lambda d: d['key'], insert_items))}')
                 else:
-                    logger.info(f'Import of {len(target_frameinstances)} embeddings from offset {offset_} successful.')
-                    
-                stmt = pginsert(target_sa_table_instance).on_conflict_do_nothing(index_elements=['key'])
+                    logger.info(
+                        f'Import of {len(target_frameinstances)} embeddings from offset {offset_} successful.')
+
+                stmt = pginsert(target_sa_table_instance).on_conflict_do_nothing(
+                    index_elements=['key'])
                 target_session.execute(stmt, insert_items)
-            
+
             offset_ += batchsize
-  
+
     return
+
 
 @data.command
 @click.argument('datasetsplit')
@@ -437,6 +465,7 @@ def get_datasetsplit_hash(datasetsplit, database):
 
     return
 
+
 @data.command
 @click.argument('datasetsplit')
 @click.argument('embeddingmodel')
@@ -445,8 +474,8 @@ def get_embeddings_hash(datasetsplit, embeddingmodel, database):
 
     database = get_dburl(database, application_name='ssc4frames_data')
 
-    hash_value = get_hash_for_embeddings(datasetsplit, embeddingmodel, database)
+    hash_value = get_hash_for_embeddings(
+        datasetsplit, embeddingmodel, database)
     print(hash_value)
 
     return
-

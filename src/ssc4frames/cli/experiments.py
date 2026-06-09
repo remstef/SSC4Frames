@@ -1,13 +1,15 @@
 import pathlib
 import click
 import json
-from ssc4frames.newcli.main import main
-from ssc4frames.newcli.helpers import get_dburl_from_env, get_experiment_runs_from_experiment_config, compare_run_configurations, Metrics, output_results
+from ssc4frames.cli.main import main
+from ssc4frames.cli.helpers import get_dburl_from_env, get_experiment_runs_from_experiment_config, compare_run_configurations, Metrics, output_results
 
-## conditional import
+# conditional import
+
+
 def require_experiment_imports():
     global Counter, deepcopy, hashlib, itertools, pprint, pd, sa, update_value, runexp, ExperimentManager, ExperimentRun, Experiment, Clustering
-    
+
     from collections import Counter
     from copy import deepcopy
     import hashlib
@@ -22,6 +24,7 @@ def require_experiment_imports():
     from ssc4frames.ExperimentManager import ExperimentManager
     from ssc4frames.database import Clustering, Experiment, ExperimentRun
 
+
 @main.group()
 @click.option('--experiment_folder', type=click.Path(exists=True), required=True)
 @click.pass_context
@@ -32,7 +35,8 @@ def experiments(ctx, experiment_folder):
     import json
 
     ctx.obj['EXPERIMENT_FOLDER'] = experiment_folder
-    ctx.obj['EXPERIMENT_FILES'] = [f for f in pathlib.Path(experiment_folder).glob('*.json') if f.is_file()]
+    ctx.obj['EXPERIMENT_FILES'] = [f for f in pathlib.Path(
+        experiment_folder).glob('*.json') if f.is_file()]
     ctx.obj['EXPERIMENT_NAMES'] = [json.loads(config_file.read_text(encoding="UTF-8"))['name']
                                    for config_file in ctx.obj['EXPERIMENT_FILES']]
 
@@ -54,7 +58,8 @@ def status(ctx):
 
     for exp_name, exp_config_file in zip(ctx.obj['EXPERIMENT_NAMES'], ctx.obj['EXPERIMENT_FILES']):
 
-        config_runs = get_experiment_runs_from_experiment_config(json.loads(exp_config_file.read_text(encoding="UTF-8")))
+        config_runs = get_experiment_runs_from_experiment_config(
+            json.loads(exp_config_file.read_text(encoding="UTF-8")))
         experiments = manager.get_experiments_by_name(exp_name)
         experiment_info = {
             'name': exp_name,
@@ -76,7 +81,8 @@ def status(ctx):
             exp = next(iter(experiments.values()))
             experiment_info['status'] = exp.get_status()
             experiment_info['runs_in_db'] = len(exp.runs)
-            experiment_info['configuration_matches'] = compare_run_configurations(exp.runs, config_runs)
+            experiment_info['configuration_matches'] = compare_run_configurations(
+                exp.runs, config_runs)
 
     click.echo(pd.DataFrame(experiments_info))
 
@@ -95,4 +101,5 @@ def results(ctx, metrics, average_runs, output_format, results_folder, verbose):
     dburl = get_dburl_from_env()
     dbh = runexp.setup_database_handler(dburl)
 
-    output_results(dbh, ctx.obj['EXPERIMENT_NAMES'], metrics, average_runs, output_format, results_folder, verbose)
+    output_results(dbh, ctx.obj['EXPERIMENT_NAMES'], metrics,
+                   average_runs, output_format, results_folder, verbose)
