@@ -55,8 +55,11 @@ dependencies = [
     "transformers~=5.10",
 ]
 
-# [project.optional-dependencies]
-# thrirdparty_experiments = []
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black"
+]
 
 [project.urls]
 Homepage = "https://github.com/remstef/ssc4frames"
