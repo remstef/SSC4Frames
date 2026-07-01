@@ -45,17 +45,19 @@ dependencies = [
     "pgvector~=0.2",
     "prompt-toolkit~=3.0.50",
     "psycopg2-binary~=2.9",
-    "pt-graph-cluster-lib",
     "pyclustering~=0.10",
     "python-dotenv~=1.0.1",
     "sentencepiece~=0.2",
     "sqlalchemy~=2.0",
     "sqlalchemy-json~=0.7",
-    "torch~=2.2",
     "transformers~=5.10",
+    "ptgcl",
 ]
 
 [project.optional-dependencies]
+torch = [
+    "torch>=2,<3"
+]
 dev = [
     "pytest",
     "black"
@@ -81,4 +83,18 @@ packages = [
 generate-setup-file = false
 
 [tool.uv.sources]
-pt-graph-cluster-lib = { path = "pkg/pt_graph_cluster_lib-20260604.0.tar.gz" }
+ptgcl = { path = "pkg/ptgcl-20260701.3.tar.gz" }
+torch = [
+  { index = "pytorch-cpu", marker = "sys_platform != 'linux'" },
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true

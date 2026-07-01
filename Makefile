@@ -1,12 +1,17 @@
+# Specify the shell to use for all commands
+SHELL := /bin/bash
 
-.ONESHELL:
+.ONESHELL: $(MAKECMDGOALS)
 
-SHELL:=/bin/bash
+# all targets are phony, i.e. they always run, even if the "target" file exists
+.PHONY: $(MAKECMDGOALS)
+
+# all targets should be silent
+.SILENT: $(MAKECMDGOALS)
 
 #
 ## Sample targets for users of the app
 #
-
 user-start-db-stack:
 	docker compose up -d
 
@@ -33,7 +38,6 @@ user-prepare-data:
 #
 ## Sample targets for development purposes
 #
-
 dev-uv-init:
 	python -m pip install -U uv
 	uv venv
@@ -62,19 +66,30 @@ dev-uv-build:
 	uv pip install -U build
 	uv run -m build
 
-dev-uv-lock-requirements:
-	uv pip compile requirements-dev.txt -o requirements-gen.txt
+dev-requirements-no-torch:
+	uv export --quiet \
+	  --format requirements-txt \
+    --no-hashes \
+    --no-dev \
+    --no-emit-project \
+    --no-editable \
+    --prune torch \
+    --prune torchvision \
+    -o requirements-no-torch.txt
 
-dev-uv-add-dev-requirements:
-	uv add -r requirements-dev.txt
+dev-deploy: dev-requirements-no-torch
+	@echo -n "Have you commited all relevant changes, updated the version tag in pyproject.toml and added your changes in CHANGLOG.md? Enter 'y' if you want to proceed: " \
+		&& read ans \
+		&& [ $${ans:-'N'} = 'y' ] \
+		&& uv lock \
+		&& git status \
+		&& git commit pyproject.toml requirements-no-torch.txt uv.lock CHANGELOG.md -m 'bump version' \
+		&& echo -n "Push commmits? Enter 'y' if you want to proceed: " \
+		&& read ans \
+		&& [ $${ans:-'N'} = 'y' ] \
+		&& git push
 
-dev-push-new-version:
-	@echo "Make sure the following files have been edited according to the version update."
-	@echo "CHANGELOG.md"
-	@echo "pyproject.toml"
-	@echo "uv.lock (run 'uv lock' after editing pyproject.toml)"
-
-deploy: dev-push-new-version
+deploy: dev-deploy
 
 
 
