@@ -1,5 +1,12 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 06/09/2026
+  - updated Dockerfile - use pytorch native docker image as base image
+  - torch dependency as optional (leave it to the user which gpu type and cuda version to use)
+  - update pytroch-graph-clustering-lib version (no torch dependencies)
+
+---
+
 ### Update version - 06/09/2026 - 1
   - restructure cli commands - outsource subcommands into their own files
 
