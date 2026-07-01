@@ -1,6 +1,13 @@
 # CHANGES to the SSC4Frames project
 
-### Update version - 06/09/2026
+
+### Update version - 07/01/2026 - 1
+  - use port forwarding for db port in devcontainers
+  - drop containername and hostname properties in compose files
+
+---
+
+### Update version - 07/01/2026
   - updated Dockerfile - use pytorch native docker image as base image
   - torch dependency as optional (leave it to the user which gpu type and cuda version to use)
   - update pytroch-graph-clustering-lib version (no torch dependencies)
