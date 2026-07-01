@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import classification_report
-from pt_graph_cluster_lib.cl import evaluate_cluster_labels as ptgcl_cl_evaluate_cluster_labels
+from ptgcl.cl import evaluate_cluster_labels as ptgcl_cl_evaluate_cluster_labels
 
 def reorder_class_scores_ensure_micro_avg(scores, labels, ninstances):
     class_scores = { label: scores[label] for label in labels if label in scores }

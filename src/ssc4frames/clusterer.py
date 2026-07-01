@@ -32,7 +32,7 @@ def import_conll():
 
 def import_cw():
   global ptgcl
-  import pt_graph_cluster_lib as ptgcl
+  import ptgcl
   
 def import_sklearn():
   global AgglomerativeClustering, sklearn
