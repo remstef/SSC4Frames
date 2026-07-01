@@ -21,13 +21,17 @@
 	// 		"path": "/usr/local/bin/python"
 	// 	}
   // },
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
 	"runServices": [
-		"db",
-		"pgadmin"
+		// "pgadmin",
+		"db"
 	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// https://oneuptime.com/blog/post/2026-01-28-dev-container-port-forwarding/view
+	"forwardPorts": [
+    // "pgadmin:80",      // pgadmin service
+		"db:5432"   // PostgreSQL service
+  ],
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
 	// "shutdownAction": "none",
 	"shutdownAction": "stopCompose",

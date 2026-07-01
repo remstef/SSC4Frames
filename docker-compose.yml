@@ -10,7 +10,6 @@ services:
 
   app:
     image: remstef/ssc4frames
-    container_name: ssc4framesapp
     build:
       context: .
       dockerfile: Dockerfile
@@ -29,8 +28,6 @@ services:
 
   db:
     image: paradedb/paradedb:0.23.2-pg18
-    container_name: ssc4framesdb
-    hostname: ssc4framesdb
     shm_size: 1gb    
     restart: always
     environment:
@@ -52,8 +49,6 @@ services:
       - PARADEDB_TELEMETRY=false # not sure if this is still used
     volumes:
       - dbdata:/var/lib/postgresql
-    ports:
-      - 54323:5432
 
   pgadmin:
     image: dpage/pgadmin4

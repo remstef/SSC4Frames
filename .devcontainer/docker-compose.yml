@@ -2,7 +2,6 @@
 services:
   ssc4framesdev: 
     image: mcr.microsoft.com/devcontainers/python:3-trixie
-    container_name: ssc4framesdev
     volumes:
       # note: host paths are relative to the first docker-compose.yml in devcontainer.json 
       - ../:/workspaces/SSC4Frames:cached
