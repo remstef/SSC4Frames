@@ -64,9 +64,15 @@ RUN dvc init --no-scm
 RUN mkdir -p ./dvcstore
 RUN dvc remote add -d --local myremote ./dvcstore
 
+# ---- Set default huggingface home ----
+RUN mkdir -p /app/.hf
+ENV HF_HOME=/app/.hf
+
 # ---- Create non-root user with an explicit UID and adds permission to access the /app folder ----
 # RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-RUN useradd -u 5678 -M -s /usr/sbin/nologin appuser && chown -R appuser /app
+RUN useradd -u 5678 -M -s /usr/sbin/nologin appuser
+RUN chown -R appuser /app
+RUN chgrp -R appuser /app
 USER appuser
 
 # run with tini

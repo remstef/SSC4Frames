@@ -4,6 +4,7 @@
 
 volumes:
   dbdata:
+  hfhome:
   pgadmindata:
 
 services:
@@ -22,6 +23,7 @@ services:
       - ./dvcstore:/app/dvcstore
       - ./data:/app/data
       - ./experiments:/app/experiments
+      - hfhome:/app/.hf
     stdin_open: true
     tty: true
     entrypoint: [ "tini", "--", "sleep", "infinity" ]
