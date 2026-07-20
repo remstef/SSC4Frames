@@ -1,5 +1,10 @@
 # CHANGES to the SSC4Frames project
 
+### Update version - 07/20/2026 - 0
+  - update default .env
+  - add HF_HOME to Dockerfile
+
+---
 
 ### Update version - 07/01/2026 - 1
   - use port forwarding for db port in devcontainers
